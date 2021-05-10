@@ -1,6 +1,6 @@
 # 获取通讯录
 
-Method: POST  
+Method: GET  
 URL: /friend/getFriends
 Correct Response:
 ```coffeescript
@@ -29,8 +29,8 @@ Error Response:
 
 # 查看新的朋友列表
 
-Method: POST  
-URL: /friend/newFriends
+Method: GET  
+URL: /friend/getNewFriends
 Correct Response:
 ```coffeescript
 {
@@ -80,8 +80,8 @@ Error Response:
 
 # 查看星标朋友
 
-Method: POST  
-URL: /friend/starFriends
+Method: GET  
+URL: /friend/getStarFriends
 Correct Response:
 ```coffeescript
 {
@@ -98,8 +98,8 @@ Error Response:
 
 # 查看某一个用户的信息
 
-Method: POST  
-URL: /friend/getUserInfo
+Method: GET  
+URL: /friend/getUserInfo/{id}/
 Correct Response:  
 ```coffeescript
 {
@@ -127,11 +127,10 @@ Error Response:
 # 设置朋友备注
 
 Method: POST  
-URL: /friend/setFriendRemark
+URL: /friend/setFriendRemark/{friend_id}/
 Request:
 ```coffeescript
 {
-    'friend_id': 朋友的ID,
     'remark': 备注名
 }
 ```
@@ -151,13 +150,7 @@ Error Response:
 # 设置星标朋友
 
 Method: POST  
-URL: /friend/setFriendStar
-Request:
-```coffeescript
-{
-    'friend_id': 朋友的ID
-}
-```
+URL: /friend/setFriendStar/{friend_id}/
 Correct Response:
 ```coffeescript
 {
@@ -196,7 +189,7 @@ Error Response:
 
 # 查看所有分组
 
-Method: POST
+Method: GET
 URL: /friend/getGroups
 Correct Response:
 ```coffeescript
@@ -221,11 +214,10 @@ Error Response:
 # 将好友添加到分组
 
 Method: POST
-URL: /friend/addFriendToGroup
+URL: /friend/addFriendToGroup/{friend_id}/
 Request:
 ```coffeescript
 {
-    'friend_id': 朋友ID,
     'group_id': 分组ID
 }
 ```
@@ -245,13 +237,7 @@ Error Response:
 # 删除好友
 
 Method: POST
-URL: /friend/removeFriend
-Request:
-```coffeescript
-{
-    'friend_id': 朋友ID
-}
-```
+URL: /friend/removeFriend/{friend_id}/
 Correct Response:
 ```coffeescript
 {
@@ -267,7 +253,7 @@ Error Response:
 
 # 查找已有联系人
 
-Method: POST
+Method: GET
 URL: /friend/findFriend
 Request:
 ```coffeescript
@@ -298,7 +284,7 @@ Error Response:
 
 # 搜索新联系人
 
-Method: POST
+Method: GET
 URL: /friend/findNewFriend
 Request:
 ```coffeescript
@@ -330,13 +316,7 @@ Error Response:
 # 添加新联系人
 
 Method: POST
-URL: /friend/addNewFriend
-Request:
-```coffeescript
-{
-    'new_friend_id': 新联系人ID
-}
-```
+URL: /friend/addNewFriend/{friend_id}/
 Correct Response:
 ```coffeescript
 {

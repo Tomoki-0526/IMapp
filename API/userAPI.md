@@ -92,7 +92,7 @@ Error Response:
 
 # 查看个人信息
 
-Method: POST  
+Method: GET  
 URL: /user/getInfo  
 Correct Response:  
 ```coffeescript
@@ -167,7 +167,7 @@ Error Response:
 
 # 生成二维码
 
-Method: POST  
+Method: GET  
 URL: /user/createQR  
 Correct Response:  
 ```coffeescript
