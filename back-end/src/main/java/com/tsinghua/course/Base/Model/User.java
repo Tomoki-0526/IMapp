@@ -3,6 +3,10 @@ package com.tsinghua.course.Base.Model;
 import com.tsinghua.course.Base.Enum.UserType;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -29,6 +33,20 @@ public class User {
     String username;
     // 密码
     String password;
+    // 昵称
+    String nickname;
+    // 性别（0-男 1-女）
+    String gender;
+    // 年龄
+    int age;
+    // 生日
+    Date birthday;
+    // 电话
+    String telephone;
+    // 头像（路径）
+    String avatar;
+    // 个性签名
+    String signature;
     // 用户类型
     UserType userType;
     // 测试数组
@@ -41,7 +59,6 @@ public class User {
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -49,7 +66,6 @@ public class User {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -57,40 +73,50 @@ public class User {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public String getNickname() { return nickname; }
+    public void setNickname(String nickname) { this.nickname = nickname; }
+
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
+
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+
+    public Date getBirthday() { return birthday; }
+    public void setBirthday(String birthday_str) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            if (birthday_str.equals(""))
+                birthday = dateFormat.parse("1970-01-01");
+            else
+                birthday = dateFormat.parse(birthday_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
-    }
+    public String getTelephone() { return telephone; }
+    public void setTelephone(String telephone) { this.telephone = telephone; }
 
-    public String[] getTestArr() {
-        return testArr;
-    }
+    public String getAvatar() { return avatar; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
 
-    public void setTestArr(String[] testArr) {
-        this.testArr = testArr;
-    }
+    public String getSignature() { return signature; }
+    public void setSignature(String signature) { this.signature = signature; }
 
-    public Map<String, String> getTestObj() {
-        return testObj;
-    }
+    public UserType getUserType() { return userType; }
+    public void setUserType(UserType userType) { this.userType = userType; }
 
-    public void setTestObj(Map<String, String> testObj) {
-        this.testObj = testObj;
-    }
+    public String[] getTestArr() { return testArr; }
+    public void setTestArr(String[] testArr) { this.testArr = testArr; }
 
-    public SubObj getSubObj() {
-        return subObj;
-    }
+    public Map<String, String> getTestObj() { return testObj; }
+    public void setTestObj(Map<String, String> testObj) { this.testObj = testObj; }
 
-    public void setSubObj(SubObj subObj) {
-        this.subObj = subObj;
-    }
+    public SubObj getSubObj() { return subObj; }
+    public void setSubObj(SubObj subObj) { this.subObj = subObj; }
 }

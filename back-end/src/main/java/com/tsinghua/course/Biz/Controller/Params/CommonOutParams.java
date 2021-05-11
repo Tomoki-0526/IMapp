@@ -17,9 +17,7 @@ public class CommonOutParams extends CommonParams {
         this.success = success;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
+    public boolean isSuccess() { return success; }
 
     public void setSuccess(boolean success) {
         this.success = success;
