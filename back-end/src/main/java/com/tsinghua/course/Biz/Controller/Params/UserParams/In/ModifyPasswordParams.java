@@ -10,10 +10,16 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
  **/
 @BizType(BizTypeEnum.USER_MODIFY_PASSWORD)
 public class ModifyPasswordParams extends CommonInParams {
-    // 密码
+    // 旧密码
     @Required
     private String old_pwd;
+
+    // 新密码
+    @Required
     private String new_pwd;
+
+    // 确认密码
+    @Required
     private String confirm_pwd;
 
     public String getOldPassword() { return old_pwd; }

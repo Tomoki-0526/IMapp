@@ -12,14 +12,12 @@ public enum UserWarnEnum implements ExceptionInterface {
     DUPLICATE_USERNAME("UserWarn006", "用户名重复"),
     NEED_PASSWORD("UserWarn007", "缺少密码"),
     INVALID_PASSWORD("UserWarn008", "密码不合法"),
-    NEED_OLD_PASSWORD("UserWarn009", "缺少旧密码"),
-    MISMATCHED_PASSWORD("UserWarn010", "旧密码不匹配"),
-    NEED_NEW_PASSWORD("UserWarn011", "缺少新密码"),
-    INVALID_NEW_PASSWORD("UserWarn012", "新密码不合法"),
-    NEED_CONFIRM_PASSWORD("UserWarn013", "缺少确认密码"),
-    MISMATCHED_NEW_PASSWORD("UserWarn014", "两次输入密码不一致"),
-    NEED_AVATAR("UserWarn015", "缺少头像"),
-    NEED_NICKNAME("UserWarn016", "缺少昵称"),
+    MISMATCHED_PASSWORD("UserWarn009", "旧密码不匹配"),
+    INVALID_NEW_PASSWORD("UserWarn010", "新密码不合法"),
+    MISMATCHED_NEW_PASSWORD("UserWarn011", "两次输入密码不一致"),
+    INVALID_GENDER("UserWarn012", "性别不合法"),
+    INVALID_BIRTHDAY("UserWarn013", "生日不合法"),
+    INVALID_TELEPHONE("UserWarn014", "手机号不合法")
     ;
 
     UserWarnEnum(String code, String msg) {

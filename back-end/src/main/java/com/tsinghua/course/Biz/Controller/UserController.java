@@ -111,24 +111,18 @@ public class UserController {
 
         /* 匹配旧密码 */
         String input_old_pwd = inParams.getOldPassword();
-        if (input_old_pwd == null)
-            throw new CourseWarn(UserWarnEnum.NEED_OLD_PASSWORD);
         String real_old_pwd = user.getPassword();
         if (!real_old_pwd.equals(input_old_pwd))
             throw new CourseWarn(UserWarnEnum.MISMATCHED_PASSWORD);
 
         /* 检验新密码的合法性 */
         String new_pwd = inParams.getNewPassword();
-        if (new_pwd == null)
-            throw new CourseWarn(UserWarnEnum.NEED_NEW_PASSWORD);
-        String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,18}$";
-        if (!new_pwd.matches(regex))
+        String reg = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,18}$";
+        if (!new_pwd.matches(reg))
             throw new CourseWarn(UserWarnEnum.INVALID_NEW_PASSWORD);
 
         /* 检查两次输入的密码是否匹配 */
         String confirm_pwd = inParams.getConfirmPassword();
-        if (confirm_pwd == null)
-            throw new CourseWarn(UserWarnEnum.NEED_CONFIRM_PASSWORD);
         if (!confirm_pwd.equals(new_pwd))
             throw new CourseWarn(UserWarnEnum.MISMATCHED_NEW_PASSWORD);
 
@@ -174,20 +168,33 @@ public class UserController {
     @BizType(BizTypeEnum.USER_UPDATE_INFO)
     @NeedLogin
     public CommonOutParams userUpdateInfo(UpdateInfoParams inParams) throws Exception {
-        /* 获取用户 */
+        /* 用户名 */
         String username = inParams.getUsername();
-        User user = userProcessor.getUserByUsername(username);
 
-        /* 获取其他参数 */
+        /* 头像 */
         String avatar = inParams.getAvatar();
-        if (avatar == null)
-            throw new CourseWarn(UserWarnEnum.NEED_AVATAR);
+
+        /* 昵称 */
         String nickname = inParams.getNickname();
-        if (nickname == null)
-            throw new CourseWarn(UserWarnEnum.NEED_NICKNAME);
-        boolean gender = inParams.getGender();
+
+        /* 性别 */
+        String gender = inParams.getGender();
+        if (!gender.equals("male") && !gender.equals("female"))
+            throw new CourseWarn(UserWarnEnum.INVALID_GENDER);
+
+        /* 生日字符串 */
         String birthday_str = inParams.getBirthdayStr();
+        String regex = "^\\d{4}-\\d{2}-\\d{2}$";
+        if (!birthday_str.matches(regex))
+            throw new CourseWarn(UserWarnEnum.INVALID_BIRTHDAY);
+
+        /* 手机号码 */
         String telephone = inParams.getTelephone();
+        regex = "^1[0-9]{10}$";
+        if (!telephone.matches(regex))
+            throw new CourseWarn(UserWarnEnum.INVALID_TELEPHONE);
+
+        /* 个性签名 */
         String signature = inParams.getSignature();
 
         userProcessor.updateUserInfo(username, avatar, nickname, gender, birthday_str, telephone, signature);

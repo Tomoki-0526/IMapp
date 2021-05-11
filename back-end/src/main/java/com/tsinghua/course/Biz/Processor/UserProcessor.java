@@ -66,7 +66,7 @@ public class UserProcessor {
     }
 
     /** 更新个人信息 */
-    public void updateUserInfo(String username, String avatar, String nickname, boolean gender,
+    public void updateUserInfo(String username, String avatar, String nickname, String gender,
                                String birthday_str, String telephone, String signature) {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));

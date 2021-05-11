@@ -20,15 +20,18 @@ public class UpdateInfoParams extends CommonInParams {
 
     // 性别
     @Required
-    private boolean gender;
+    private String gender;
 
     // 生日
+    @Required
     private String birthday_str;
 
     // 手机号码
+    @Required
     private String telephone;
 
     // 个性签名
+    @Required
     private String signature;
 
     public String getAvatar() { return avatar; }
@@ -37,8 +40,8 @@ public class UpdateInfoParams extends CommonInParams {
     public String getNickname() { return nickname; }
     public void setNickname(String nickname) { this.nickname = nickname; }
 
-    public boolean getGender() { return gender; }
-    public void setGender(boolean gender) { this.gender = gender; }
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
 
     public String getBirthdayStr() { return birthday_str; }
     public void setBirthdayStr(String birthday_str) { this.birthday_str = birthday_str; }
