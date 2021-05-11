@@ -5,8 +5,8 @@ URL: /user/login
 Request:  
 ```coffeescript
 {
-    'username': 长度不超过20的字符串（英文、数字、下划线）,
-    'password': 同上
+    'username': 长度8~20（英文、数字、下划线）,
+    'password': 长度6~18（必须包含字母、数字和特殊字符）
 }
 ```
 Correct Response:
@@ -50,7 +50,7 @@ Error Response:
 
 # 登出
 
-Method: POST  
+Method: GET  
 URL: /user/logout  
 Correct Response:  
 ```coffeescript
@@ -100,9 +100,9 @@ Correct Response:
     'avatar': 图片路径,
     'nickname': 昵称,
     'username': 用户名,
-    'gender': boolean（0-男 1-女）,
+    'gender': string（"male", "female"）,
     'age': int,
-    'birthday': datetime,
+    'birthday': string，格式"yyyy-MM-dd",
     'telephone': 手机号码,
     'signature': 个性签名
 }
@@ -122,10 +122,10 @@ Request:
 ```coffeescript
 {
     'avatar': 图片路径,
-    'username': 长度不超过20的字符串（英文、数字、下划线）,
     'nickname': 长度不超过20的字符串（任意字符）,
-    'gender': boolean（0-男 1-女）,
-    'birthday': datetime,
+    'gender': string（"male", "female"）,
+    'birthday': string，格式"yyyy-MM-dd",
+    'telephone': string,
     'signature': 长度不超过100的字符串
 }
 ```
@@ -139,29 +139,6 @@ Error Response:
 ```coffeescript
 {
     'msg': '更新失败'
-}
-```
-
-# 更换手机号码
-
-Method: POST  
-URL: /user/changeTelNum  
-Request:  
-```coffeescript
-{
-    'telephone': 11位数字
-}
-```
-Correct Response:  
-```coffeescript
-{
-    'msg': '手机号更新成功'
-}
-```
-Error Response:
-```coffeescript
-{
-    'msg': '手机号更新失败'
 }
 ```
 

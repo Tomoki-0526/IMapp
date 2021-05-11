@@ -15,4 +15,20 @@ public class KeyConstant {
     /** 以下为User关键key */
     // 用户名
     public static final String USERNAME = "username";
+    // 密码
+    public static final String PASSWORD = "password";
+    // 头像
+    public static final String AVATAR = "avatar";
+    // 昵称
+    public static final String NICKNAME = "nickname";
+    // 性别
+    public static final String GENDER = "gender";
+    // 生日
+    public static final String BIRTHDAY = "birthday";
+    // 年龄
+    public static final String AGE = "age";
+    // 手机号码
+    public static final String TELEPHONE = "telephone";
+    // 个性签名
+    public static final String SIGNATURE = "signature";
 }
