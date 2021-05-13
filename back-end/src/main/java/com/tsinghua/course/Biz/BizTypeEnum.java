@@ -16,6 +16,9 @@ public enum BizTypeEnum {
     USER_GET_INFO(UserController.class, "/user/getInfo", "查看个人信息"),
     USER_UPDATE_INFO(UserController.class, "/user/updateInfo", "更新个人信息"),
 
+    /** 通讯录业务类型 */
+
+
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),
 
