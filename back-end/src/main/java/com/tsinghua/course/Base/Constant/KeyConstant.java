@@ -31,4 +31,8 @@ public class KeyConstant {
     public static final String TELEPHONE = "telephone";
     // 个性签名
     public static final String SIGNATURE = "signature";
+
+    /** Friendship关键key */
+    // 好友用户名
+    public static final String FRIEND_USERNAME = "friend_username";
 }

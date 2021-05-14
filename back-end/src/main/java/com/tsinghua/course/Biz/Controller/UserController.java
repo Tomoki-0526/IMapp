@@ -9,10 +9,10 @@ import com.tsinghua.course.Base.Model.User;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.UserParams.In.LoginInParams;
-import com.tsinghua.course.Biz.Controller.Params.UserParams.In.ModifyPasswordParams;
-import com.tsinghua.course.Biz.Controller.Params.UserParams.In.RegisterParams;
-import com.tsinghua.course.Biz.Controller.Params.UserParams.In.UpdateInfoParams;
-import com.tsinghua.course.Biz.Controller.Params.UserParams.Out.GetInfoParams;
+import com.tsinghua.course.Biz.Controller.Params.UserParams.In.ModifyPasswordInParams;
+import com.tsinghua.course.Biz.Controller.Params.UserParams.In.RegisterInParams;
+import com.tsinghua.course.Biz.Controller.Params.UserParams.In.UpdateInfoInParams;
+import com.tsinghua.course.Biz.Controller.Params.UserParams.Out.GetInfoOutParams;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.*;
 import io.netty.channel.ChannelHandlerContext;
@@ -57,7 +57,7 @@ public class UserController {
 
     /** 用户注册业务 */
     @BizType(BizTypeEnum.USER_REGISTER)
-    public CommonOutParams userRegister(RegisterParams inParams) throws Exception {
+    public CommonOutParams userRegister(RegisterInParams inParams) throws Exception {
         /* 用户名 */
         String username = inParams.getUsername();
         if (username == null)
@@ -103,7 +103,7 @@ public class UserController {
     /** 修改密码业务 */
     @BizType(BizTypeEnum.USER_MODIFY_PASSWORD)
     @NeedLogin
-    public CommonOutParams userModifyPassword(ModifyPasswordParams inParams) throws Exception {
+    public CommonOutParams userModifyPassword(ModifyPasswordInParams inParams) throws Exception {
         /* 获取用户 */
         String username = inParams.getUsername();
         User user = userProcessor.getUserByUsername(username);
@@ -132,7 +132,7 @@ public class UserController {
     /** 查看个人信息 */
     @BizType(BizTypeEnum.USER_GET_INFO)
     @NeedLogin
-    public GetInfoParams userGetInfo(CommonInParams inParams) throws Exception {
+    public GetInfoOutParams userGetInfo(CommonInParams inParams) throws Exception {
         /* 获取用户 */
         String username = inParams.getUsername();
         User user = userProcessor.getUserByUsername(username);
@@ -150,7 +150,7 @@ public class UserController {
         String birthday_str = dateFormat.format(birthday);
 
         /* 组织Response */
-        GetInfoParams outParams = new GetInfoParams(true);
+        GetInfoOutParams outParams = new GetInfoOutParams(true);
         outParams.setAvatar(avatar);
         outParams.setUsername(username);
         outParams.setNickname(nickname);
@@ -166,7 +166,7 @@ public class UserController {
     /** 更新个人信息 */
     @BizType(BizTypeEnum.USER_UPDATE_INFO)
     @NeedLogin
-    public CommonOutParams userUpdateInfo(UpdateInfoParams inParams) throws Exception {
+    public CommonOutParams userUpdateInfo(UpdateInfoInParams inParams) throws Exception {
         /* 用户名 */
         String username = inParams.getUsername();
 

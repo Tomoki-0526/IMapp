@@ -9,7 +9,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
  * @描述 用户注册的入参
  **/
 @BizType(BizTypeEnum.USER_REGISTER)
-public class RegisterParams extends CommonInParams {
+public class RegisterInParams extends CommonInParams {
     // 密码
     @Required
     private String password;
