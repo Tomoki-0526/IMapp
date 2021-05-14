@@ -15,9 +15,9 @@ Correct Response:
 一个朋友的格式:
 ```coffeescript
 {
-    'friend_id': 朋友的ID,
-    'avatar': 朋友的头像,
-    'name': 朋友的昵称或备注
+    'friend_username': 朋友的用户名,
+    'friend_avatar': 朋友的头像,
+    'friend_name': 朋友的昵称或备注
 }
 ```
 Error Response:
@@ -96,14 +96,19 @@ Error Response:
 }
 ```
 
-# 查看某一个用户的信息
+# 查看某一个好友的信息
 
 Method: GET  
-URL: /friend/getUserInfo/{id}/
+URL: /friend/getFriendInfo
+Request:
+```coffeescript
+{
+    'friend_username': 该用户的用户名
+}
+```
 Correct Response:  
 ```coffeescript
 {
-    'is_friend': 是否已经是朋友（0-不是 1-是）,
     'avatar': 图片路径,
     'nickname': 昵称,
     'username': 用户名,
@@ -282,28 +287,22 @@ Error Response:
 }
 ```
 
-# 搜索新联系人
+# 搜索陌生用户
 
 Method: GET
-URL: /friend/findNewFriend
+URL: /friend/findStranger
 Request:
 ```coffeescript
 {
-    'content': 字符串（用户名、手机号）
+    'stranger_username': 查找的联系人
 }
 ```
 Correct Response:
 ```coffeescript
 {
-    'result': [搜索结果列表]
-}
-```
-一个结果的格式:
-```coffeescript
-{
-    'new_friend_id': 新联系人ID,
-    'avatar': 头像,
-    'name': 昵称
+    'stranger_username': 陌生人用户名,
+    'stranger_nickname': 陌生人昵称,
+    'stranger_avatar': 陌生人头像
 }
 ```
 Error Response:
@@ -313,10 +312,43 @@ Error Response:
 }
 ```
 
-# 添加新联系人
+# 获取陌生用户信息
+
+Method: GET
+URL: /friend/getStrangerInfo
+Request:
+```coffeescript
+{
+    'stranger_username': 陌生人用户名
+}
+```
+Correct Response:
+```coffeescript
+{
+    'stranger_username': 陌生人用户名,
+    'stranger_nickname': 昵称,
+    'stranger_avatar': 头像,
+    'stranger_gender': 性别,
+    'stranger_signature': 个性签名
+}
+```
+Error Response:
+```coffeescript
+{
+    'msg': '获取失败'
+}
+```
+
+# 添加陌生用户为好友
 
 Method: POST
-URL: /friend/addNewFriend/{friend_id}/
+URL: /friend/newFriendRequest
+Request:
+```coffeescript
+{
+    'username': 新朋友用户名
+}
+```
 Correct Response:
 ```coffeescript
 {

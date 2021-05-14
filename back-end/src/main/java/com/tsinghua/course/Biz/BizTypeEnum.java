@@ -1,5 +1,6 @@
 package com.tsinghua.course.Biz;
 
+import com.tsinghua.course.Biz.Controller.FriendController;
 import com.tsinghua.course.Biz.Controller.TestController;
 import com.tsinghua.course.Biz.Controller.TimerController;
 import com.tsinghua.course.Biz.Controller.UserController;
@@ -17,7 +18,8 @@ public enum BizTypeEnum {
     USER_UPDATE_INFO(UserController.class, "/user/updateInfo", "更新个人信息"),
 
     /** 通讯录业务类型 */
-
+    FRIEND_FIND_STRANGER(FriendController.class, "/friend/findStranger", "搜索陌生人"),
+    FRIEND_GET_STRANGER_INFO(FriendController.class, "/friend/getStrangerInfo", "获取陌生人信息"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

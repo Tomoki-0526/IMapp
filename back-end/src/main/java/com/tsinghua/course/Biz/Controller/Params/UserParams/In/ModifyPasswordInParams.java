@@ -9,7 +9,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
  * @描述 修改密码的入参
  **/
 @BizType(BizTypeEnum.USER_MODIFY_PASSWORD)
-public class ModifyPasswordParams extends CommonInParams {
+public class ModifyPasswordInParams extends CommonInParams {
     // 旧密码
     @Required
     private String old_pwd;

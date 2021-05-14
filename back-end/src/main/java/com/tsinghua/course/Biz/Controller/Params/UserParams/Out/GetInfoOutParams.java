@@ -8,7 +8,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
  * @描述 查看个人信息的出参
  **/
 @BizType(BizTypeEnum.USER_GET_INFO)
-public class GetInfoParams extends CommonOutParams {
+public class GetInfoOutParams extends CommonOutParams {
     // 头像图片路径
     private String avatar;
     // 昵称
@@ -26,8 +26,8 @@ public class GetInfoParams extends CommonOutParams {
     // 个性签名
     private String signature;
 
-    public GetInfoParams() { this.success = true; }
-    public GetInfoParams(boolean success) { this.success = success; }
+    public GetInfoOutParams() { this.success = true; }
+    public GetInfoOutParams(boolean success) { this.success = success; }
 
     public String getAvatar() {
         return avatar;
