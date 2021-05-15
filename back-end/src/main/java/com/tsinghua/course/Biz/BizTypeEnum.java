@@ -16,10 +16,12 @@ public enum BizTypeEnum {
     USER_MODIFY_PASSWORD(UserController.class, "/user/modifyPassword", "修改密码"),
     USER_GET_INFO(UserController.class, "/user/getInfo", "查看个人信息"),
     USER_UPDATE_INFO(UserController.class, "/user/updateInfo", "更新个人信息"),
+    USER_UPLOAD_AVATAR(UserController.class, "/user/uploadAvatar", "上传头像"),
 
     /** 通讯录业务类型 */
     FRIEND_FIND_STRANGER(FriendController.class, "/friend/findStranger", "搜索陌生人"),
     FRIEND_GET_STRANGER_INFO(FriendController.class, "/friend/getStrangerInfo", "获取陌生人信息"),
+    FRIEND_FIND_FRIEND(FriendController.class, "/friend/findFriend", "查找好友"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

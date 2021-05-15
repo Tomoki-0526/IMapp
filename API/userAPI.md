@@ -97,7 +97,7 @@ URL: /user/getInfo
 Correct Response:  
 ```coffeescript
 {
-    'avatar': 图片路径,
+    'avatar': 图片路径 & MultipartFile格式的图片文件？,
     'nickname': 昵称,
     'username': 用户名,
     'gender': string（"male", "female"）,
@@ -121,7 +121,6 @@ URL: /user/updateInfo
 Request:  
 ```coffeescript
 {
-    'avatar': 图片路径,
     'nickname': 长度不超过20的字符串（任意字符）,
     'gender': string（"male", "female"）,
     'birthday': string，格式"yyyy-MM-dd",
@@ -139,6 +138,30 @@ Error Response:
 ```coffeescript
 {
     'msg': '更新失败'
+}
+```
+
+# 上传头像
+
+Method: POST
+URL: /user/uploadAvatar
+Request:
+```coffeescript
+{
+    'avatar': MultipartFile格式的图片文件？
+    SpringBoot框架使用MultipartFile
+}
+```
+Correct Response:  
+```coffeescript
+{
+    'msg': '上传头像成功'
+}
+```
+Error Response:
+```coffeescript
+{
+    'msg': '上传头像失败'
 }
 ```
 

@@ -17,7 +17,8 @@ Correct Response:
 {
     'friend_username': 朋友的用户名,
     'friend_avatar': 朋友的头像,
-    'friend_name': 朋友的昵称或备注
+    'friend_nickname': 朋友的昵称,
+    'friend_remark': 朋友的备注
 }
 ```
 Error Response:
@@ -276,8 +277,9 @@ Correct Response:
 ```coffeescript
 {
     'friend_id': 好友ID,
-    'avatar': 头像,
-    'name': 昵称或备注
+    'friend_avatar': 头像,
+    'friend_nickname': 昵称,
+    'friend_remark': 备注
 }
 ```
 Error Response:

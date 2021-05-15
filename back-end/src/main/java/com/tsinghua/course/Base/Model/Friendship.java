@@ -32,7 +32,7 @@ public class Friendship {
     // 星标
     boolean star;
     // 分组
-    String group;
+    FriendGroup group;
     // 测试对象
     SubObj subObj;
 
@@ -48,8 +48,8 @@ public class Friendship {
     public boolean getStar() { return star; }
     public void setStar(boolean star) { this.star = star; }
 
-    public String getGroup() { return group; }
-    public void setGroup(String group) { this.group = group; }
+    public FriendGroup getGroup() { return group; }
+    public void setGroup(FriendGroup group) { this.group = group; }
 
     public SubObj getSubObj() { return subObj; }
     public void setSubObj(SubObj subObj) { this.subObj = subObj; }

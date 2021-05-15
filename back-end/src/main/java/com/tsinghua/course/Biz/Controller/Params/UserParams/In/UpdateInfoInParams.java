@@ -10,10 +10,6 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
  **/
 @BizType(BizTypeEnum.USER_UPDATE_INFO)
 public class UpdateInfoInParams extends CommonInParams {
-    // 头像图片路径
-    @Required
-    private String avatar;
-
     // 昵称
     @Required
     private String nickname;
@@ -33,9 +29,6 @@ public class UpdateInfoInParams extends CommonInParams {
     // 个性签名
     @Required
     private String signature;
-
-    public String getAvatar() { return avatar; }
-    public void setAvatar(String avatar) { this.avatar = avatar; }
 
     public String getNickname() { return nickname; }
     public void setNickname(String nickname) { this.nickname = nickname; }

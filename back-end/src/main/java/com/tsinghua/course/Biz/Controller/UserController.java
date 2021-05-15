@@ -8,19 +8,22 @@ import com.tsinghua.course.Base.Error.UserWarnEnum;
 import com.tsinghua.course.Base.Model.User;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
-import com.tsinghua.course.Biz.Controller.Params.UserParams.In.LoginInParams;
-import com.tsinghua.course.Biz.Controller.Params.UserParams.In.ModifyPasswordInParams;
-import com.tsinghua.course.Biz.Controller.Params.UserParams.In.RegisterInParams;
-import com.tsinghua.course.Biz.Controller.Params.UserParams.In.UpdateInfoInParams;
+import com.tsinghua.course.Biz.Controller.Params.UserParams.In.*;
 import com.tsinghua.course.Biz.Controller.Params.UserParams.Out.GetInfoOutParams;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.*;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.tsinghua.course.Base.Constant.GlobalConstant.LINUX_AVATAR_PATH;
+import static com.tsinghua.course.Base.Constant.GlobalConstant.WINDOWS_AVATAR_PATH;
 
 /**
  * @描述 用户控制器，用于执行用户相关的业务
@@ -170,9 +173,6 @@ public class UserController {
         /* 用户名 */
         String username = inParams.getUsername();
 
-        /* 头像 */
-        String avatar = inParams.getAvatar();
-
         /* 昵称 */
         String nickname = inParams.getNickname();
 
@@ -196,7 +196,45 @@ public class UserController {
         /* 个性签名 */
         String signature = inParams.getSignature();
 
-        userProcessor.updateUserInfo(username, avatar, nickname, gender, birthday_str, telephone, signature);
+        userProcessor.updateUserInfo(username, nickname, gender, birthday_str, telephone, signature);
+        return new CommonOutParams(true);
+    }
+
+    /** 上传头像 */
+    @BizType(BizTypeEnum.USER_UPLOAD_AVATAR)
+    @NeedLogin
+    public CommonOutParams userUploadAvatar(UploadAvatarInParams inParams) throws Exception {
+        // 根据Windows和Linux配置不同的头像保存路径
+        String OSName = System.getProperty("os.name");
+        String avatarPath = OSName.toLowerCase().startsWith("win") ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
+
+        // 获取文件内容
+        MultipartFile file = inParams.getAvatar();
+        InputStream inputStream = file.getInputStream();
+        // 获取原始文件名
+        String originalFilename = file.getOriginalFilename();
+
+        // 生成uuid名称
+        assert originalFilename != null;
+        String uuidFilename = FileUtil.getUUIDName(originalFilename);
+
+        // 产生一个随机目录
+        String randomDir = FileUtil.getDir();
+
+        File fileDir = new File(avatarPath + randomDir);
+        // 若文件夹不存在，则创建文件夹
+        if (!fileDir.exists())
+            fileDir.mkdirs();
+        // 创建新的文件
+        File newFile = new File(avatarPath + randomDir, uuidFilename);
+        // 将文件输出到目标文件中
+        file.transferTo(newFile);
+
+        // 将保存的文件路径更新到用户信息中
+        String avatar = randomDir + "/" + uuidFilename;
+        String username = inParams.getUsername();
+        userProcessor.updateAvatar(username, avatar);
+
         return new CommonOutParams(true);
     }
 }

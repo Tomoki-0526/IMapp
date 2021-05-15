@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
+
 /**
  * @描述 用户原子处理器，所有与用户相关的原子操作都在此处理器中执行
  **/
@@ -35,9 +37,12 @@ public class UserProcessor {
         user.setAge(0);
         user.setBirthday("");
         user.setTelephone("");
-        user.setAvatar("");
         user.setSignature("");
         user.setUserType(UserType.NORMAL);
+
+        String OSName = System.getProperty("os.name");
+        String avatarPath = OSName.toLowerCase().startsWith("win") ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
+        user.setAvatar(avatarPath + DEFAULT_AVATAR);
 
         User.SubObj subObj = new User.SubObj();
         Date now = new Date();
@@ -66,13 +71,12 @@ public class UserProcessor {
     }
 
     /** 更新个人信息 */
-    public void updateUserInfo(String username, String avatar, String nickname, String gender,
+    public void updateUserInfo(String username, String nickname, String gender,
                                String birthday_str, String telephone, String signature) {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
 
         Update update = new Update();
-        update.set(KeyConstant.AVATAR, avatar);
         update.set(KeyConstant.NICKNAME, nickname);
         update.set(KeyConstant.GENDER, gender);
         update.set(KeyConstant.TELEPHONE, telephone);
@@ -111,6 +115,15 @@ public class UserProcessor {
             update.set(KeyConstant.AGE, 0);
         }
 
+        mongoTemplate.upsert(query, update, User.class);
+    }
+
+    /** 更新头像 */
+    public void updateAvatar(String username, String avatar) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+        Update update = new Update();
+        update.set(KeyConstant.AVATAR, avatar);
         mongoTemplate.upsert(query, update, User.class);
     }
 }
