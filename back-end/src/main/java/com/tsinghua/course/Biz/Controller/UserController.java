@@ -22,8 +22,9 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.tsinghua.course.Base.Constant.GlobalConstant.LINUX_AVATAR_PATH;
-import static com.tsinghua.course.Base.Constant.GlobalConstant.WINDOWS_AVATAR_PATH;
+import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
+import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
+import static com.tsinghua.course.Base.Constant.NameConstant.WIN;
 
 /**
  * @描述 用户控制器，用于执行用户相关的业务
@@ -149,7 +150,7 @@ public class UserController {
         String telephone = user.getTelephone();
         String signature = user.getSignature();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(BIRTHDAY_PATTERN);
         String birthday_str = dateFormat.format(birthday);
 
         /* 组织Response */
@@ -205,8 +206,8 @@ public class UserController {
     @NeedLogin
     public CommonOutParams userUploadAvatar(UploadAvatarInParams inParams) throws Exception {
         // 根据Windows和Linux配置不同的头像保存路径
-        String OSName = System.getProperty("os.name");
-        String avatarPath = OSName.toLowerCase().startsWith("win") ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
+        String OSName = System.getProperty(OS_NAME);
+        String avatarPath = OSName.toLowerCase().startsWith(WIN) ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
 
         // 获取文件内容
         MultipartFile file = inParams.getAvatar();

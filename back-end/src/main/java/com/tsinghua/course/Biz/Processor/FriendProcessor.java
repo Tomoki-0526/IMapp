@@ -59,4 +59,11 @@ public class FriendProcessor {
         query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username).and(KeyConstant.REMARK).is(friend_remark));
         return mongoTemplate.find(query, Friendship.class);
     }
+
+    /** 查找自己所有的星标好友 */
+    public List<Friendship> getAllStarFriends(String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+        return mongoTemplate.find(query, Friendship.class);
+    }
 }

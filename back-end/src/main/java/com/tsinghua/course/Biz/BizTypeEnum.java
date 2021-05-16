@@ -22,6 +22,8 @@ public enum BizTypeEnum {
     FRIEND_FIND_STRANGER(FriendController.class, "/friend/findStranger", "搜索陌生人"),
     FRIEND_GET_STRANGER_INFO(FriendController.class, "/friend/getStrangerInfo", "获取陌生人信息"),
     FRIEND_FIND_FRIEND(FriendController.class, "/friend/findFriend", "查找好友"),
+    FRIEND_GET_STAR_FRIENDS(FriendController.class, "/friend/getStarFriends", "查看星标好友"),
+    FRIEND_GET_FRIEND_INFO(FriendController.class, "/friend/getFriendInfo", "查看某一位好友的信息"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),
