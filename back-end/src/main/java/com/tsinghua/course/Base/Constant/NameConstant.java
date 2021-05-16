@@ -16,4 +16,10 @@ public class NameConstant {
 
     /** 定时任务id名 */
     public static final String TEST_JOB = "testJob";
+
+    /** 操作系统名称 */
+    // 字段
+    public static final String OS_NAME = "os.name";
+    // Windows
+    public static final String WIN = "win";
 }

@@ -79,7 +79,7 @@ Error Response:
 }
 ```
 
-# 查看星标朋友
+# 查看星标朋友 √
 
 Method: GET  
 URL: /friend/getStarFriends
@@ -97,7 +97,7 @@ Error Response:
 }
 ```
 
-# 查看某一个好友的信息
+# 查看某一个好友的信息 √
 
 Method: GET  
 URL: /friend/getFriendInfo
@@ -116,7 +116,7 @@ Correct Response:
     'remark': 备注名,
     'gender': boolean（0-男 1-女）,
     'age': int,
-    'birthday': datetime,
+    'birthday': string，格式"yyyy-MM-dd",
     'telephone': 手机号码,
     'group': 分组名称,
     'star': 是否标星,
@@ -257,7 +257,7 @@ Error Response:
 }
 ```
 
-# 查找已有联系人
+# 搜索好友 √
 
 Method: GET
 URL: /friend/findFriend
@@ -289,7 +289,7 @@ Error Response:
 }
 ```
 
-# 搜索陌生用户
+# 搜索陌生用户 √
 
 Method: GET
 URL: /friend/findStranger
@@ -314,7 +314,7 @@ Error Response:
 }
 ```
 
-# 获取陌生用户信息
+# 获取陌生用户信息 √
 
 Method: GET
 URL: /friend/getStrangerInfo

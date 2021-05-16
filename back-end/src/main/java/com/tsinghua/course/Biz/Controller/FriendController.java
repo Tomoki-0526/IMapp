@@ -6,19 +6,23 @@ import com.tsinghua.course.Base.CustomizedClass.FriendItem;
 import com.tsinghua.course.Base.Model.Friendship;
 import com.tsinghua.course.Base.Model.User;
 import com.tsinghua.course.Biz.BizTypeEnum;
+import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.FindFriendInParams;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.FindStrangerInParams;
+import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.GetFriendInfoInParams;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.GetStrangerInfoInParams;
-import com.tsinghua.course.Biz.Controller.Params.FriendParams.out.FindFriendOutParams;
-import com.tsinghua.course.Biz.Controller.Params.FriendParams.out.FindStrangerOutParams;
-import com.tsinghua.course.Biz.Controller.Params.FriendParams.out.GetStrangerInfoOutParams;
+import com.tsinghua.course.Biz.Controller.Params.FriendParams.out.*;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.tsinghua.course.Base.Constant.GlobalConstant.BIRTHDAY_PATTERN;
 
 /**
  * @描述 好友控制器，用于执行通讯录相关的业务
@@ -131,5 +135,80 @@ public class FriendController {
             outParams.setExtraInfo("查找成功");
             return outParams;
         }
+    }
+
+    /** 查看星标好友 */
+    @BizType(BizTypeEnum.FRIEND_GET_STAR_FRIENDS)
+    @NeedLogin
+    public GetStarFriendsOutParams friendGetStarFriends(CommonInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        List<Friendship> starFriendsList = friendProcessor.getAllStarFriends(username);
+        if (starFriendsList.size() == 0) {
+            GetStarFriendsOutParams outParams = new GetStarFriendsOutParams(false);
+            outParams.setStarFriendsList(new FriendItem[0]);
+            outParams.setExtraInfo("没有星标好友");
+            return outParams;
+        }
+        List<FriendItem> temp = new ArrayList<>();
+        for (Friendship starFriend: starFriendsList) {
+            String friend_username = starFriend.getFriendUsername();
+            String friend_remark = starFriend.getRemark();
+            User friend = userProcessor.getUserByUsername(friend_username);
+            String friend_avatar = friend.getAvatar();
+            String friend_nickname = friend.getNickname();
+
+            FriendItem friendItem = new FriendItem();
+            friendItem.setFriendUsername(friend_username);
+            friendItem.setFriendAvatar(friend_avatar);
+            friendItem.setFriendNickname(friend_nickname);
+            friendItem.setFriendRemark(friend_remark);
+
+            temp.add(friendItem);
+        }
+        FriendItem[] result = new FriendItem[temp.size()];
+        temp.toArray(result);
+        GetStarFriendsOutParams outParams = new GetStarFriendsOutParams();
+        outParams.setStarFriendsList(result);
+        outParams.setExtraInfo("查找成功");
+        return outParams;
+    }
+
+    /** 查看某一位好友的信息 */
+    @BizType(BizTypeEnum.FRIEND_GET_FRIEND_INFO)
+    @NeedLogin
+    public GetFriendInfoOutParams friendGetFriendInfo(GetFriendInfoInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String friend_username = inParams.getFriendUsername();
+        User friend = userProcessor.getUserByUsername(friend_username);
+        Friendship friendship = friendProcessor.getFriendshipByUsername(username, friend_username);
+
+        String avatar = friend.getAvatar();
+        String nickname = friend.getNickname();
+        String remark = friendship.getRemark();
+        String gender = friend.getGender();
+        int age = friend.getAge();
+        String telephone = friend.getTelephone();
+        String group = friendship.getGroup();
+        boolean star = friendship.isStar();
+        String signature = friend.getSignature();
+
+        Date birthday = friend.getBirthday();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(BIRTHDAY_PATTERN);
+        String birthday_str = dateFormat.format(birthday);
+
+        GetFriendInfoOutParams outParams = new GetFriendInfoOutParams();
+        outParams.setAge(age);
+        outParams.setAvatar(avatar);
+        outParams.setBirthday(birthday_str);
+        outParams.setGender(gender);
+        outParams.setNickname(nickname);
+        outParams.setUsername(friend_username);
+        outParams.setRemark(remark);
+        outParams.setTelephone(telephone);
+        outParams.setGroup(group);
+        outParams.setStar(star);
+        outParams.setSignature(signature);
+
+        return outParams;
     }
 }
