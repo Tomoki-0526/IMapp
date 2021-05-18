@@ -1,4 +1,4 @@
-# 登录
+# 登录 √
 
 Method: POST  
 URL: /user/login  
@@ -22,7 +22,7 @@ Error Response:
 }
 ```
 
-# 注册
+# 注册 √
 
 Method: POST  
 URL: /user/register  
@@ -48,7 +48,7 @@ Error Response:
 }
 ```
 
-# 登出
+# 登出 √
 
 Method: GET  
 URL: /user/logout  
@@ -65,7 +65,7 @@ Error Response:
 }
 ```
 
-# 修改密码
+# 修改密码 √
 
 Method: POST  
 URL: /user/modifyPassword  
@@ -90,7 +90,7 @@ Error Response:
 }
 ```
 
-# 查看个人信息
+# 查看个人信息 √
 
 Method: GET  
 URL: /user/getInfo  
@@ -114,7 +114,7 @@ Error Response:
 }
 ```
 
-# 更新个人信息
+# 更新个人信息 √
 
 Method: POST  
 URL: /user/updateInfo  
@@ -141,7 +141,7 @@ Error Response:
 }
 ```
 
-# 上传头像
+# 上传头像 √
 
 Method: POST
 URL: /user/uploadAvatar

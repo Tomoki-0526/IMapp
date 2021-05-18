@@ -15,11 +15,6 @@ public class FindStrangerOutParams extends CommonOutParams {
     String stranger_nickname;
     // 头像
     String stranger_avatar;
-    // 附加信息（查找失败时）
-    String extraInfo;
-
-    public FindStrangerOutParams() { this.success = true; }
-    public FindStrangerOutParams(boolean success) { this.success = success; }
 
     public String getStrangerUsername() { return stranger_username; }
     public void setStrangerUsername(String stranger_username) { this.stranger_username = stranger_username; }
@@ -29,7 +24,4 @@ public class FindStrangerOutParams extends CommonOutParams {
 
     public String getStrangerAvatar() { return stranger_avatar; }
     public void setStrangerAvatar(String avatar) { this.stranger_avatar = stranger_avatar; }
-
-    public String getExtraInfo() { return extraInfo; }
-    public void setExtraInfo(String extraInfo) { this.extraInfo = extraInfo; }
 }

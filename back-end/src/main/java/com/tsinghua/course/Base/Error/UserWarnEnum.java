@@ -17,7 +17,11 @@ public enum UserWarnEnum implements ExceptionInterface {
     MISMATCHED_NEW_PASSWORD("UserWarn011", "两次输入密码不一致"),
     INVALID_GENDER("UserWarn012", "性别不合法"),
     INVALID_BIRTHDAY("UserWarn013", "生日不合法"),
-    INVALID_TELEPHONE("UserWarn014", "手机号不合法")
+    INVALID_TELEPHONE("UserWarn014", "手机号不合法"),
+    FIND_STRANGER_NO_RESULT("UserWarn015", "未找到用户"),
+    FIND_FRIEND_NO_RESULT("UserWarn016", "未找到好友"),
+    NO_STAR_FRIENDS("UserWarn017", "没有特别关心好友"),
+    NO_FRIEND_REQUEST("UserWarn018", "没有新好友申请"),
     ;
 
     UserWarnEnum(String code, String msg) {

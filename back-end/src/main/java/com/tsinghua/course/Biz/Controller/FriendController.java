@@ -3,6 +3,9 @@ package com.tsinghua.course.Biz.Controller;
 import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.NeedLogin;
 import com.tsinghua.course.Base.CustomizedClass.FriendItem;
+import com.tsinghua.course.Base.CustomizedClass.FriendRequestItem;
+import com.tsinghua.course.Base.Error.CourseWarn;
+import com.tsinghua.course.Base.Error.UserWarnEnum;
 import com.tsinghua.course.Base.Model.FriendRequest;
 import com.tsinghua.course.Base.Model.Friendship;
 import com.tsinghua.course.Base.Model.User;
@@ -46,12 +49,7 @@ public class FriendController {
         String username = inParams.getUsername();
         Friendship friendship = friendProcessor.getFriendshipByUsername(username, stranger_username);
         if (stranger == null || stranger.getUsername().equals(username) || friendship != null) {
-            FindStrangerOutParams outParams = new FindStrangerOutParams(false);
-            outParams.setStrangerUsername("");
-            outParams.setStrangerNickname("");
-            outParams.setStrangerAvatar("");
-            outParams.setExtraInfo("未找到结果");
-            return outParams;
+            throw new CourseWarn(UserWarnEnum.FIND_STRANGER_NO_RESULT);
         }
         String nickname = stranger.getNickname();
         String avatar = stranger.getAvatar();
@@ -60,7 +58,6 @@ public class FriendController {
         outParams.setStrangerUsername(stranger_username);
         outParams.setStrangerNickname(nickname);
         outParams.setStrangerAvatar(avatar);
-        outParams.setExtraInfo("查找成功");
 
         return outParams;
     }
@@ -105,10 +102,7 @@ public class FriendController {
         friendship_list.addAll(friendProcessor.getFriendshipByRemark(username, content));
 
         if (friendship_list.isEmpty()) {
-            FindFriendOutParams outParams = new FindFriendOutParams();
-            outParams.setFriends(new FriendItem[0]);
-            outParams.setExtraInfo("未找到结果");
-            return outParams;
+            throw new CourseWarn(UserWarnEnum.FIND_FRIEND_NO_RESULT);
         }
         else {
             List<FriendItem> temp = new ArrayList<>();
@@ -132,7 +126,6 @@ public class FriendController {
 
             FindFriendOutParams outParams = new FindFriendOutParams();
             outParams.setFriends(result);
-            outParams.setExtraInfo("查找成功");
             return outParams;
         }
     }
@@ -144,10 +137,7 @@ public class FriendController {
         String username = inParams.getUsername();
         List<Friendship> starFriendsList = friendProcessor.getAllStarFriends(username);
         if (starFriendsList.size() == 0) {
-            GetStarFriendsOutParams outParams = new GetStarFriendsOutParams(false);
-            outParams.setStarFriendsList(new FriendItem[0]);
-            outParams.setExtraInfo("没有星标好友");
-            return outParams;
+            throw new CourseWarn(UserWarnEnum.NO_STAR_FRIENDS);
         }
         List<FriendItem> temp = new ArrayList<>();
         for (Friendship starFriend: starFriendsList) {
@@ -169,7 +159,6 @@ public class FriendController {
         temp.toArray(result);
         GetStarFriendsOutParams outParams = new GetStarFriendsOutParams();
         outParams.setStarFriendsList(result);
-        outParams.setExtraInfo("查找成功");
         return outParams;
     }
 
@@ -217,13 +206,22 @@ public class FriendController {
     @NeedLogin
     public CommonOutParams friendNewFriendRequest(NewFriendRequestInParams inParams) throws Exception {
         /* 添加申请到数据库 */
-        String username = inParams.getUsername();
+        String from_username = inParams.getUsername();
         String to_username = inParams.getToUsername();
         String extra = inParams.getExtra();
-        friendProcessor.createFriendRequest(username, to_username, extra);
+        friendProcessor.createFriendRequest(from_username, to_username, extra);
 
         // TODO
         /* 调用websocket给接收者客户端定向发送消息 */
+        NewFriendRequestOutParams outParams = new NewFriendRequestOutParams();
+        User from_user = userProcessor.getUserByUsername(from_username);
+        outParams.setFromUsername(from_username);
+        outParams.setFromNickname(from_user.getNickname());
+        outParams.setFromAvatar(from_user.getAvatar());
+        outParams.setExtra(extra);
+        outParams.setStatus(0);
+
+        SocketUtil.sendMessageToUser(to_username, outParams);
 
         return new CommonOutParams(true);
     }
@@ -258,6 +256,57 @@ public class FriendController {
         String friend_username = inParams.getFriendUsername();
         String remark = inParams.getRemark();
         friendProcessor.setFriendRemark(username, friend_username, remark);
+
+        return new CommonOutParams(true);
+    }
+
+    /** 查看好友申请 */
+    @BizType(BizTypeEnum.FRIEND_GET_FRIEND_REQUEST)
+    @NeedLogin
+    public GetFriendRequestOutParams friendGetFriendRequest(CommonInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        List<FriendRequest> friendRequestList = friendProcessor.getFriendRequest(username);
+        if (friendRequestList.size() == 0) {
+            throw new CourseWarn(UserWarnEnum.NO_FRIEND_REQUEST);
+        }
+
+        List<FriendRequestItem> friendRequestItemList = new ArrayList<>();
+        for (FriendRequest friendRequest: friendRequestList) {
+            String fromUsername = friendRequest.getFromUsername();
+            User fromUser = userProcessor.getUserByUsername(fromUsername);
+
+            FriendRequestItem friendRequestItem = new FriendRequestItem();
+            friendRequestItem.setFromUsername(fromUsername);
+            friendRequestItem.setFromNickname(fromUser.getNickname());
+            friendRequestItem.setFromAvatar(fromUser.getAvatar());
+            friendRequestItem.setExtra(friendRequest.getExtra());
+            friendRequestItem.setStatus(friendRequest.getStatus());
+
+            friendRequestItemList.add(friendRequestItem);
+        }
+
+        FriendRequestItem[] friendRequestItems = new FriendRequestItem[friendRequestItemList.size()];
+        friendRequestItemList.toArray(friendRequestItems);
+
+        GetFriendRequestOutParams outParams = new GetFriendRequestOutParams();
+        outParams.setFriendRequest(friendRequestItems);
+        return outParams;
+    }
+
+    /** 审核好友申请 */
+    @BizType(BizTypeEnum.FRIEND_CHECK_FRIEND_REQUEST)
+    @NeedLogin
+    public CommonOutParams friendCheckFriendRequest(CheckFriendRequestInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String from_username = inParams.getFromUsername();
+        boolean result = inParams.getResult();
+
+        friendProcessor.checkFriendRequest(from_username, username, result);
+        // TODO
+        /**
+         * 如果通过，则给发送方返回推送
+         * 以新消息的形式发送
+         */
 
         return new CommonOutParams(true);
     }

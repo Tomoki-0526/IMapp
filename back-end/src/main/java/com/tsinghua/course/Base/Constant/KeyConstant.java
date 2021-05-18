@@ -39,4 +39,12 @@ public class KeyConstant {
     public static final String REMARK = "remark";
     // 星标
     public static final String STAR = "star";
+
+    /** FriendRequest关键key */
+    // 发送方用户名
+    public static final String FROM_USERNAME = "from_username";
+    // 接收方用户名
+    public static final String TO_USERNAME = "to_username";
+    // 状态
+    public static final String STATUS = "status";
 }
