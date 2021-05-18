@@ -3,17 +3,17 @@ package com.tsinghua.course.Biz.Controller;
 import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.NeedLogin;
 import com.tsinghua.course.Base.CustomizedClass.FriendItem;
+import com.tsinghua.course.Base.Model.FriendRequest;
 import com.tsinghua.course.Base.Model.Friendship;
 import com.tsinghua.course.Base.Model.User;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
-import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.FindFriendInParams;
-import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.FindStrangerInParams;
-import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.GetFriendInfoInParams;
-import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.GetStrangerInfoInParams;
+import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
+import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.*;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.out.*;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
+import com.tsinghua.course.Frame.Util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -210,5 +210,55 @@ public class FriendController {
         outParams.setSignature(signature);
 
         return outParams;
+    }
+
+    /** 好友申请 */
+    @BizType(BizTypeEnum.FRIEND_NEW_FRIEND_REQUEST)
+    @NeedLogin
+    public CommonOutParams friendNewFriendRequest(NewFriendRequestInParams inParams) throws Exception {
+        /* 添加申请到数据库 */
+        String username = inParams.getUsername();
+        String to_username = inParams.getToUsername();
+        String extra = inParams.getExtra();
+        friendProcessor.createFriendRequest(username, to_username, extra);
+
+        // TODO
+        /* 调用websocket给接收者客户端定向发送消息 */
+
+        return new CommonOutParams(true);
+    }
+
+    /** 删除好友 */
+    @BizType(BizTypeEnum.FRIEND_REMOVE_FRIEND)
+    @NeedLogin
+    public CommonOutParams friendRemoveFriend(RemoveFriendInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String friend_username = inParams.getFriendUsername();
+        friendProcessor.removeFriend(username, friend_username);
+
+        return new CommonOutParams(true);
+    }
+
+    /** 设置星标好友 */
+    @BizType(BizTypeEnum.FRIEND_SET_STAR_FRIEND)
+    @NeedLogin
+    public CommonOutParams friendSetStarFriend(SetStarFriendInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String friend_username = inParams.getFriendUsername();
+        friendProcessor.setStarFriend(username, friend_username);
+
+        return new CommonOutParams(true);
+    }
+
+    /** 设置好友备注 */
+    @BizType(BizTypeEnum.FRIEND_SET_FRIEND_REMARK)
+    @NeedLogin
+    public CommonOutParams friendSetFriendRemark(SetFriendRemarkInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String friend_username = inParams.getFriendUsername();
+        String remark = inParams.getRemark();
+        friendProcessor.setFriendRemark(username, friend_username, remark);
+
+        return new CommonOutParams(true);
     }
 }

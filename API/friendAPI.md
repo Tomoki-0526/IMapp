@@ -130,13 +130,14 @@ Error Response:
 }
 ```
 
-# 设置朋友备注
+# 设置朋友备注 √√
 
 Method: POST  
-URL: /friend/setFriendRemark/{friend_id}/
+URL: /friend/setFriendRemark
 Request:
 ```coffeescript
 {
+    'friend_username': 好友用户名,
     'remark': 备注名
 }
 ```
@@ -153,10 +154,16 @@ Error Response:
 }
 ```
 
-# 设置星标朋友
+# 设置星标朋友 √√
 
 Method: POST  
-URL: /friend/setFriendStar/{friend_id}/
+URL: /friend/setStarFriend
+Request:
+```coffeescript
+{
+    'friend_username': 好友用户名
+}
+```
 Correct Response:
 ```coffeescript
 {
@@ -206,8 +213,8 @@ Correct Response:
 一个分组的格式:
 ```coffeescript
 {
-    'id': 分组ID,
-    'name': 分组名称
+    'group_id': 分组ID,
+    'group_name': 分组名称
 }
 ```
 Error Response:
@@ -220,11 +227,12 @@ Error Response:
 # 将好友添加到分组
 
 Method: POST
-URL: /friend/addFriendToGroup/{friend_id}/
+URL: /friend/addFriendToGroup
 Request:
 ```coffeescript
 {
-    'group_id': 分组ID
+    'friend_username': 好友用户名,
+    'group_id': 分组名
 }
 ```
 Correct Response:
@@ -240,10 +248,16 @@ Error Response:
 }
 ```
 
-# 删除好友
+# 删除好友 √√
 
 Method: POST
-URL: /friend/removeFriend/{friend_id}/
+URL: /friend/removeFriend
+Request:
+```coffeescript
+{
+    'friend_username': 好友用户名
+}
+```
 Correct Response:
 ```coffeescript
 {
@@ -348,7 +362,8 @@ URL: /friend/newFriendRequest
 Request:
 ```coffeescript
 {
-    'username': 新朋友用户名
+    'username': 新朋友用户名,
+    'extra': 附加信息
 }
 ```
 Correct Response:

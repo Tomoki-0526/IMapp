@@ -21,9 +21,13 @@ public enum BizTypeEnum {
     /** 通讯录业务类型 */
     FRIEND_FIND_STRANGER(FriendController.class, "/friend/findStranger", "搜索陌生人"),
     FRIEND_GET_STRANGER_INFO(FriendController.class, "/friend/getStrangerInfo", "获取陌生人信息"),
+    FRIEND_NEW_FRIEND_REQUEST(FriendController.class, "/friend/newFriendRequest", "添加陌生用户为好友"),
     FRIEND_FIND_FRIEND(FriendController.class, "/friend/findFriend", "查找好友"),
     FRIEND_GET_STAR_FRIENDS(FriendController.class, "/friend/getStarFriends", "查看星标好友"),
+    FRIEND_SET_STAR_FRIEND(FriendController.class, "/friend/setStarFriend", "设置星标好友"),
     FRIEND_GET_FRIEND_INFO(FriendController.class, "/friend/getFriendInfo", "查看某一位好友的信息"),
+    FRIEND_REMOVE_FRIEND(FriendController.class, "/friend/removeFriend", "删除好友"),
+    FRIEND_SET_FRIEND_REMARK(FriendController.class, "/friend/setFriendRemark", "设置好友备注"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

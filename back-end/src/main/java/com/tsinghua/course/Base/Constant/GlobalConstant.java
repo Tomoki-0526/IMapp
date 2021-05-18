@@ -10,8 +10,10 @@ public class GlobalConstant {
     public static final String STACK_SPLIT = "/";
     /** 日志分隔符 */
     public static final String LOG_SPLIT = "-";
-    /** 生日格式 */
+    /** 日期格式 */
     public static final String BIRTHDAY_PATTERN = "yyyy-MM-dd";
+    /** 日期-时间格式 */
+    public static final String DATETIME_PATTERN = "yyyy-MM-dd hh:mm:ss";
     /** 十六进制字符 */
     public static final String HEX_STR = "0123456789ABCDEF";
     /** 头像保存路径 */

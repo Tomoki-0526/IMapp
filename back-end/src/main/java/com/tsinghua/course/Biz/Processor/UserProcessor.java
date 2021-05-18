@@ -18,6 +18,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
+import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
+import static com.tsinghua.course.Base.Constant.NameConstant.WIN;
 
 /**
  * @描述 用户原子处理器，所有与用户相关的原子操作都在此处理器中执行
@@ -40,13 +42,13 @@ public class UserProcessor {
         user.setSignature("");
         user.setUserType(UserType.NORMAL);
 
-        String OSName = System.getProperty("os.name");
-        String avatarPath = OSName.toLowerCase().startsWith("win") ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
+        String OSName = System.getProperty(OS_NAME);
+        String avatarPath = OSName.toLowerCase().startsWith(WIN) ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
         user.setAvatar(avatarPath + DEFAULT_AVATAR);
 
         User.SubObj subObj = new User.SubObj();
         Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
         subObj.setTime(dateFormat.format(now));
         user.setSubObj(subObj);
 

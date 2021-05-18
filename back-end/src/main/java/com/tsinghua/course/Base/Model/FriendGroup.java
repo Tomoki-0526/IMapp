@@ -26,15 +26,18 @@ public class FriendGroup {
     // 分组名称
     String group_name;
     // 所属用户（外键）
-    User user;
+    String username;
     // 测试对象
     SubObj subObj;
+
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getGroupName() { return group_name; }
     public void setGroupName(String group_name) { this.group_name = group_name; }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
     public SubObj getSubObj() { return subObj; }
     public void setSubObj(SubObj subObj) { this.subObj = subObj; }
