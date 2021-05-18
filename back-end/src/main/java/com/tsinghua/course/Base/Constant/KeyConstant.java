@@ -37,4 +37,6 @@ public class KeyConstant {
     public static final String FRIEND_USERNAME = "friend_username";
     // 好友备注
     public static final String REMARK = "remark";
+    // 星标
+    public static final String STAR = "star";
 }

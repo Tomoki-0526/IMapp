@@ -81,17 +81,8 @@ public class UserController {
         if (!password.matches(regex))
             throw new CourseWarn(UserWarnEnum.INVALID_PASSWORD);
 
-        /* 创建新用户并登录 */
+        /* 创建新用户 */
         userProcessor.createUser(username, password);
-        ChannelHandlerContext ctx = ThreadUtil.getCtx();
-        if (ctx != null)
-            SocketUtil.setUserSocket(username, ctx);
-        else {
-            HttpSession httpSession = ThreadUtil.getHttpSession();
-            if (httpSession != null) {
-                httpSession.setUsername(username);
-            }
-        }
 
         return new CommonOutParams(true);
     }

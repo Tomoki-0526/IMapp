@@ -1,6 +1,9 @@
 package com.tsinghua.course.Biz.Processor;
 
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.internal.bulk.DeleteRequest;
 import com.tsinghua.course.Base.Constant.KeyConstant;
+import com.tsinghua.course.Base.Model.FriendRequest;
 import com.tsinghua.course.Base.Model.Friendship;
 import com.tsinghua.course.Base.Model.User;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.out.FindFriendOutParams;
@@ -8,11 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.tsinghua.course.Base.Constant.GlobalConstant.DATETIME_PATTERN;
 
 /**
  * @描述 好友原子处理器
@@ -32,8 +40,8 @@ public class FriendProcessor {
     /** 根据用户名查找自己的某一位好友 */
     public Friendship getFriendshipByUsername(String username, String friend_username) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username).
-                                    and(KeyConstant.FRIEND_USERNAME).is(friend_username));
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.FRIEND_USERNAME).is(friend_username));
         return mongoTemplate.findOne(query, Friendship.class);
     }
 
@@ -56,7 +64,8 @@ public class FriendProcessor {
     /** 根据备注查找自己的好友 */
     public List<Friendship> getFriendshipByRemark(String username, String friend_remark) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username).and(KeyConstant.REMARK).is(friend_remark));
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.REMARK).is(friend_remark));
         return mongoTemplate.find(query, Friendship.class);
     }
 
@@ -65,5 +74,50 @@ public class FriendProcessor {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
         return mongoTemplate.find(query, Friendship.class);
+    }
+
+    /** 增加好友申请 */
+    public void createFriendRequest(String from_username, String to_username, String extra) {
+        FriendRequest friendRequest = new FriendRequest();
+        friendRequest.setFromUsername(from_username);
+        friendRequest.setToUsername(to_username);
+        friendRequest.setExtra(extra);
+        friendRequest.setStatus(0);
+
+        FriendRequest.SubObj subObj = new FriendRequest.SubObj();
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+        subObj.setTime(dateFormat.format(now));
+        friendRequest.setSubObj(subObj);
+
+        mongoTemplate.insert(friendRequest);
+    }
+
+    /** 删除好友 */
+    public void removeFriend(String username, String friend_username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.FRIEND_USERNAME).is(friend_username));
+        mongoTemplate.remove(query, Friendship.class);
+    }
+
+    /** 设置星标好友 */
+    public void setStarFriend(String username, String friend_username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.FRIEND_USERNAME).is(friend_username));
+        Update update = new Update();
+        update.set(KeyConstant.STAR, true);
+        mongoTemplate.upsert(query, update, Friendship.class);
+    }
+
+    /** 设置好友备注 */
+    public void setFriendRemark(String username, String friend_username, String remark) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.FRIEND_USERNAME).is(friend_username));
+        Update update = new Update();
+        update.set(KeyConstant.REMARK, remark);
+        mongoTemplate.upsert(query, update, Friendship.class);
     }
 }
