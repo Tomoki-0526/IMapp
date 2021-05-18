@@ -66,9 +66,9 @@ public class UserController {
         String username = inParams.getUsername();
         if (username == null)
             throw new CourseWarn(UserWarnEnum.NEED_USERNAME);
-        String regex = "^[0-9A-Za-z_]{8,20}$";
-        if (!username.matches(regex))
-            throw new CourseWarn(UserWarnEnum.INVALID_USERNAME);
+//        String regex = "^[0-9A-Za-z_]{8,20}$";
+//        if (!username.matches(regex))
+//            throw new CourseWarn(UserWarnEnum.INVALID_USERNAME);
         User user = userProcessor.getUserByUsername(username);
         if (user != null)
             throw new CourseWarn(UserWarnEnum.DUPLICATE_USERNAME);
@@ -77,9 +77,9 @@ public class UserController {
         String password = inParams.getPassword();
         if (password == null)
             throw new CourseWarn(UserWarnEnum.NEED_PASSWORD);
-        regex = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,18}$";
-        if (!password.matches(regex))
-            throw new CourseWarn(UserWarnEnum.INVALID_PASSWORD);
+//        regex = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,18}$";
+//        if (!password.matches(regex))
+//            throw new CourseWarn(UserWarnEnum.INVALID_PASSWORD);
 
         /* 创建新用户 */
         userProcessor.createUser(username, password);
@@ -91,7 +91,17 @@ public class UserController {
     @BizType(BizTypeEnum.USER_LOGOUT)
     @NeedLogin
     public CommonOutParams userLogout(CommonInParams inParams) throws Exception {
-
+        ChannelHandlerContext ctx = ThreadUtil.getCtx();
+        if (ctx != null) {
+            SocketUtil.removeSocket(ctx);
+        }
+        else {
+            HttpSession httpSession = ThreadUtil.getHttpSession();
+            if (httpSession != null) {
+                String sessionId = httpSession.getSessionId();
+                HttpSession.removeSession(sessionId);
+            }
+        }
         return new CommonOutParams(true);
     }
 
@@ -111,9 +121,9 @@ public class UserController {
 
         /* 检验新密码的合法性 */
         String new_pwd = inParams.getNewPassword();
-        String reg = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,18}$";
-        if (!new_pwd.matches(reg))
-            throw new CourseWarn(UserWarnEnum.INVALID_NEW_PASSWORD);
+//        String reg = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,18}$";
+//        if (!new_pwd.matches(reg))
+//            throw new CourseWarn(UserWarnEnum.INVALID_NEW_PASSWORD);
 
         /* 检查两次输入的密码是否匹配 */
         String confirm_pwd = inParams.getConfirmPassword();

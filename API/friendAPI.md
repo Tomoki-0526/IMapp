@@ -28,23 +28,23 @@ Error Response:
 }
 ```
 
-# 查看新的朋友列表
+# 查看好友申请列表 √
 
 Method: GET  
-URL: /friend/getNewFriends
+URL: /friend/getFriendRequest
 Correct Response:
 ```coffeescript
 {
-    'new_friends': [新朋友列表]
+    'friend_request': [新朋友列表]
 }
 ```
 一个新朋友的格式:
 ```coffeescript
 {
-    'friend_id': 新朋友的ID,
-    'avatar': 新朋友的头像,
-    'nickname': 新朋友的昵称,
-    'reason': 申请理由,
+    'from_username': 新朋友的用户名,
+    'from_avatar': 新朋友的头像,
+    'from_nickname': 新朋友的昵称,
+    'from_extra': 申请理由,
     'status': 状态（0-等待 1-接受 2-拒绝）
 }
 ```
@@ -55,14 +55,14 @@ Error Response:
 }
 ```
 
-# 审核好友申请
+# 审核好友申请 √
 
 Method: POST
-URL: /friend/checkNewFriend
+URL: /friend/checkFriendRequest
 Request:
 ```coffeescript
 {
-    'friend_id': 新朋友ID,
+    'from_username': 新朋友用户名,
     'result': boolean，0-拒绝 1-接受
 }
 ```
@@ -130,7 +130,7 @@ Error Response:
 }
 ```
 
-# 设置朋友备注 √√
+# 设置朋友备注 √
 
 Method: POST  
 URL: /friend/setFriendRemark
@@ -154,7 +154,7 @@ Error Response:
 }
 ```
 
-# 设置星标朋友 √√
+# 设置星标朋友 √
 
 Method: POST  
 URL: /friend/setStarFriend
@@ -248,7 +248,7 @@ Error Response:
 }
 ```
 
-# 删除好友 √√
+# 删除好友 √
 
 Method: POST
 URL: /friend/removeFriend
@@ -355,7 +355,7 @@ Error Response:
 }
 ```
 
-# 添加陌生用户为好友
+# 添加陌生用户为好友 √
 
 Method: POST
 URL: /friend/newFriendRequest

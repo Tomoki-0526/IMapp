@@ -28,6 +28,8 @@ public enum BizTypeEnum {
     FRIEND_GET_FRIEND_INFO(FriendController.class, "/friend/getFriendInfo", "查看某一位好友的信息"),
     FRIEND_REMOVE_FRIEND(FriendController.class, "/friend/removeFriend", "删除好友"),
     FRIEND_SET_FRIEND_REMARK(FriendController.class, "/friend/setFriendRemark", "设置好友备注"),
+    FRIEND_GET_FRIEND_REQUEST(FriendController.class, "/friend/getFriendRequest", "查看好友申请"),
+    FRIEND_CHECK_FRIEND_REQUEST(FriendController.class, "/friend/checkFriendRequest", "审核好友申请"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

@@ -120,4 +120,26 @@ public class FriendProcessor {
         update.set(KeyConstant.REMARK, remark);
         mongoTemplate.upsert(query, update, Friendship.class);
     }
+
+    /** 查看好友申请 */
+    public List<FriendRequest> getFriendRequest(String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.TO_USERNAME).is(username));
+        return mongoTemplate.find(query, FriendRequest.class);
+    }
+
+    /** 审核好友申请 */
+    public void checkFriendRequest(String from_username, String to_username, boolean result) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.FROM_USERNAME).is(from_username)
+                                    .and(KeyConstant.TO_USERNAME).is(to_username));
+        Update update = new Update();
+        if (result) {
+            update.set(KeyConstant.STATUS, 1);
+        }
+        else {
+            update.set(KeyConstant.STATUS, 2);
+        }
+        mongoTemplate.upsert(query, update, FriendRequest.class);
+    }
 }
