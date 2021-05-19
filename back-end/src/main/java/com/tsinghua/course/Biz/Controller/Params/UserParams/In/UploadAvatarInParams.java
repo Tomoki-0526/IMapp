@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadAvatarInParams extends CommonInParams {
     // 头像
     @Required
-    MultipartFile avatar;
+    private MultipartFile avatar;
 
     public MultipartFile getAvatar() { return avatar; }
     public void setAvatar(MultipartFile avatar) { this.avatar = avatar; }

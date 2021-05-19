@@ -11,7 +11,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.FRIEND_GET_STAR_FRIENDS)
 public class GetStarFriendsOutParams extends CommonOutParams {
     // 星标好友列表
-    FriendItem[] star_friends;
+    private FriendItem[] star_friends;
 
     public FriendItem[] getStarFriendsList() { return star_friends; }
     public void setStarFriendsList(FriendItem[] star_friends) { this.star_friends = star_friends; }

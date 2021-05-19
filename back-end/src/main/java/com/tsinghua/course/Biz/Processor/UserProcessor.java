@@ -30,15 +30,15 @@ public class UserProcessor {
     MongoTemplate mongoTemplate;
 
     /** 创建新用户 */
-    public void createUser(String username, String password) {
+    public void createUser(String username, String password, String nickname, String telephone) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
-        user.setNickname(username);
+        user.setNickname(nickname);
         user.setGender("");
         user.setAge(0);
         user.setBirthday("");
-        user.setTelephone("");
+        user.setTelephone(telephone);
         user.setSignature("");
         user.setUserType(UserType.NORMAL);
 

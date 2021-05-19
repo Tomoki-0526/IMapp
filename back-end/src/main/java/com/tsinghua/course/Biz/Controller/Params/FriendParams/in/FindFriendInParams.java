@@ -12,7 +12,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class FindFriendInParams extends CommonInParams {
     // 好友用户名、昵称或备注
     @Required
-    String content;
+    private String content;
 
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }

@@ -91,7 +91,10 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
             params.fromJsonObject(requestParams);
 
             /** 获取缓存在session中的用户名信息 */
-            if (hasPreSession && !bizTypeEnum.equals(BizTypeEnum.USER_LOGIN)) {
+//            if (hasPreSession && !bizTypeEnum.equals(BizTypeEnum.USER_LOGIN)) {
+//                params.setUsername(httpSession.getUsername());
+//            }
+            if (hasPreSession && !bizTypeEnum.equals(BizTypeEnum.USER_LOGIN) && !bizTypeEnum.equals(BizTypeEnum.USER_REGISTER)) {
                 params.setUsername(httpSession.getUsername());
             }
 

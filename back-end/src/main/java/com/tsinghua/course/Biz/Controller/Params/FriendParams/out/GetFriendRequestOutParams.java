@@ -11,7 +11,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.FRIEND_GET_FRIEND_REQUEST)
 public class GetFriendRequestOutParams extends CommonOutParams {
     // 好友申请列表
-    FriendRequestItem[] friend_request;
+    private FriendRequestItem[] friend_request;
 
     public FriendRequestItem[] getFriendRequest() { return friend_request; }
     public void setFriendRequest(FriendRequestItem[] friend_request) { this.friend_request = friend_request; }

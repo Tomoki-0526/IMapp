@@ -10,27 +10,27 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.FRIEND_GET_FRIEND_INFO)
 public class GetFriendInfoOutParams extends CommonOutParams {
     // 头像
-    String avatar;
+    private String avatar;
     // 昵称
-    String nickname;
+    private String nickname;
     // 用户名
-    String username;
+    private String username;
     // 备注
-    String remark;
+    private String remark;
     // 性别
-    String gender;
+    private String gender;
     // 年龄
-    int age;
+    private int age;
     // 生日
-    String birthday;
+    private String birthday;
     // 手机号
-    String telephone;
+    private String telephone;
     // 分组名
-    String group;
+    private String group;
     // 星标
-    boolean star;
+    private boolean star;
     // 个性签名
-    String signature;
+    private String signature;
 
     public GetFriendInfoOutParams() { this.success = true; }
     public GetFriendInfoOutParams(boolean success) { this.success = success; }

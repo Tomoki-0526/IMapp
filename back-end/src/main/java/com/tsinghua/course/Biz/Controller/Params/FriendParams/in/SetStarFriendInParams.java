@@ -12,7 +12,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class SetStarFriendInParams extends CommonInParams {
     // 好友用户名
     @Required
-    String friend_username;
+    private String friend_username;
 
     public String getFriendUsername() { return friend_username; }
     public void setFriendUsername(String friend_username) { this.friend_username = friend_username; }

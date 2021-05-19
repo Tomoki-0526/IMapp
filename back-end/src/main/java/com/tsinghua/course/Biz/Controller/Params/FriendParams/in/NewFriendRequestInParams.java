@@ -12,11 +12,11 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class NewFriendRequestInParams extends CommonInParams {
     // 对方的用户名
     @Required
-    String to_username;
+    private String to_username;
 
     // 附加信息
     @Required
-    String extra;
+    private String extra;
 
     public String getToUsername() { return to_username; }
     public void setToUsername(String to_username) { this.to_username = to_username; }

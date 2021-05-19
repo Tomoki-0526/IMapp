@@ -12,10 +12,10 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class CheckFriendRequestInParams extends CommonInParams {
     // 对方用户名
     @Required
-    String from_username;
+    private String from_username;
     // 结果
     @Required
-    boolean result;
+    private boolean result;
 
     public String getFromUsername() { return from_username; }
     public void setFromUsername(String from_username) { this.from_username = from_username; }
