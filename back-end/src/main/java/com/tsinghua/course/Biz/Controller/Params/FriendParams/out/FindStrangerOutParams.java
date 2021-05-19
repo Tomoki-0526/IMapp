@@ -10,11 +10,11 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.FRIEND_FIND_STRANGER)
 public class FindStrangerOutParams extends CommonOutParams {
     // 用户名
-    String stranger_username;
+    private String stranger_username;
     // 昵称
-    String stranger_nickname;
+    private String stranger_nickname;
     // 头像
-    String stranger_avatar;
+    private String stranger_avatar;
 
     public String getStrangerUsername() { return stranger_username; }
     public void setStrangerUsername(String stranger_username) { this.stranger_username = stranger_username; }

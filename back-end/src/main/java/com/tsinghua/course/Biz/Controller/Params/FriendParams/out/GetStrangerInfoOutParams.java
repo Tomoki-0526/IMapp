@@ -10,15 +10,15 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.FRIEND_GET_STRANGER_INFO)
 public class GetStrangerInfoOutParams extends CommonOutParams {
     // 陌生人用户名
-    String stranger_username;
+    private String stranger_username;
     // 陌生人昵称
-    String stranger_nickname;
+    private String stranger_nickname;
     // 陌生人头像
-    String stranger_avatar;
+    private String stranger_avatar;
     // 陌生人性别
-    String stranger_gender;
+    private String stranger_gender;
     // 陌生人个性签名
-    String stranger_signature;
+    private String stranger_signature;
 
     public GetStrangerInfoOutParams() { this.success = true; }
     public GetStrangerInfoOutParams(boolean success) { this.success = success; }

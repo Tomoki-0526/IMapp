@@ -75,14 +75,18 @@ public class UserController {
 
         /* 密码 */
         String password = inParams.getPassword();
-        if (password == null)
-            throw new CourseWarn(UserWarnEnum.NEED_PASSWORD);
 //        regex = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,18}$";
 //        if (!password.matches(regex))
 //            throw new CourseWarn(UserWarnEnum.INVALID_PASSWORD);
 
+        /* 昵称 */
+        String nickname = inParams.getNickname();
+
+        /* 手机号 */
+        String telephone = inParams.getTelephone();
+
         /* 创建新用户 */
-        userProcessor.createUser(username, password);
+        userProcessor.createUser(username, password, nickname, telephone);
 
         return new CommonOutParams(true);
     }

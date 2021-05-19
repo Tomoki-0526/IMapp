@@ -12,7 +12,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class GetStrangerInfoInParams extends CommonInParams {
     // 陌生人用户名
     @Required
-    String stranger_username;
+    private String stranger_username;
 
     public String getStrangerUsername() { return stranger_username; }
     public void setStrangerUsername(String stranger_username) { this.stranger_username = stranger_username; }

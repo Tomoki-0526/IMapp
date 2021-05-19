@@ -10,15 +10,15 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.FRIEND_NEW_FRIEND_REQUEST)
 public class NewFriendRequestOutParams extends CommonOutParams {
     // 发送者用户名
-    String from_username;
+    private String from_username;
     // 发送者昵称
-    String from_nickname;
+    private String from_nickname;
     // 发送者头像
-    String from_avatar;
+    private String from_avatar;
     // 申请理由
-    String extra;
+    private String extra;
     // 状态
-    int status;
+    private int status;
 
     public String getFromUsername() { return from_username; }
     public void setFromUsername(String from_username) { this.from_username = from_username; }
