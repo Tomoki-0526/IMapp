@@ -18,7 +18,7 @@ public class GlobalConstant {
     public static final String HEX_STR = "0123456789ABCDEF";
     /** 头像保存路径 */
     public static final String WINDOWS_AVATAR_PATH = "D:/Eusford/Homework/app/IMapp/uploads/avatar/";
-    public static final String LINUX_AVATAR_PATH = "/root/IMapp/uploads/avatar/";
+    public static final String LINUX_AVATAR_PATH = "/home/IMapp/uploads/avatar/";
     /** 默认头像文件名 */
     public static final String DEFAULT_AVATAR = "default.png";
 
