@@ -11,6 +11,8 @@ public class KeyConstant {
     public static final String PATH = "path";
     // 操作类型
     public static final String BIZ_TYPE = "bizType";
+    // ID
+    public static final String ID = "id";
 
     /** 以下为User关键key */
     // 用户名
@@ -39,6 +41,8 @@ public class KeyConstant {
     public static final String REMARK = "remark";
     // 星标
     public static final String STAR = "star";
+    // 分组
+    public static final String GROUP = "group_name";
 
     /** FriendRequest关键key */
     // 发送方用户名

@@ -30,6 +30,10 @@ public enum BizTypeEnum {
     FRIEND_SET_FRIEND_REMARK(FriendController.class, "/friend/setFriendRemark", "设置好友备注"),
     FRIEND_GET_FRIEND_REQUEST(FriendController.class, "/friend/getFriendRequest", "查看好友申请"),
     FRIEND_CHECK_FRIEND_REQUEST(FriendController.class, "/friend/checkFriendRequest", "审核好友申请"),
+    FRIEND_ADD_GROUP(FriendController.class, "/friend/addGroup", "添加分组"),
+    FRIEND_GET_GROUPS(FriendController.class, "/friend/getGroups", "查看所有分组"),
+    FRIEND_ADD_FRIEND_TO_GROUP(FriendController.class, "/friend/addFriendToGroup", "将好友添加到分组"),
+    FRIEND_SET_GROUP_NAME(FriendController.class, "/friend/setGroupName", "修改分组名称"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

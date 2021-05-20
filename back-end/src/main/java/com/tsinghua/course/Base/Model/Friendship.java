@@ -32,7 +32,7 @@ public class Friendship {
     // 星标
     boolean star;
     // 分组
-    String group;
+    String group_id;
     // 测试对象
     SubObj subObj;
 
@@ -46,13 +46,13 @@ public class Friendship {
     public void setFriendUsername(String friend_username) { this.friend_username = friend_username; }
 
     public String getRemark() { return remark; }
-    public void setRemark() { this.remark = remark; }
+    public void setRemark(String remark) { this.remark = remark; }
 
     public boolean isStar() { return star; }
     public void setStar(boolean star) { this.star = star; }
 
-    public String getGroup() { return group; }
-    public void setGroup(String group) { this.group = group; }
+    public String getGroupID() { return group_id; }
+    public void setGroupID(String group_id) { this.group_id = group_id; }
 
     public SubObj getSubObj() { return subObj; }
     public void setSubObj(SubObj subObj) { this.subObj = subObj; }

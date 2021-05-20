@@ -10,6 +10,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.UserParams.In.*;
 import com.tsinghua.course.Biz.Controller.Params.UserParams.Out.GetInfoOutParams;
+import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.*;
 import io.netty.channel.ChannelHandlerContext;
@@ -34,6 +35,8 @@ public class UserController {
 
     @Autowired
     UserProcessor userProcessor;
+    @Autowired
+    FriendProcessor friendProcessor;
 
     /** 用户登录业务 */
     @BizType(BizTypeEnum.USER_LOGIN)
@@ -85,8 +88,9 @@ public class UserController {
         /* 手机号 */
         String telephone = inParams.getTelephone();
 
-        /* 创建新用户 */
+        /* 创建新用户和默认分组 */
         userProcessor.createUser(username, password, nickname, telephone);
+        friendProcessor.addDefaultFriendGroup(username);
 
         return new CommonOutParams(true);
     }
@@ -148,6 +152,8 @@ public class UserController {
 
         /* 获取个人信息 */
         String avatar = user.getAvatar();
+        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar;
+
         String nickname = user.getNickname();
         String gender = user.getGender();
         int age = user.getAge();
@@ -155,12 +161,12 @@ public class UserController {
         String telephone = user.getTelephone();
         String signature = user.getSignature();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(BIRTHDAY_PATTERN);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
         String birthday_str = dateFormat.format(birthday);
 
         /* 组织Response */
         GetInfoOutParams outParams = new GetInfoOutParams(true);
-        outParams.setAvatar(avatar);
+        outParams.setAvatar(avatar_url);
         outParams.setUsername(username);
         outParams.setNickname(nickname);
         outParams.setGender(gender);

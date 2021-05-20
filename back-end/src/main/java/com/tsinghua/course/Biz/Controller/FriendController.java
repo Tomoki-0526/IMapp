@@ -6,6 +6,7 @@ import com.tsinghua.course.Base.CustomizedClass.FriendItem;
 import com.tsinghua.course.Base.CustomizedClass.FriendRequestItem;
 import com.tsinghua.course.Base.Error.CourseWarn;
 import com.tsinghua.course.Base.Error.UserWarnEnum;
+import com.tsinghua.course.Base.Model.FriendGroup;
 import com.tsinghua.course.Base.Model.FriendRequest;
 import com.tsinghua.course.Base.Model.Friendship;
 import com.tsinghua.course.Base.Model.User;
@@ -25,7 +26,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.tsinghua.course.Base.Constant.GlobalConstant.BIRTHDAY_PATTERN;
+import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
+import static com.tsinghua.course.Base.Constant.KeyConstant.GROUP;
 
 /**
  * @描述 好友控制器，用于执行通讯录相关的业务
@@ -53,11 +55,12 @@ public class FriendController {
         }
         String nickname = stranger.getNickname();
         String avatar = stranger.getAvatar();
+        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar;
 
         FindStrangerOutParams outParams = new FindStrangerOutParams();
         outParams.setStrangerUsername(stranger_username);
         outParams.setStrangerNickname(nickname);
-        outParams.setStrangerAvatar(avatar);
+        outParams.setStrangerAvatar(avatar_url);
 
         return outParams;
     }
@@ -71,13 +74,14 @@ public class FriendController {
 
         String stranger_nickname = stranger.getNickname();
         String stranger_avatar = stranger.getAvatar();
+        String stranger_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + stranger_avatar;
         String stranger_gender = stranger.getGender();
         String stranger_signature = stranger.getSignature();
 
         GetStrangerInfoOutParams outParams = new GetStrangerInfoOutParams();
         outParams.setStrangerUsername(stranger_username);
         outParams.setStrangerNickname(stranger_nickname);
-        outParams.setStrangerAvatar(stranger_avatar);
+        outParams.setStrangerAvatar(stranger_avatar_url);
         outParams.setStrangerGender(stranger_gender);
         outParams.setStrangerSignature(stranger_signature);
 
@@ -112,10 +116,11 @@ public class FriendController {
                 User friend = userProcessor.getUserByUsername(friend_username);
                 String friend_nickname = friend.getNickname();
                 String friend_avatar = friend.getAvatar();
+                String friend_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + friend_avatar;
 
                 FriendItem item = new FriendItem();
                 item.setFriendUsername(friend_username);
-                item.setFriendAvatar(friend_avatar);
+                item.setFriendAvatar(friend_avatar_url);
                 item.setFriendNickname(friend_nickname);
                 item.setFriendRemark(friend_remark);
 
@@ -145,11 +150,12 @@ public class FriendController {
             String friend_remark = starFriend.getRemark();
             User friend = userProcessor.getUserByUsername(friend_username);
             String friend_avatar = friend.getAvatar();
+            String friend_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + friend_avatar;
             String friend_nickname = friend.getNickname();
 
             FriendItem friendItem = new FriendItem();
             friendItem.setFriendUsername(friend_username);
-            friendItem.setFriendAvatar(friend_avatar);
+            friendItem.setFriendAvatar(friend_avatar_url);
             friendItem.setFriendNickname(friend_nickname);
             friendItem.setFriendRemark(friend_remark);
 
@@ -172,29 +178,33 @@ public class FriendController {
         Friendship friendship = friendProcessor.getFriendshipByUsername(username, friend_username);
 
         String avatar = friend.getAvatar();
+        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar;
         String nickname = friend.getNickname();
         String remark = friendship.getRemark();
         String gender = friend.getGender();
         int age = friend.getAge();
         String telephone = friend.getTelephone();
-        String group = friendship.getGroup();
+
+        String groupID = friendship.getGroupID();
+        FriendGroup friendGroup = friendProcessor.getGroupByID(groupID);
+
         boolean star = friendship.isStar();
         String signature = friend.getSignature();
 
         Date birthday = friend.getBirthday();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(BIRTHDAY_PATTERN);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
         String birthday_str = dateFormat.format(birthday);
 
         GetFriendInfoOutParams outParams = new GetFriendInfoOutParams();
         outParams.setAge(age);
-        outParams.setAvatar(avatar);
+        outParams.setAvatar(avatar_url);
         outParams.setBirthday(birthday_str);
         outParams.setGender(gender);
         outParams.setNickname(nickname);
         outParams.setUsername(friend_username);
         outParams.setRemark(remark);
         outParams.setTelephone(telephone);
-        outParams.setGroup(group);
+        outParams.setGroup(friendGroup.getGroupName());
         outParams.setStar(star);
         outParams.setSignature(signature);
 
@@ -278,7 +288,9 @@ public class FriendController {
             FriendRequestItem friendRequestItem = new FriendRequestItem();
             friendRequestItem.setFromUsername(fromUsername);
             friendRequestItem.setFromNickname(fromUser.getNickname());
-            friendRequestItem.setFromAvatar(fromUser.getAvatar());
+            String avatar = fromUser.getAvatar();
+            String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar;
+            friendRequestItem.setFromAvatar(avatar_url);
             friendRequestItem.setExtra(friendRequest.getExtra());
             friendRequestItem.setStatus(friendRequest.getStatus());
 
@@ -303,11 +315,84 @@ public class FriendController {
 
         friendProcessor.checkFriendRequest(from_username, username, result);
         // TODO
-        /**
-         * 如果通过，则给发送方返回推送
-         * 以新消息的形式发送
+        /*
+          如果通过，则给发送方返回推送
+          以新消息的形式发送
          */
+        if (result) {
+            friendProcessor.addFriendship(username, from_username);
+            friendProcessor.addFriendship(from_username, username);
+            friendProcessor.addFriendToGroup(username, from_username, GROUP);
+            friendProcessor.addFriendToGroup(from_username, username, GROUP);
+        }
 
+        return new CommonOutParams(true);
+    }
+
+    /** 添加分组 */
+    @BizType(BizTypeEnum.FRIEND_ADD_GROUP)
+    @NeedLogin
+    public CommonOutParams friendAddGroup(AddGroupInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String group_name = inParams.getGroupName();
+
+        FriendGroup friendGroup = friendProcessor.getGroupByUsernameAndGroupName(username, group_name);
+        if (friendGroup != null) {
+            throw new CourseWarn(UserWarnEnum.DUPLICATE_GROUP);
+        }
+
+        friendProcessor.addFriendGroup(username, group_name);
+        return new CommonOutParams(true);
+    }
+
+    /** 查看所有分组 */
+    @BizType(BizTypeEnum.FRIEND_GET_GROUPS)
+    @NeedLogin
+    public GetGroupsOutParams friendGetGroups(CommonInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        List<FriendGroup> friendGroupList = friendProcessor.getAllGroups(username);
+        List<String> groupName = new ArrayList<>();
+        for (FriendGroup friendGroup: friendGroupList) {
+            groupName.add(friendGroup.getGroupName());
+        }
+        String[] result = new String[groupName.size()];
+        groupName.toArray(result);
+
+        GetGroupsOutParams outParams = new GetGroupsOutParams();
+        outParams.setGroups(result);
+        return outParams;
+    }
+
+    /** 将好友添加到分组 */
+    @BizType(BizTypeEnum.FRIEND_ADD_FRIEND_TO_GROUP)
+    @NeedLogin
+    public CommonOutParams friendAddFriendToGroup(AddFriendToGroupInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String friend_username = inParams.getFriendUsername();
+        String group_name = inParams.getGroupName();
+
+        FriendGroup friendGroup = friendProcessor.getGroupByUsernameAndGroupName(username, group_name);
+        if (friendGroup == null) {
+            throw new CourseWarn(UserWarnEnum.NO_SUCH_GROUP);
+        }
+
+        friendProcessor.addFriendToGroup(username, friend_username, group_name);
+        return new CommonOutParams(true);
+    }
+
+    /** 修改分组名称 */
+    @BizType(BizTypeEnum.FRIEND_SET_GROUP_NAME)
+    @NeedLogin
+    public CommonOutParams friendSetGroupName(SetGroupNameInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String old_group_name = inParams.getOldGroupName();
+        String new_group_name = inParams.getNewGroupName();
+
+        FriendGroup friendGroup = friendProcessor.getGroupByUsernameAndGroupName(username, old_group_name);
+        if (friendGroup == null) {
+            throw new CourseWarn(UserWarnEnum.NO_SUCH_GROUP);
+        }
+        friendProcessor.setGroupName(username, old_group_name, new_group_name);
         return new CommonOutParams(true);
     }
 }
