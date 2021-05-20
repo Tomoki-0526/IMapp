@@ -22,6 +22,8 @@ public enum UserWarnEnum implements ExceptionInterface {
     FIND_FRIEND_NO_RESULT("UserWarn016", "未找到好友"),
     NO_STAR_FRIENDS("UserWarn017", "没有特别关心好友"),
     NO_FRIEND_REQUEST("UserWarn018", "没有新好友申请"),
+    NO_SUCH_GROUP("UserWarn019", "没有该分组"),
+    DUPLICATE_GROUP("UserWarn020", "分组名重复"),
     ;
 
     UserWarnEnum(String code, String msg) {

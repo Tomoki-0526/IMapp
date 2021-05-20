@@ -207,14 +207,7 @@ URL: /friend/getGroups
 Correct Response:
 ```coffeescript
 {
-    'group': [分组列表]
-}
-```
-一个分组的格式:
-```coffeescript
-{
-    'group_id': 分组ID,
-    'group_name': 分组名称
+    'groups': [分组名称string列表]
 }
 ```
 Error Response:
@@ -232,7 +225,31 @@ Request:
 ```coffeescript
 {
     'friend_username': 好友用户名,
-    'group_id': 分组名
+    'group_name': 分组名
+}
+```
+Correct Response:
+```coffeescript
+{
+    'msg': '添加成功'
+}
+```
+Error Response:
+```coffeescript
+{
+    'msg': '添加失败'
+}
+```
+
+# 修改分组名称
+
+Method: POST
+URL: /friend/setGroupName
+Request:
+```coffeescript
+{
+    'old_group_name': 旧分组名,
+    'new_group_name': 新分组名
 }
 ```
 Correct Response:

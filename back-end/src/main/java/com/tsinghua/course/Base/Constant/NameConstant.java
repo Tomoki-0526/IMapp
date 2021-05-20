@@ -22,4 +22,7 @@ public class NameConstant {
     public static final String OS_NAME = "os.name";
     // Windows
     public static final String WIN = "win";
+
+    /** 默认分组 */
+    public static final String DEFAULT_GROUP = "我的好友";
 }
