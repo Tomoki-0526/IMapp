@@ -4,6 +4,7 @@ import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.NeedLogin;
 import com.tsinghua.course.Base.CustomizedClass.FriendItem;
 import com.tsinghua.course.Base.CustomizedClass.FriendRequestItem;
+import com.tsinghua.course.Base.CustomizedClass.FriendsByGroup;
 import com.tsinghua.course.Base.Error.CourseWarn;
 import com.tsinghua.course.Base.Error.UserWarnEnum;
 import com.tsinghua.course.Base.Model.FriendGroup;
@@ -27,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
-import static com.tsinghua.course.Base.Constant.KeyConstant.GROUP;
+import static com.tsinghua.course.Base.Constant.NameConstant.DEFAULT_GROUP;
 
 /**
  * @描述 好友控制器，用于执行通讯录相关的业务
@@ -322,8 +323,8 @@ public class FriendController {
         if (result) {
             friendProcessor.addFriendship(username, from_username);
             friendProcessor.addFriendship(from_username, username);
-            friendProcessor.addFriendToGroup(username, from_username, GROUP);
-            friendProcessor.addFriendToGroup(from_username, username, GROUP);
+            friendProcessor.addFriendToGroup(username, from_username, DEFAULT_GROUP);
+            friendProcessor.addFriendToGroup(from_username, username, DEFAULT_GROUP);
         }
 
         return new CommonOutParams(true);
@@ -394,5 +395,45 @@ public class FriendController {
         }
         friendProcessor.setGroupName(username, old_group_name, new_group_name);
         return new CommonOutParams(true);
+    }
+
+    /** 获取通讯录 */
+    @BizType(BizTypeEnum.FRIEND_GET_FRIENDS)
+    @NeedLogin
+    public GetFriendsOutParams friendGetFriends(CommonInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        List<FriendGroup> groups = friendProcessor.getAllGroups(username);
+        List<FriendsByGroup> friendsByGroupList = new ArrayList<>();
+        for (FriendGroup group: groups) {
+            String group_id = group.getId();
+            String group_name = group.getGroupName();
+            List<Friendship> friends_in_group = friendProcessor.getFriendsOfOneGroup(group_id);
+            List<FriendItem> friendItemList = new ArrayList<>();
+            for (Friendship friendship: friends_in_group) {
+                String friend_username = friendship.getUsername();
+                User friend = userProcessor.getUserByUsername(friend_username);
+
+                FriendItem friendItem = new FriendItem();
+                friendItem.setFriendUsername(friend_username);
+                friendItem.setFriendAvatar(friend.getAvatar());
+                friendItem.setFriendNickname(friend.getNickname());
+                friendItem.setFriendRemark(friendship.getRemark());
+
+                friendItemList.add(friendItem);
+            }
+            FriendItem[] friendItems = new FriendItem[friendItemList.size()];
+            friendItemList.toArray(friendItems);
+
+            FriendsByGroup friendsByGroup = new FriendsByGroup();
+            friendsByGroup.setGroupName(group_name);
+            friendsByGroup.setFriendsInGroup(friendItems);
+            friendsByGroupList.add(friendsByGroup);
+        }
+        FriendsByGroup[] result = new FriendsByGroup[friendsByGroupList.size()];
+        friendsByGroupList.toArray(result);
+
+        GetFriendsOutParams outParams = new GetFriendsOutParams();
+        outParams.setFriends(result);
+        return outParams;
     }
 }

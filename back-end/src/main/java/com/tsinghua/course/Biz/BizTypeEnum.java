@@ -34,6 +34,7 @@ public enum BizTypeEnum {
     FRIEND_GET_GROUPS(FriendController.class, "/friend/getGroups", "查看所有分组"),
     FRIEND_ADD_FRIEND_TO_GROUP(FriendController.class, "/friend/addFriendToGroup", "将好友添加到分组"),
     FRIEND_SET_GROUP_NAME(FriendController.class, "/friend/setGroupName", "修改分组名称"),
+    FRIEND_GET_FRIENDS(FriendController.class, "/friend/getFriends", "获取通讯录"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),
