@@ -48,6 +48,8 @@ public class User {
     String signature;
     // 用户类型
     UserType userType;
+    // 分组数
+    int num_groups;
     // 测试数组
     String[] testArr;
     // 测试对象
@@ -98,6 +100,9 @@ public class User {
 
     public UserType getUserType() { return userType; }
     public void setUserType(UserType userType) { this.userType = userType; }
+
+    public int getNumOfGroups() { return num_groups; }
+    public void setNumOfGroups(int num_groups) { this.num_groups = num_groups; }
 
     public String[] getTestArr() { return testArr; }
     public void setTestArr(String[] testArr) { this.testArr = testArr; }

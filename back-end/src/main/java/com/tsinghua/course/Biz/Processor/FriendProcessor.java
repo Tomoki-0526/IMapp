@@ -1,21 +1,17 @@
 package com.tsinghua.course.Biz.Processor;
 
-import com.mongodb.client.result.DeleteResult;
-import com.mongodb.internal.bulk.DeleteRequest;
 import com.tsinghua.course.Base.Constant.KeyConstant;
 import com.tsinghua.course.Base.Model.FriendGroup;
 import com.tsinghua.course.Base.Model.FriendRequest;
 import com.tsinghua.course.Base.Model.Friendship;
 import com.tsinghua.course.Base.Model.User;
-import com.tsinghua.course.Biz.Controller.Params.FriendParams.out.FindFriendOutParams;
-import org.apache.tomcat.util.net.SSLUtilBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.DATETIME_PATTERN;
-import static com.tsinghua.course.Base.Constant.GlobalConstant.DATE_PATTERN;
 import static com.tsinghua.course.Base.Constant.NameConstant.DEFAULT_GROUP;
 
 /**
@@ -201,10 +196,15 @@ public class FriendProcessor {
     public void addFriendToGroup(String username, String friend_username, String group_name) {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.GROUP_NAME).is(group_name));
+        FriendGroup friendGroup = mongoTemplate.findOne(query, FriendGroup.class);
+
+        Query query1 = new Query();
+        query1.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
                                     .and(KeyConstant.FRIEND_USERNAME).is(friend_username));
         Update update = new Update();
-        update.set(KeyConstant.GROUP, group_name);
-        mongoTemplate.upsert(query, update, Friendship.class);
+        update.set(KeyConstant.GROUP_ID, friendGroup.getId());
+        mongoTemplate.upsert(query1, update, Friendship.class);
     }
 
     /** 获取所有分组 */
@@ -218,7 +218,7 @@ public class FriendProcessor {
     public FriendGroup getGroupByUsernameAndGroupName(String username, String group_name) {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
-                                    .and(KeyConstant.GROUP).is(group_name));
+                                    .and(KeyConstant.GROUP_NAME).is(group_name));
         return mongoTemplate.findOne(query, FriendGroup.class);
     }
 
@@ -232,10 +232,17 @@ public class FriendProcessor {
     /** 修改分组名 */
     public void setGroupName(String username, String old_group_name, String new_group_name) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.GROUP).is(old_group_name)
+        query.addCriteria(Criteria.where(KeyConstant.GROUP_NAME).is(old_group_name)
                                     .and(KeyConstant.USERNAME).is(username));
         Update update = new Update();
-        update.set(KeyConstant.GROUP, new_group_name);
+        update.set(KeyConstant.GROUP_NAME, new_group_name);
         mongoTemplate.upsert(query, update, FriendGroup.class);
+    }
+
+    /** 获取某分组的所有好友 */
+    public List<Friendship> getFriendsOfOneGroup(String group_id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.GROUP_ID).is(group_id));
+        return mongoTemplate.find(query, Friendship.class);
     }
 }

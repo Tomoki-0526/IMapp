@@ -41,8 +41,12 @@ public class KeyConstant {
     public static final String REMARK = "remark";
     // 星标
     public static final String STAR = "star";
+    // 分组ID
+    public static final String GROUP_ID = "group_id";
+
+    /** FriendGroup关键key */
     // 分组
-    public static final String GROUP = "group_name";
+    public static final String GROUP_NAME = "group_name";
 
     /** FriendRequest关键key */
     // 发送方用户名
