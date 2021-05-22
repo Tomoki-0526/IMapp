@@ -1,9 +1,6 @@
 package com.tsinghua.course.Biz;
 
-import com.tsinghua.course.Biz.Controller.FriendController;
-import com.tsinghua.course.Biz.Controller.TestController;
-import com.tsinghua.course.Biz.Controller.TimerController;
-import com.tsinghua.course.Biz.Controller.UserController;
+import com.tsinghua.course.Biz.Controller.*;
 
 /**
  * @描述 业务类型枚举，所有的业务类型都需要枚举在此类中
@@ -35,6 +32,10 @@ public enum BizTypeEnum {
     FRIEND_ADD_FRIEND_TO_GROUP(FriendController.class, "/friend/addFriendToGroup", "将好友添加到分组"),
     FRIEND_SET_GROUP_NAME(FriendController.class, "/friend/setGroupName", "修改分组名称"),
     FRIEND_GET_FRIENDS(FriendController.class, "/friend/getFriends", "获取通讯录"),
+
+    /** 聊天业务类型 */
+    CHAT_GET_CHAT_USER_LINK(ChatController.class, "/chat/getChatUserLink", "获取聊天关系"),
+    CHAT_QUIT_CHAT(ChatController.class, "/chat/quitChat", "退出聊天"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

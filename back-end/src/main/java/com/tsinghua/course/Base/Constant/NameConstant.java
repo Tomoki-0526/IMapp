@@ -25,4 +25,16 @@ public class NameConstant {
 
     /** 默认分组 */
     public static final String DEFAULT_GROUP = "我的好友";
+
+    /** 消息类型 */
+    // 文本
+    public static final int MESSAGE_TYPE_TEXT = 0;
+    // 图片
+    public static final int MESSAGE_TYPE_IMAGE = 1;
+    // 音频
+    public static final int MESSAGE_TYPE_AUDIO = 2;
+    // 视频
+    public static final int MESSAGE_TYPE_VIDEO = 3;
+    // 位置信息
+    public static final int MESSAGE_TYPE_LOCATION = 4;
 }
