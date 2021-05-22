@@ -67,7 +67,7 @@ public class UserController {
     public CommonOutParams userRegister(RegisterInParams inParams) throws Exception {
         /* 用户名 */
         String username = inParams.getUsername();
-        if (username == null)
+        if (username.equals(""))
             throw new CourseWarn(UserWarnEnum.NEED_USERNAME);
 //        String regex = "^[0-9A-Za-z_]{8,20}$";
 //        if (!username.matches(regex))
@@ -78,15 +78,24 @@ public class UserController {
 
         /* 密码 */
         String password = inParams.getPassword();
+        if (password.equals(""))
+            throw new CourseWarn(UserWarnEnum.NEED_PASSWORD);
 //        regex = "^(?![0-9]+$)(?![a-zA-Z]+$)(?![0-9a-zA-Z]+$)(?![0-9\\W]+$)(?![a-zA-Z\\W]+$)[0-9A-Za-z\\W]{6,18}$";
 //        if (!password.matches(regex))
 //            throw new CourseWarn(UserWarnEnum.INVALID_PASSWORD);
 
         /* 昵称 */
         String nickname = inParams.getNickname();
+        if (nickname.equals(""))
+            throw new CourseWarn(UserWarnEnum.NEED_NICKNAME);
 
         /* 手机号 */
         String telephone = inParams.getTelephone();
+        if (telephone.equals(""))
+            throw new CourseWarn(UserWarnEnum.NEED_TELEPHONE);
+        String regex = "^1[0-9]{10}$";
+        if (!telephone.matches(regex))
+            throw new CourseWarn(UserWarnEnum.INVALID_TELEPHONE);
 
         /* 创建新用户和默认分组 */
         userProcessor.createUser(username, password, nickname, telephone);
@@ -187,6 +196,8 @@ public class UserController {
 
         /* 昵称 */
         String nickname = inParams.getNickname();
+        if (nickname.equals(""))
+            throw new CourseWarn(UserWarnEnum.NEED_NICKNAME);
 
         /* 性别 */
         String gender = inParams.getGender();

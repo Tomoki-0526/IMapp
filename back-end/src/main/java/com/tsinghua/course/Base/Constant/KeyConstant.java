@@ -55,4 +55,12 @@ public class KeyConstant {
     public static final String TO_USERNAME = "to_username";
     // 状态
     public static final String STATUS = "status";
+
+    /** ChatItem关键key */
+    // 聊天关系id
+    public static final String LINK_ID = "link_id";
+    // from_user在线状态
+    public static final String FROM_WINDOW = "from_window";
+    // to_user在线状态
+    public static final String TO_WINDOW = "to_window";
 }
