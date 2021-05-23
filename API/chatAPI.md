@@ -79,9 +79,10 @@ Correct Response:
 ```coffeescript
 {
     "msg_id": 聊天记录id,
-    "content": 内容,
+    "from_avatar": 发送方头像,
     "from_username": 发送方用户名,
-    "to_username": 接收方用户名,
+    "content": 内容,
+    "type": 类型,
     "send_time": 发送时间
 }
 ```

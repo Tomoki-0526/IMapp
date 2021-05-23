@@ -38,6 +38,7 @@ public enum BizTypeEnum {
     CHAT_QUIT_CHAT(ChatController.class, "/chat/quitChat", "退出聊天"),
     CHAT_SEND_MESSAGE(ChatController.class, "/chat/sendMessage", "发送消息给指定用户"),
     CHAT_GET_HISTORY(ChatController.class, "/chat/getHistory", "查看历史聊天记录"),
+    CHAT_REMOVE_HISTORY(ChatController.class, "/chat/removeHistory", "删除历史记录"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

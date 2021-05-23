@@ -24,10 +24,17 @@ public class GlobalConstant {
     public static final String DEFAULT_AVATAR = "default.png";
     /** 服务器IP */
     public static final String SERVER_IP = "8.140.133.34";
-    /** Http端口 */
-    public static final String HTTP_PORT = "7563";
-    /** Websocket端口 */
-    public static final String WS_PORT = "7562";
     /** 文件端口 */
     public static final String FILE_PORT = "7561";
+    /** 消息类型 */
+    // 文本
+    public static final int MESSAGE_TYPE_TEXT = 0;
+    // 图片
+    public static final int MESSAGE_TYPE_IMAGE = 1;
+    // 音频
+    public static final int MESSAGE_TYPE_AUDIO = 2;
+    // 视频
+    public static final int MESSAGE_TYPE_VIDEO = 3;
+    // 位置信息
+    public static final int MESSAGE_TYPE_LOCATION = 4;
 }

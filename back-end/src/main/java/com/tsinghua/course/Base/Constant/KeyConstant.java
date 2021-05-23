@@ -69,6 +69,6 @@ public class KeyConstant {
     /** ChatMessage关键key */
     // 发送时间
     public static final String SEND_TIME = "send_time";
-    // 最后一条消息
+    // 是否是最后一条消息
     public static final String LATEST = "latest";
 }
