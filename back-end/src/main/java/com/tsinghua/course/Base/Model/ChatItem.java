@@ -21,8 +21,6 @@ public class ChatItem {
     boolean to_window;
     // 未读数
     int unread;
-    // 列表状态，是否删除
-    boolean status;
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -44,7 +42,4 @@ public class ChatItem {
 
     public int getUnread() { return unread; }
     public void setUnread(int unread) { this.unread = unread; }
-
-    public boolean getStatus() { return status; }
-    public void setStatus(boolean status) { this.status = status; }
 }

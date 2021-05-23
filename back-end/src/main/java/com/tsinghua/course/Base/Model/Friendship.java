@@ -31,8 +31,6 @@ public class Friendship {
     String remark;
     // 星标
     boolean star;
-    // 分组
-    String group_id;
     // 测试对象
     SubObj subObj;
 
@@ -50,9 +48,6 @@ public class Friendship {
 
     public boolean isStar() { return star; }
     public void setStar(boolean star) { this.star = star; }
-
-    public String getGroupID() { return group_id; }
-    public void setGroupID(String group_id) { this.group_id = group_id; }
 
     public SubObj getSubObj() { return subObj; }
     public void setSubObj(SubObj subObj) { this.subObj = subObj; }

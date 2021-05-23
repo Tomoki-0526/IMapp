@@ -63,4 +63,12 @@ public class KeyConstant {
     public static final String FROM_WINDOW = "from_window";
     // to_user在线状态
     public static final String TO_WINDOW = "to_window";
+    // 未读数
+    public static final String UNREAD = "unread";
+
+    /** ChatMessage关键key */
+    // 发送时间
+    public static final String SEND_TIME = "send_time";
+    // 最后一条消息
+    public static final String LATEST = "latest";
 }
