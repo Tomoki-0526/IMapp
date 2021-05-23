@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">Course29</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">MyApp</string>
+    <string name="title_chat">聊天</string>
+    <string name="title_nearby">附近</string>
+    <string name="title_moment">动态</string>
+    <string name="title_contact">通讯</string>
+    <string name="login_successfully">登录成功</string>
+    <string name="logon_successfully">注册成功</string>
 </resources>
