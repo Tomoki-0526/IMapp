@@ -1,13 +1,11 @@
 package com.tsinghua.course.Biz.Processor;
 
 import com.tsinghua.course.Base.Constant.KeyConstant;
-import com.tsinghua.course.Base.Model.FriendGroup;
 import com.tsinghua.course.Base.Model.FriendRequest;
 import com.tsinghua.course.Base.Model.Friendship;
 import com.tsinghua.course.Base.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -19,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.DATETIME_PATTERN;
-import static com.tsinghua.course.Base.Constant.NameConstant.DEFAULT_GROUP;
 
 /**
  * @描述 好友原子处理器
@@ -150,8 +147,8 @@ public class FriendProcessor {
         friendship.setRemark("");
         friendship.setStar(false);
 
-        FriendGroup friendGroup = getGroupByUsernameAndGroupName(username, DEFAULT_GROUP);
-        friendship.setGroupID(friendGroup.getId());
+//        FriendGroup friendGroup = getGroupByUsernameAndGroupName(username, DEFAULT_GROUP);
+//        friendship.setGroupID(friendGroup.getId());
 
         Friendship.SubObj subObj = new Friendship.SubObj();
         Date now = new Date();
@@ -163,86 +160,79 @@ public class FriendProcessor {
     }
 
     /** 添加分组 */
-    public void addFriendGroup(String username, String group_name) {
-        FriendGroup friendGroup = new FriendGroup();
-        friendGroup.setUsername(username);
-        friendGroup.setGroupName(group_name);
-
-        FriendGroup.SubObj subObj = new FriendGroup.SubObj();
-        Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
-        subObj.setTime(dateFormat.format(now));
-        friendGroup.setSubObj(subObj);
-
-        mongoTemplate.insert(friendGroup);
-    }
+//    public void addFriendGroup(String username, String group_name) {
+//        FriendGroup friendGroup = new FriendGroup();
+//        friendGroup.setUsername(username);
+//        friendGroup.setGroupName(group_name);
+//
+//        FriendGroup.SubObj subObj = new FriendGroup.SubObj();
+//        Date now = new Date();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+//        subObj.setTime(dateFormat.format(now));
+//        friendGroup.setSubObj(subObj);
+//
+//        mongoTemplate.insert(friendGroup);
+//    }
 
     /** 添加默认分组 */
-    public void addDefaultFriendGroup(String username) {
-        FriendGroup friendGroup = new FriendGroup();
-        friendGroup.setUsername(username);
-        friendGroup.setGroupName(DEFAULT_GROUP);
-
-        FriendGroup.SubObj subObj = new FriendGroup.SubObj();
-        Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
-        subObj.setTime(dateFormat.format(now));
-        friendGroup.setSubObj(subObj);
-
-        mongoTemplate.insert(friendGroup);
-    }
+//    public void addDefaultFriendGroup(String username) {
+//        FriendGroup friendGroup = new FriendGroup();
+//        friendGroup.setUsername(username);
+//        friendGroup.setGroupName(DEFAULT_GROUP);
+//
+//        FriendGroup.SubObj subObj = new FriendGroup.SubObj();
+//        Date now = new Date();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+//        subObj.setTime(dateFormat.format(now));
+//        friendGroup.setSubObj(subObj);
+//
+//        mongoTemplate.insert(friendGroup);
+//    }
 
     /** 将好友添加到分组 */
-    public void addFriendToGroup(String username, String friend_username, String group_name) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
-                                    .and(KeyConstant.GROUP_NAME).is(group_name));
-        FriendGroup friendGroup = mongoTemplate.findOne(query, FriendGroup.class);
-
-        Query query1 = new Query();
-        query1.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
-                                    .and(KeyConstant.FRIEND_USERNAME).is(friend_username));
-        Update update = new Update();
-        update.set(KeyConstant.GROUP_ID, friendGroup.getId());
-        mongoTemplate.upsert(query1, update, Friendship.class);
-    }
+//    public void addFriendToGroup(String username, String friend_username, String group_name) {
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+//                                    .and(KeyConstant.GROUP_NAME).is(group_name));
+//        FriendGroup friendGroup = mongoTemplate.findOne(query, FriendGroup.class);
+//
+//        Query query1 = new Query();
+//        query1.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+//                                    .and(KeyConstant.FRIEND_USERNAME).is(friend_username));
+//        Update update = new Update();
+//        update.set(KeyConstant.GROUP_ID, friendGroup.getId());
+//        mongoTemplate.upsert(query1, update, Friendship.class);
+//    }
 
     /** 获取所有分组 */
-    public List<FriendGroup> getAllGroups(String username) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
-        return mongoTemplate.find(query, FriendGroup.class);
-    }
+//    public List<FriendGroup> getAllGroups(String username) {
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+//        return mongoTemplate.find(query, FriendGroup.class);
+//    }
 
     /** 根据用户名和分组名查找分组 */
-    public FriendGroup getGroupByUsernameAndGroupName(String username, String group_name) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
-                                    .and(KeyConstant.GROUP_NAME).is(group_name));
-        return mongoTemplate.findOne(query, FriendGroup.class);
-    }
+//    public FriendGroup getGroupByUsernameAndGroupName(String username, String group_name) {
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+//                                    .and(KeyConstant.GROUP_NAME).is(group_name));
+//        return mongoTemplate.findOne(query, FriendGroup.class);
+//    }
 
     /** 根据ID查找分组 */
-    public FriendGroup getGroupByID(String id) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.ID).is(id));
-        return mongoTemplate.findOne(query, FriendGroup.class);
-    }
+//    public FriendGroup getGroupByID(String id) {
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where(KeyConstant.ID).is(id));
+//        return mongoTemplate.findOne(query, FriendGroup.class);
+//    }
 
     /** 修改分组名 */
-    public void setGroupName(String username, String old_group_name, String new_group_name) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.GROUP_NAME).is(old_group_name)
-                                    .and(KeyConstant.USERNAME).is(username));
-        Update update = new Update();
-        update.set(KeyConstant.GROUP_NAME, new_group_name);
-        mongoTemplate.upsert(query, update, FriendGroup.class);
-    }
-
-    /** 获取某分组的所有好友 */
-    public List<Friendship> getFriendsOfOneGroup(String group_id) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.GROUP_ID).is(group_id));
-        return mongoTemplate.find(query, Friendship.class);
-    }
+//    public void setGroupName(String username, String old_group_name, String new_group_name) {
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where(KeyConstant.GROUP_NAME).is(old_group_name)
+//                                    .and(KeyConstant.USERNAME).is(username));
+//        Update update = new Update();
+//        update.set(KeyConstant.GROUP_NAME, new_group_name);
+//        mongoTemplate.upsert(query, update, FriendGroup.class);
+//    }
 }

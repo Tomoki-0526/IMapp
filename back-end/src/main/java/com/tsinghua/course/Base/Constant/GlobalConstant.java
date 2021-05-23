@@ -18,7 +18,8 @@ public class GlobalConstant {
     public static final String HEX_STR = "0123456789ABCDEF";
     /** 头像保存路径 */
     public static final String WINDOWS_AVATAR_PATH = "D:/Eusford/Homework/app/IMapp/uploads/avatar/";
-    public static final String LINUX_AVATAR_PATH = "/avatar/";
+    public static final String LINUX_AVATAR_PATH = "/home/uploads/avatar/";
+    public static final String RELATIVE_PATH = "/avatar/";
     /** 默认头像文件名 */
     public static final String DEFAULT_AVATAR = "default.png";
     /** 服务器IP */
@@ -28,5 +29,5 @@ public class GlobalConstant {
     /** Websocket端口 */
     public static final String WS_PORT = "7562";
     /** 文件端口 */
-    public static final String FILE_PORT = "7564";
+    public static final String FILE_PORT = "7561";
 }

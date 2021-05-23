@@ -1,39 +1,39 @@
-package com.tsinghua.course.Base.Model;
+package com.tsinghua.course.Biz.Controller.Params.ChatParams.in;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.tsinghua.course.Base.Annotation.BizType;
+import com.tsinghua.course.Base.Annotation.Required;
+import com.tsinghua.course.Biz.BizTypeEnum;
+import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 
 import java.util.Date;
 
 /**
- * @描述 聊天内容详情表
+ * @描述 发送消息给指定用户的入参
  */
-@Document
-public class ChatMessage {
-    // mongodb唯一id
-    String id;
-    // 用户聊天关系表主键
+@BizType(BizTypeEnum.CHAT_SEND_MESSAGE)
+public class SendMessageInParams extends CommonInParams {
+    // 聊天关系id
+    @Required
     String link_id;
-    // 发送方用户名
-    String from_username;
-    // 接收方用户名
-    String to_username;
-    // 内容
-    String content;
-    // 发送时间
-    Date send_time;
-    // 消息类型
-    int type;
-    // 是否是最后一条消息
-    boolean latest;
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    // 接收方用户名
+    @Required
+    String to_username;
+
+    // 消息内容
+    @Required
+    String content;
+
+    // 发送时间
+    @Required
+    Date send_time;
+
+    // 消息类型
+    @Required
+    int type;
 
     public String getLinkId() { return link_id; }
     public void setLinkId(String link_id) { this.link_id = link_id; }
-
-    public String getFromUsername() { return from_username; }
-    public void setFromUsername(String from_username) { this.from_username = from_username; }
 
     public String getToUsername() { return to_username; }
     public void setToUsername(String to_username) { this.to_username = to_username; }
@@ -46,7 +46,4 @@ public class ChatMessage {
 
     public int getType() { return type; }
     public void setType(int type) { this.type = type; }
-
-    public boolean getLatest() { return latest; }
-    public void setLatest(boolean latest) { this.latest = latest; }
 }

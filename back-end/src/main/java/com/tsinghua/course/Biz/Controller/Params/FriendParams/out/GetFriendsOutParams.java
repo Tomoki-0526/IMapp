@@ -1,7 +1,7 @@
 package com.tsinghua.course.Biz.Controller.Params.FriendParams.out;
 
 import com.tsinghua.course.Base.Annotation.BizType;
-import com.tsinghua.course.Base.CustomizedClass.FriendsByGroup;
+import com.tsinghua.course.Base.CustomizedClass.FriendItem;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 
@@ -11,8 +11,8 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.FRIEND_GET_FRIENDS)
 public class GetFriendsOutParams extends CommonOutParams {
     // 所有好友
-    FriendsByGroup[] friends;
+    FriendItem[] friends;
 
-    public FriendsByGroup[] getFriends() { return friends; }
-    public void setFriends(FriendsByGroup[] friends) { this.friends = friends; }
+    public FriendItem[] getFriends() { return friends; }
+    public void setFriends(FriendItem[] friends) { this.friends = friends; }
 }

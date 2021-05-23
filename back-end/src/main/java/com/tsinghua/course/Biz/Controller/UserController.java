@@ -97,9 +97,8 @@ public class UserController {
         if (!telephone.matches(regex))
             throw new CourseWarn(UserWarnEnum.INVALID_TELEPHONE);
 
-        /* 创建新用户和默认分组 */
+        /* 创建新用户 */
         userProcessor.createUser(username, password, nickname, telephone);
-        friendProcessor.addDefaultFriendGroup(username);
 
         return new CommonOutParams(true);
     }
@@ -161,7 +160,8 @@ public class UserController {
 
         /* 获取个人信息 */
         String avatar = user.getAvatar();
-        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar;
+        int index = avatar.indexOf(RELATIVE_PATH);
+        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
 
         String nickname = user.getNickname();
         String gender = user.getGender();
@@ -254,7 +254,7 @@ public class UserController {
         file.transferTo(newFile);
 
         // 将保存的文件路径更新到用户信息中
-        String avatar = randomDir + "/" + uuidFilename;
+        String avatar = avatarPath + randomDir + "/" + uuidFilename;
         String username = inParams.getUsername();
         userProcessor.updateAvatar(username, avatar);
 

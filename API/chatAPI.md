@@ -22,7 +22,9 @@ Correct Response:
 }
 ```
 
-## 2. 退出聊天界面
+## 2. 退出聊天界面 √
+
+※ 用户退出聊天界面或删除聊天条目时调用
 
 Method: POST  
 URL: /chat/quitChat  
@@ -33,7 +35,7 @@ Request:
 }
 ```
 
-## 3. 发送消息
+## 3. 发送消息(私聊) √
 
 Method: POST  
 URL: /ws/chat/sendMessage  
@@ -47,19 +49,17 @@ Request:
     "type": int 消息类型(0-文本 1-图片 2-音频 3-视频 4-位置信息)
 }
 ```
-
-## 4. 删除聊天列表项
-
-Method: POST  
-URL: /chat/removeChatItem  
-Request:
+定向发送给接收方的推送
 ```coffeescript
 {
-    "link_id": 聊天关系id
+    "content": string 消息内容,
+    "type": int 消息类型,
+    "window": boolean 接收方是否在聊天窗口,
+    "unread": int 未读数
 }
 ```
 
-## 5. 查看历史聊天记录
+## 4. 查看历史聊天记录
 
 Method: GET  
 URL: /chat/getHistory  
@@ -86,7 +86,7 @@ Correct Response:
 }
 ```
 
-## 6. 删除历史聊天记录(批量)
+## 5. 删除历史聊天记录(批量)
 
 Method: POST  
 URL: /chat/removeHistory  
