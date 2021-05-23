@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context=".LogonActivity"
+    >
+
+    <EditText
+        android:id="@+id/et_logon_username"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="150dp"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:hint="用户名"
+        />
+
+    <EditText
+        android:id="@+id/et_logon_password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:inputType="textPassword"
+        android:hint="密 码"
+
+        />
+
+    <EditText
+        android:id="@+id/et_logon_password_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:inputType="textPassword"
+        android:hint="确认密码"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_password_wrong"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="12sp"
+        android:text=""
+        android:textColor="@color/red"
+        android:paddingLeft="10dp"
+        android:textStyle="italic"
+        />
+
+    <EditText
+        android:id="@+id/et_logon_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:hint="昵 称"
+        />
+
+    <EditText
+        android:id="@+id/et_logon_telephone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:hint="手机号码"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+
+        <Button
+            android:id="@+id/btn_logon"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="注册"
+            />
+
+        <Button
+            android:id="@+id/btn_returnToLogin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="50dp"
+            android:layout_height="wrap_content"
+            android:text="返回"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
