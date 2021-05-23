@@ -125,4 +125,22 @@ public class ChatProcessor {
         query.addCriteria(Criteria.where(KeyConstant.LINK_ID).is(link_id));
         mongoTemplate.remove(query, ChatUserLink.class);
     }
+
+    /** 根据link_id查询所有的聊天记录(按时间升序) */
+    public List<ChatMessage> getAllLinkMessages(String link_id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.LINK_ID).is(link_id));
+        query.with(Sort.by(Sort.Order.asc(KeyConstant.SEND_TIME)));
+        return mongoTemplate.find(query, ChatMessage.class);
+    }
+
+    /** 删除聊天记录 */
+    public void removeMessages(String link_id, String[] msgs) {
+        for (String msg : msgs) {
+            Query query = new Query();
+            query.addCriteria(Criteria.where(KeyConstant.LINK_ID).is(link_id)
+                    .and(KeyConstant.ID).is(msg));
+            mongoTemplate.remove(query, ChatMessage.class);
+        }
+    }
 }

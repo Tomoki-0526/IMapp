@@ -2,21 +2,28 @@ package com.tsinghua.course.Biz.Controller;
 
 import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.NeedLogin;
+import com.tsinghua.course.Base.CustomizedClass.HistoryItem;
 import com.tsinghua.course.Base.Model.ChatItem;
+import com.tsinghua.course.Base.Model.ChatMessage;
 import com.tsinghua.course.Base.Model.ChatUserLink;
+import com.tsinghua.course.Base.Model.User;
 import com.tsinghua.course.Biz.BizTypeEnum;
-import com.tsinghua.course.Biz.Controller.Params.ChatParams.in.GetChatUserLinkInParams;
-import com.tsinghua.course.Biz.Controller.Params.ChatParams.in.QuitChatInParams;
-import com.tsinghua.course.Biz.Controller.Params.ChatParams.in.SendMessageInParams;
+import com.tsinghua.course.Biz.Controller.Params.ChatParams.in.*;
 import com.tsinghua.course.Biz.Controller.Params.ChatParams.out.GetChatUserLinkOutParams;
+import com.tsinghua.course.Biz.Controller.Params.ChatParams.out.GetHistoryOutParams;
 import com.tsinghua.course.Biz.Controller.Params.ChatParams.out.SendMessageOutParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Processor.ChatProcessor;
+import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.SocketUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 
 /**
  * @描述 聊天控制器，用于执行即时通讯相关的业务
@@ -26,6 +33,8 @@ public class ChatController {
 
     @Autowired
     ChatProcessor chatProcessor;
+    @Autowired
+    UserProcessor userProcessor;
 
     /** 获取聊天关系 */
     @BizType(BizTypeEnum.CHAT_GET_CHAT_USER_LINK)
@@ -101,5 +110,51 @@ public class ChatController {
         return new CommonOutParams(true);
     }
 
+    /** 查看历史记录 */
+    @BizType(BizTypeEnum.CHAT_GET_HISTORY)
+    @NeedLogin
+    public GetHistoryOutParams chatGetHistory(GetHistoryInParams inParams) throws Exception {
+        String link_id = inParams.getLinkId();
+        List<ChatMessage> chatMessageList = chatProcessor.getAllLinkMessages(link_id);
 
+        List<HistoryItem> historyItemList = new ArrayList<>();
+        for (ChatMessage chatMessage: chatMessageList) {
+            String msg_id = chatMessage.getId();
+            String from_username = chatMessage.getFromUsername();
+            String content = chatMessage.getContent();
+            int type = chatMessage.getType();
+            Date send_time = chatMessage.getSendTime();
+
+            User user = userProcessor.getUserByUsername(from_username);
+            String avatar = user.getAvatar();
+            int index = avatar.indexOf(RELATIVE_PATH);
+            String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+
+            HistoryItem historyItem = new HistoryItem();
+            historyItem.setMsgId(msg_id);
+            historyItem.setFromUsername(from_username);
+            historyItem.setFromAvatar(avatar_url);
+            historyItem.setContent(content);
+            historyItem.setType(type);
+            historyItem.setSendTime(send_time);
+            historyItemList.add(historyItem);
+        }
+        HistoryItem[] historyItems = new HistoryItem[historyItemList.size()];
+        historyItemList.toArray(historyItems);
+
+        GetHistoryOutParams outParams = new GetHistoryOutParams();
+        outParams.setHistory(historyItems);
+        return outParams;
+    }
+
+    /** 删除历史记录 */
+    @BizType(BizTypeEnum.CHAT_REMOVE_HISTORY)
+    @NeedLogin
+    public CommonOutParams chatRemoveHistory(RemoveHistoryInParams inParams) throws Exception {
+        String link_id = inParams.getLinkId();
+        String[] msgs = inParams.getMsgs();
+
+        chatProcessor.removeMessages(link_id, msgs);
+        return new CommonOutParams(true);
+    }
 }
