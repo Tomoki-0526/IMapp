@@ -1,4 +1,4 @@
-# 登录 √
+# 登录 √ √
 
 Method: POST  
 URL: /user/login  
@@ -22,7 +22,7 @@ Error Response:
 }
 ```
 
-# 注册 √
+# 注册 √ √
 
 Method: POST  
 URL: /user/register  
@@ -48,7 +48,7 @@ Error Response:
 }
 ```
 
-# 登出 √
+# 登出 √ √
 
 Method: GET  
 URL: /user/logout  
@@ -90,7 +90,7 @@ Error Response:
 }
 ```
 
-# 查看个人信息 √
+# 查看个人信息 √ √
 
 Method: GET  
 URL: /user/getInfo  
