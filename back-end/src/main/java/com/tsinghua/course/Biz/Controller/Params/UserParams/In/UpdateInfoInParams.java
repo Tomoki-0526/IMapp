@@ -5,6 +5,8 @@ import com.tsinghua.course.Base.Annotation.Required;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 
+import java.util.Date;
+
 /**
  * @描述 更新个人信息的入参
  **/
@@ -20,7 +22,7 @@ public class UpdateInfoInParams extends CommonInParams {
 
     // 生日
     @Required
-    private String birthday_str;
+    private String birthday;
 
     // 手机号码
     @Required
@@ -36,8 +38,8 @@ public class UpdateInfoInParams extends CommonInParams {
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
 
-    public String getBirthdayStr() { return birthday_str; }
-    public void setBirthdayStr(String birthday_str) { this.birthday_str = birthday_str; }
+    public String getBirthday() { return birthday; }
+    public void setBirthday(String birthday) { this.birthday = birthday; }
 
     public String getTelephone() { return telephone; }
     public void setTelephone(String telephone) { this.telephone = telephone; }

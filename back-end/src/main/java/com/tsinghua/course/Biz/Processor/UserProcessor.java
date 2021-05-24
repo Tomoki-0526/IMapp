@@ -87,7 +87,7 @@ public class UserProcessor {
         /* 根据生日计算年龄 */
         if (birthday_str != null) {
             try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
                 Date birthday = dateFormat.parse(birthday_str);
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(birthday);
@@ -114,7 +114,12 @@ public class UserProcessor {
             }
         }
         else {
-            update.set(KeyConstant.BIRTHDAY, "");
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+            try {
+                update.set(KeyConstant.BIRTHDAY, dateFormat.parse("1970-01-01"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            };
             update.set(KeyConstant.AGE, 0);
         }
 
