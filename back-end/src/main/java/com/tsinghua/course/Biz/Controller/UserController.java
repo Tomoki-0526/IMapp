@@ -170,8 +170,8 @@ public class UserController {
         String telephone = user.getTelephone();
         String signature = user.getSignature();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
-        String birthday_str = dateFormat.format(birthday);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+//        String birthday_str = dateFormat.format(birthday);
 
         /* 组织Response */
         GetInfoOutParams outParams = new GetInfoOutParams(true);
@@ -180,7 +180,7 @@ public class UserController {
         outParams.setNickname(nickname);
         outParams.setGender(gender);
         outParams.setAge(age);
-        outParams.setBirthday(birthday_str);
+        outParams.setBirthday(birthday);
         outParams.setTelephone(telephone);
         outParams.setSignature(signature);
 
@@ -204,8 +204,8 @@ public class UserController {
         if (!gender.equals("male") && !gender.equals("female"))
             throw new CourseWarn(UserWarnEnum.INVALID_GENDER);
 
-        /* 生日字符串 */
-        String birthday_str = inParams.getBirthdayStr();
+        /* 生日 */
+        String birthday_str = inParams.getBirthday();
         String regex = "^\\d{4}-\\d{2}-\\d{2}$";
         if (!birthday_str.matches(regex))
             throw new CourseWarn(UserWarnEnum.INVALID_BIRTHDAY);

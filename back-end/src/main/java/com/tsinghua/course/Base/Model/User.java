@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import static com.tsinghua.course.Base.Constant.GlobalConstant.DATE_PATTERN;
+
 /**
  * @描述 对应mongodb中的User集合，mongodb是非关系型数据库，可以存储的对象类型很丰富，使用起来方便很多
  **/
@@ -77,7 +79,7 @@ public class User {
 
     public Date getBirthday() { return birthday; }
     public void setBirthday(String birthday_str) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
         try {
             if (birthday_str.equals(""))
                 birthday = dateFormat.parse("1970-01-01");

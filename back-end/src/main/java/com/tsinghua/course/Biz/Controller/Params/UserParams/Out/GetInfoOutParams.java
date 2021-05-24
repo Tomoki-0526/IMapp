@@ -4,6 +4,8 @@ import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 
+import java.util.Date;
+
 /**
  * @描述 查看个人信息的出参
  **/
@@ -20,7 +22,7 @@ public class GetInfoOutParams extends CommonOutParams {
     // 年龄
     private int age;
     // 生日
-    private String birthday;
+    private Date birthday;
     // 手机号码
     private String telephone;
     // 个性签名
@@ -60,10 +62,8 @@ public class GetInfoOutParams extends CommonOutParams {
     }
     public void setAge(int age) { this.age = age; }
 
-    public String getBirthday() { return birthday; }
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
+    public Date getBirthday() { return birthday; }
+    public void setBirthday(Date birthday) { this.birthday = birthday; }
 
     public String getTelephone() {
         return telephone;

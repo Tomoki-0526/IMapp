@@ -4,7 +4,6 @@ import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.NeedLogin;
 import com.tsinghua.course.Base.CustomizedClass.FriendItem;
 import com.tsinghua.course.Base.CustomizedClass.FriendRequestItem;
-import com.tsinghua.course.Base.CustomizedClass.FriendsByGroup;
 import com.tsinghua.course.Base.Error.CourseWarn;
 import com.tsinghua.course.Base.Error.UserWarnEnum;
 import com.tsinghua.course.Base.Model.*;
@@ -26,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
-import static com.tsinghua.course.Base.Constant.NameConstant.DEFAULT_GROUP;
 
 /**
  * @描述 好友控制器，用于执行通讯录相关的业务
