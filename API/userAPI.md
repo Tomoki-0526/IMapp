@@ -65,7 +65,7 @@ Error Response:
 }
 ```
 
-# 修改密码 √
+# 修改密码 √ √
 
 Method: POST  
 URL: /user/modifyPassword  
@@ -114,7 +114,7 @@ Error Response:
 }
 ```
 
-# 更新个人信息 √
+# 更新个人信息 √ √
 
 Method: POST  
 URL: /user/updateInfo  
