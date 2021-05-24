@@ -6,4 +6,6 @@
     <string name="title_contact">通讯</string>
     <string name="login_successfully">登录成功</string>
     <string name="logon_successfully">注册成功</string>
+    <string name="logout_successfully">登出成功</string>
+    <string name="modify_successfully">修改成功</string>
 </resources>

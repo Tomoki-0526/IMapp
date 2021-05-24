@@ -71,8 +71,6 @@
             android:layout_gravity="center"
             />
 
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -215,11 +213,12 @@
             android:scaleType="centerCrop"
             />
     </LinearLayout>
-    //TODO:圆角
+    //TODO:登录圆角
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Button
+            android:id="@+id/btn_logout"
             android:layout_width="120dp"
             android:layout_height="30dp"
             android:layout_marginBottom="30dp"
