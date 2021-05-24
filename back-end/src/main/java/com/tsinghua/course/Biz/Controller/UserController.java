@@ -170,8 +170,8 @@ public class UserController {
         String telephone = user.getTelephone();
         String signature = user.getSignature();
 
-//        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
-//        String birthday_str = dateFormat.format(birthday);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+        String birthday_str = dateFormat.format(birthday);
 
         /* 组织Response */
         GetInfoOutParams outParams = new GetInfoOutParams(true);
@@ -180,7 +180,7 @@ public class UserController {
         outParams.setNickname(nickname);
         outParams.setGender(gender);
         outParams.setAge(age);
-        outParams.setBirthday(birthday);
+        outParams.setBirthday(birthday_str);
         outParams.setTelephone(telephone);
         outParams.setSignature(signature);
 

@@ -26,7 +26,7 @@ public class SendMessageInParams extends CommonInParams {
 
     // 发送时间
     @Required
-    Date send_time;
+    String send_time;
 
     // 消息类型
     @Required
@@ -41,8 +41,8 @@ public class SendMessageInParams extends CommonInParams {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
-    public Date getSendTime() { return send_time; }
-    public void setSendTime(Date send_time) { this.send_time = send_time; }
+    public String getSendTime() { return send_time; }
+    public void setSendTime(String send_time) { this.send_time = send_time; }
 
     public int getType() { return type; }
     public void setType(int type) { this.type = type; }

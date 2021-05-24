@@ -22,7 +22,7 @@ public class GetInfoOutParams extends CommonOutParams {
     // 年龄
     private int age;
     // 生日
-    private Date birthday;
+    private String birthday;
     // 手机号码
     private String telephone;
     // 个性签名
@@ -62,8 +62,8 @@ public class GetInfoOutParams extends CommonOutParams {
     }
     public void setAge(int age) { this.age = age; }
 
-    public Date getBirthday() { return birthday; }
-    public void setBirthday(Date birthday) { this.birthday = birthday; }
+    public String getBirthday() { return birthday; }
+    public void setBirthday(String birthday) { this.birthday = birthday; }
 
     public String getTelephone() {
         return telephone;
