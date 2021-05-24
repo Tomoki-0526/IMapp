@@ -1,15 +1,11 @@
-# 获取通讯录
+# 获取通讯录 √
 
 Method: GET  
 URL: /friend/getFriends
 Correct Response:
 ```coffeescript
 {
-    'friends': {
-        '分组1名称': [朋友列表],
-        '分组2名称': [朋友列表],
-        ...
-    }
+    'friends': 朋友列表,
 }
 ```
 一个朋友的格式:

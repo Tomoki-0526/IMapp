@@ -17,7 +17,7 @@ public class HistoryItem {
     // 消息类型
     int type;
     // 发送时间
-    Date send_time;
+    String send_time;
 
     public String getMsgId() { return msg_id; }
     public void setMsgId(String msg_id) { this.msg_id = msg_id; }
@@ -34,6 +34,6 @@ public class HistoryItem {
     public int getType() { return type; }
     public void setType(int type) { this.type = type; }
 
-    public Date getSendTime() { return send_time; }
-    public void setSendTime(Date send_time) { this.send_time = send_time; }
+    public String getSendTime() { return send_time; }
+    public void setSendTime(String send_time) { this.send_time = send_time; }
 }

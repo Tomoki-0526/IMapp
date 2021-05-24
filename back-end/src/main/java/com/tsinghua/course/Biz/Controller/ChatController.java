@@ -19,6 +19,7 @@ import com.tsinghua.course.Frame.Util.SocketUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,8 +82,11 @@ public class ChatController {
         String from_username = inParams.getUsername();
         String to_username = inParams.getToUsername();
         String content = inParams.getContent();
-        Date send_time = inParams.getSendTime();
+        String send_time_str = inParams.getSendTime();
         int type = inParams.getType();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+        Date send_time = dateFormat.parse(send_time_str);
 
         /* 把消息插入数据库 */
         // 把上一条消息的最新状态置否
@@ -136,7 +140,10 @@ public class ChatController {
             historyItem.setFromAvatar(avatar_url);
             historyItem.setContent(content);
             historyItem.setType(type);
-            historyItem.setSendTime(send_time);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+            String send_time_str = dateFormat.format(send_time);
+            historyItem.setSendTime(send_time_str);
             historyItemList.add(historyItem);
         }
         HistoryItem[] historyItems = new HistoryItem[historyItemList.size()];

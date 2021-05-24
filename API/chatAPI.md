@@ -45,7 +45,7 @@ Request:
     "link_id": string 聊天关系id,
     "to_username": string 接收方用户名,
     "content": string 消息内容,
-    "send_time": Date 发送时间,
+    "send_time": string 发送时间(yyyy-MM-dd hh:mm:ss),
     "type": int 消息类型(0-文本 1-图片 2-音频 3-视频 4-位置信息)
 }
 ```
@@ -59,7 +59,7 @@ Request:
 }
 ```
 
-## 4. 查看历史聊天记录
+## 4. 查看历史聊天记录 √
 
 Method: GET  
 URL: /chat/getHistory  
@@ -87,7 +87,7 @@ Correct Response:
 }
 ```
 
-## 5. 删除历史聊天记录(批量)
+## 5. 删除历史聊天记录(批量) √
 
 Method: POST  
 URL: /chat/removeHistory  
