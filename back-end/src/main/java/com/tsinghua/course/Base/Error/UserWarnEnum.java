@@ -25,7 +25,8 @@ public enum UserWarnEnum implements ExceptionInterface {
     NO_SUCH_GROUP("UserWarn019", "没有该分组"),
     DUPLICATE_GROUP("UserWarn020", "分组名重复"),
     NEED_NICKNAME("UserWarn021", "缺少昵称"),
-    NEED_TELEPHONE("UserWarn022", "缺少手机号")
+    NEED_TELEPHONE("UserWarn022", "缺少手机号"),
+    ALREADY_FRIEND("UserWarn023", "对方已经是您的好友"),
     ;
 
     UserWarnEnum(String code, String msg) {

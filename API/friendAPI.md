@@ -375,7 +375,7 @@ URL: /friend/newFriendRequest
 Request:
 ```coffeescript
 {
-    'username': 新朋友用户名,
+    'to_username': 新朋友用户名,
     'extra': 附加信息
 }
 ```
