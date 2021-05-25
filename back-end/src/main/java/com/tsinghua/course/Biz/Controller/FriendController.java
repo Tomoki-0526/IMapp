@@ -248,9 +248,11 @@ public class FriendController {
 
         /* 删除聊天条目（单向）和关系 */
         ChatUserLink chatUserLink = chatProcessor.getChatUserLink(username, friend_username);
-        String link_id = chatUserLink.getId();
-        chatProcessor.removeChatItem(link_id, username);
-        chatProcessor.removeChatUserLink(link_id);
+        if (chatUserLink != null) {
+            String link_id = chatUserLink.getId();
+            chatProcessor.removeChatItem(link_id, username);
+            chatProcessor.removeChatUserLink(link_id);
+        }
 
         return new CommonOutParams(true);
     }
@@ -321,10 +323,14 @@ public class FriendController {
         String username = inParams.getUsername();
         String from_username = inParams.getFromUsername();
         String result_str = inParams.getResult();
-        boolean result = false;
-        if (result_str.equals("1"))
-            result = true;
+        boolean result = result_str.equals("1");
 
+        /* 如果发起者已经是好友了则返回 */
+        Friendship friendship = friendProcessor.getFriendshipByUsername(username, from_username);
+        if (friendship != null) {
+            throw new CourseWarn(UserWarnEnum.ALREADY_FRIEND);
+        }
+        /* 审核好友申请 */
         friendProcessor.checkFriendRequest(from_username, username, result);
 
         if (result) {
