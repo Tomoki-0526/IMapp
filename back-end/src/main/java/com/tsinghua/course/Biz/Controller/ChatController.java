@@ -83,7 +83,15 @@ public class ChatController {
         String to_username = inParams.getToUsername();
         String content = inParams.getContent();
         String send_time_str = inParams.getSendTime();
-        int type = inParams.getType();
+        String type_str = inParams.getType();
+        int type = 0;
+        switch (type_str) {
+            case "1": type = 1; break;
+            case "2": type = 2; break;
+            case "3": type = 3; break;
+            case "4": type = 4; break;
+            default: break;
+        }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
         Date send_time = dateFormat.parse(send_time_str);

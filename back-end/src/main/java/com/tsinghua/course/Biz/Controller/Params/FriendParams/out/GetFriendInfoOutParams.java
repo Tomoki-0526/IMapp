@@ -62,7 +62,7 @@ public class GetFriendInfoOutParams extends CommonOutParams {
     public String getGroup() { return group; }
     public void setGroup(String group) { this.group = group; }
 
-    public boolean isStar() { return star; }
+    public boolean getStar() { return star; }
     public void setStar(boolean star) { this.star = star; }
 
     public String getSignature() { return signature; }
