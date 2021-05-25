@@ -15,11 +15,11 @@ public class CheckFriendRequestInParams extends CommonInParams {
     private String from_username;
     // 结果
     @Required
-    private boolean result;
+    private String result;
 
     public String getFromUsername() { return from_username; }
     public void setFromUsername(String from_username) { this.from_username = from_username; }
 
-    public boolean getResult() { return result; }
-    public void setResult(boolean result) { this.result = result; }
+    public String getResult() { return result; }
+    public void setResult(String result) { this.result = result; }
 }

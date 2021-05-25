@@ -8,6 +8,7 @@ import com.tsinghua.course.Base.Error.CourseWarn;
 import com.tsinghua.course.Base.Error.UserWarnEnum;
 import com.tsinghua.course.Base.Model.*;
 import com.tsinghua.course.Biz.BizTypeEnum;
+import com.tsinghua.course.Biz.Controller.Params.ChatParams.out.SendMessageOutParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.*;
@@ -205,8 +206,8 @@ public class FriendController {
         outParams.setUsername(friend_username);
         outParams.setRemark(remark);
         outParams.setTelephone(telephone);
-        outParams.setStar(star);
         outParams.setSignature(signature);
+        outParams.setStar(star);
 
         return outParams;
     }
@@ -319,19 +320,24 @@ public class FriendController {
     public CommonOutParams friendCheckFriendRequest(CheckFriendRequestInParams inParams) throws Exception {
         String username = inParams.getUsername();
         String from_username = inParams.getFromUsername();
-        boolean result = inParams.getResult();
+        String result_str = inParams.getResult();
+        boolean result = false;
+        if (result_str.equals("1"))
+            result = true;
 
         friendProcessor.checkFriendRequest(from_username, username, result);
-        // TODO
-        /*
-          如果通过，则给发送方返回推送
-          以新消息的形式发送
-         */
+
         if (result) {
             friendProcessor.addFriendship(username, from_username);
             friendProcessor.addFriendship(from_username, username);
 //            friendProcessor.addFriendToGroup(username, from_username, DEFAULT_GROUP);
 //            friendProcessor.addFriendToGroup(from_username, username, DEFAULT_GROUP);
+
+            /* 给对方返回结果 */
+            CheckFriendRequestOutParams outParams = new CheckFriendRequestOutParams();
+            outParams.setFromUsername(from_username);
+            outParams.setExtra("对方已接受您的好友申请");
+            SocketUtil.sendMessageToUser(from_username, outParams);
         }
 
         return new CommonOutParams(true);

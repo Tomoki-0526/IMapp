@@ -30,7 +30,7 @@ public class SendMessageInParams extends CommonInParams {
 
     // 消息类型
     @Required
-    int type;
+    String type;
 
     public String getLinkId() { return link_id; }
     public void setLinkId(String link_id) { this.link_id = link_id; }
@@ -44,6 +44,6 @@ public class SendMessageInParams extends CommonInParams {
     public String getSendTime() { return send_time; }
     public void setSendTime(String send_time) { this.send_time = send_time; }
 
-    public int getType() { return type; }
-    public void setType(int type) { this.type = type; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 }

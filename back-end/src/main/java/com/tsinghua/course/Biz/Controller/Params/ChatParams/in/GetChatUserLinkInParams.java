@@ -1,6 +1,7 @@
 package com.tsinghua.course.Biz.Controller.Params.ChatParams.in;
 
 import com.tsinghua.course.Base.Annotation.BizType;
+import com.tsinghua.course.Base.Annotation.Required;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 
@@ -10,6 +11,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 @BizType(BizTypeEnum.CHAT_GET_CHAT_USER_LINK)
 public class GetChatUserLinkInParams extends CommonInParams {
     // 接收方用户名
+    @Required
     String to_username;
 
     public String getToUsername() { return to_username; }

@@ -41,7 +41,6 @@ public class UserProcessor {
         user.setTelephone(telephone);
         user.setSignature("");
         user.setUserType(UserType.NORMAL);
-        user.setNumOfGroups(1);
 
         String OSName = System.getProperty(OS_NAME);
         String avatarPath = OSName.toLowerCase().startsWith(WIN) ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
