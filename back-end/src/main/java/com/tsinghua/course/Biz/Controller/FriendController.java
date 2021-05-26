@@ -246,6 +246,10 @@ public class FriendController {
         String friend_username = inParams.getFriendUsername();
         friendProcessor.removeFriend(username, friend_username);
 
+        /* 更新好友请求状态 */
+        friendProcessor.updateFriendRequestStatus(username, friend_username);
+        friendProcessor.updateFriendRequestStatus(friend_username, username);
+
         /* 删除聊天条目（单向）和关系 */
         ChatUserLink chatUserLink = chatProcessor.getChatUserLink(username, friend_username);
         if (chatUserLink != null) {
