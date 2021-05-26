@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
@@ -201,7 +202,7 @@ public class UserController {
 
         /* 性别 */
         String gender = inParams.getGender();
-        if (!gender.equals("male") && !gender.equals("female"))
+        if (!gender.equals("male") && !gender.equals("female") && !gender.equals(""))
             throw new CourseWarn(UserWarnEnum.INVALID_GENDER);
 
         /* 生日 */
