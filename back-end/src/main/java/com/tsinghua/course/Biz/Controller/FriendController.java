@@ -21,9 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 
@@ -313,6 +311,7 @@ public class FriendController {
         }
 
         FriendRequestItem[] friendRequestItems = new FriendRequestItem[friendRequestItemList.size()];
+        Collections.reverse(friendRequestItemList);
         friendRequestItemList.toArray(friendRequestItems);
 
         GetFriendRequestOutParams outParams = new GetFriendRequestOutParams();
@@ -445,6 +444,7 @@ public class FriendController {
             friendItem.setFriendRemark(friend_remark);
             friendItemList.add(friendItem);
         }
+
         FriendItem[] result = new FriendItem[friendItemList.size()];
         friendItemList.toArray(result);
 
