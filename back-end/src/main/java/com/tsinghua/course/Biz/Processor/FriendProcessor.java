@@ -159,7 +159,28 @@ public class FriendProcessor {
         mongoTemplate.insert(friendship);
     }
 
-    /** 添加分组 */
+    /** 删除好友请求 */
+    public void removeFriendRequest(String from_username, String to_username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.FROM_USERNAME).is(from_username)
+                                    .and(KeyConstant.TO_USERNAME).is(to_username));
+        mongoTemplate.remove(query, FriendRequest.class);
+    }
+
+    /** 更新好友请求状态（双向） */
+    public void updateFriendRequestStatus(String from_username, String to_username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.FROM_USERNAME).is(from_username)
+                                    .and(KeyConstant.TO_USERNAME).is(to_username));
+        List<FriendRequest> friendRequestList = mongoTemplate.find(query, FriendRequest.class);
+        if (!friendRequestList.isEmpty()) {
+            Update update = new Update();
+            update.set(KeyConstant.STATUS, 2);
+            mongoTemplate.upsert(query, update, FriendRequest.class);
+        }
+    }
+
+//    /** 添加分组 */
 //    public void addFriendGroup(String username, String group_name) {
 //        FriendGroup friendGroup = new FriendGroup();
 //        friendGroup.setUsername(username);
@@ -174,7 +195,7 @@ public class FriendProcessor {
 //        mongoTemplate.insert(friendGroup);
 //    }
 
-    /** 添加默认分组 */
+//    /** 添加默认分组 */
 //    public void addDefaultFriendGroup(String username) {
 //        FriendGroup friendGroup = new FriendGroup();
 //        friendGroup.setUsername(username);
@@ -189,7 +210,7 @@ public class FriendProcessor {
 //        mongoTemplate.insert(friendGroup);
 //    }
 
-    /** 将好友添加到分组 */
+//    /** 将好友添加到分组 */
 //    public void addFriendToGroup(String username, String friend_username, String group_name) {
 //        Query query = new Query();
 //        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
@@ -204,14 +225,14 @@ public class FriendProcessor {
 //        mongoTemplate.upsert(query1, update, Friendship.class);
 //    }
 
-    /** 获取所有分组 */
+//    /** 获取所有分组 */
 //    public List<FriendGroup> getAllGroups(String username) {
 //        Query query = new Query();
 //        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
 //        return mongoTemplate.find(query, FriendGroup.class);
 //    }
 
-    /** 根据用户名和分组名查找分组 */
+//    /** 根据用户名和分组名查找分组 */
 //    public FriendGroup getGroupByUsernameAndGroupName(String username, String group_name) {
 //        Query query = new Query();
 //        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
@@ -219,14 +240,14 @@ public class FriendProcessor {
 //        return mongoTemplate.findOne(query, FriendGroup.class);
 //    }
 
-    /** 根据ID查找分组 */
+//    /** 根据ID查找分组 */
 //    public FriendGroup getGroupByID(String id) {
 //        Query query = new Query();
 //        query.addCriteria(Criteria.where(KeyConstant.ID).is(id));
 //        return mongoTemplate.findOne(query, FriendGroup.class);
 //    }
 
-    /** 修改分组名 */
+//    /** 修改分组名 */
 //    public void setGroupName(String username, String old_group_name, String new_group_name) {
 //        Query query = new Query();
 //        query.addCriteria(Criteria.where(KeyConstant.GROUP_NAME).is(old_group_name)
