@@ -1,4 +1,4 @@
-# 获取通讯录 √
+# 获取通讯录 √ √
 
 Method: GET  
 URL: /friend/getFriends
@@ -24,7 +24,7 @@ Error Response:
 }
 ```
 
-# 查看好友申请列表 √
+# 查看好友申请列表 √ √
 
 Method: GET  
 URL: /friend/getFriendRequest
@@ -51,7 +51,7 @@ Error Response:
 }
 ```
 
-# 审核好友申请 √
+# 审核好友申请 √ √
 
 Method: POST
 URL: /friend/checkFriendRequest
@@ -93,7 +93,7 @@ Error Response:
 }
 ```
 
-# 查看某一个好友的信息 √
+# 查看某一个好友的信息 √ √
 
 Method: GET  
 URL: /friend/getFriendInfo
@@ -261,7 +261,7 @@ Error Response:
 }
 ```
 
-# 删除好友 √
+# 删除好友 √ √
 
 Method: POST
 URL: /friend/removeFriend
@@ -341,7 +341,7 @@ Error Response:
 }
 ```
 
-# 获取陌生用户信息 √
+# 获取陌生用户信息 √ √
 
 Method: GET
 URL: /friend/getStrangerInfo
@@ -368,7 +368,7 @@ Error Response:
 }
 ```
 
-# 添加陌生用户为好友 √
+# 添加陌生用户为好友 √ √
 
 Method: POST
 URL: /friend/newFriendRequest
