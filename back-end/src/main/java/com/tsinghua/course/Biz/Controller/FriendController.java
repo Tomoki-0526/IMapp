@@ -267,7 +267,18 @@ public class FriendController {
     public CommonOutParams friendSetStarFriend(SetStarFriendInParams inParams) throws Exception {
         String username = inParams.getUsername();
         String friend_username = inParams.getFriendUsername();
-        friendProcessor.setStarFriend(username, friend_username);
+        friendProcessor.setStarFriend(username, friend_username, true);
+
+        return new CommonOutParams(true);
+    }
+
+    /** 取消星标好友 */
+    @BizType(BizTypeEnum.FRIEND_CANCEL_STAR_FRIEND)
+    @NeedLogin
+    public CommonOutParams friendCancelStarFriend(CancelStarFriendInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String friend_username = inParams.getFriendUsername();
+        friendProcessor.setStarFriend(username, friend_username, false);
 
         return new CommonOutParams(true);
     }

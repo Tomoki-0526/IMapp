@@ -98,12 +98,12 @@ public class FriendProcessor {
     }
 
     /** 设置星标好友 */
-    public void setStarFriend(String username, String friend_username) {
+    public void setStarFriend(String username, String friend_username, boolean star) {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
                                     .and(KeyConstant.FRIEND_USERNAME).is(friend_username));
         Update update = new Update();
-        update.set(KeyConstant.STAR, true);
+        update.set(KeyConstant.STAR, star);
         mongoTemplate.upsert(query, update, Friendship.class);
     }
 

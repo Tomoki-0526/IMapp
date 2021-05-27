@@ -22,6 +22,7 @@ public enum BizTypeEnum {
     FRIEND_FIND_FRIEND(FriendController.class, "/friend/findFriend", "查找好友"),
     FRIEND_GET_STAR_FRIENDS(FriendController.class, "/friend/getStarFriends", "查看星标好友"),
     FRIEND_SET_STAR_FRIEND(FriendController.class, "/friend/setStarFriend", "设置星标好友"),
+    FRIEND_CANCEL_STAR_FRIEND(FriendController.class, "/friend/cancelStarFriend", "取消星标好友"),
     FRIEND_GET_FRIEND_INFO(FriendController.class, "/friend/getFriendInfo", "查看某一位好友的信息"),
     FRIEND_REMOVE_FRIEND(FriendController.class, "/friend/removeFriend", "删除好友"),
     FRIEND_SET_FRIEND_REMARK(FriendController.class, "/friend/setFriendRemark", "设置好友备注"),
