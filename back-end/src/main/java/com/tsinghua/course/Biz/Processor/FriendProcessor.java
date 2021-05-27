@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.DATETIME_PATTERN;
 
@@ -41,29 +42,29 @@ public class FriendProcessor {
         return mongoTemplate.findOne(query, Friendship.class);
     }
 
-    /** 根据昵称查找自己的好友 */
-    public List<Friendship> getFriendshipByNickname(String username, String friend_nickname) {
-        List<Friendship> friendship_list = getAllFriendship(username);
-        Query query = new Query();
-        List<Friendship> result = new ArrayList<>();
-        for (Friendship friendship: friendship_list) {
-            String friend_username = friendship.getFriendUsername();
-            query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(friend_username));
-            User friend = mongoTemplate.findOne(query, User.class);
-            assert friend != null;
-            if (friend.getNickname().equals(friend_nickname))
-                result.add(friendship);
-        }
-        return result;
-    }
+//    /** 根据昵称查找自己的好友 */
+//    public List<Friendship> getFriendshipByNickname(String username, String friend_nickname) {
+//        List<Friendship> friendship_list = getAllFriendship(username);
+//        Query query = new Query();
+//        List<Friendship> result = new ArrayList<>();
+//        for (Friendship friendship: friendship_list) {
+//            String friend_username = friendship.getFriendUsername();
+//            query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(friend_username));
+//            User friend = mongoTemplate.findOne(query, User.class);
+//            assert friend != null;
+//            if (friend.getNickname().equals(friend_nickname))
+//                result.add(friendship);
+//        }
+//        return result;
+//    }
 
-    /** 根据备注查找自己的好友 */
-    public List<Friendship> getFriendshipByRemark(String username, String friend_remark) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
-                                    .and(KeyConstant.REMARK).is(friend_remark));
-        return mongoTemplate.find(query, Friendship.class);
-    }
+//    /** 根据备注查找自己的好友 */
+//    public List<Friendship> getFriendshipByRemark(String username, String friend_remark) {
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+//                                    .and(KeyConstant.REMARK).is(friend_remark));
+//        return mongoTemplate.find(query, Friendship.class);
+//    }
 
     /** 查找自己所有的星标好友 */
     public List<Friendship> getAllStarFriends(String username) {
@@ -178,6 +179,45 @@ public class FriendProcessor {
             update.set(KeyConstant.STATUS, 2);
             mongoTemplate.upsert(query, update, FriendRequest.class);
         }
+    }
+
+    /** 根据用户名搜索好友（模糊） */
+    public List<Friendship> getFriendsByUsernameFuzzy(String username, String friendUsername) {
+        Pattern pattern = Pattern.compile("^.*" + friendUsername + ".*$", Pattern.CASE_INSENSITIVE);
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.FRIEND_USERNAME).regex(pattern));
+
+        return mongoTemplate.find(query, Friendship.class);
+    }
+
+    /** 根据备注搜索好友（模糊） */
+    public List<Friendship> getFriendsByRemarkFuzzy(String username, String remark) {
+        Pattern pattern = Pattern.compile("^.*" + remark + ".*$", Pattern.CASE_INSENSITIVE);
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                .and(KeyConstant.REMARK).regex(pattern));
+
+        return mongoTemplate.find(query, Friendship.class);
+    }
+
+    /** 根据昵称搜索好友（模糊） */
+    public List<Friendship> getFriendsByNicknameFuzzy(String username, String nickname) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+        List<Friendship> friendshipList = mongoTemplate.find(query, Friendship.class);
+        List<Friendship> result = new ArrayList<>();
+        for (Friendship friendship: friendshipList) {
+            String friend_username = friendship.getFriendUsername();
+            Query query1 = new Query();
+            query1.addCriteria(Criteria.where(KeyConstant.USERNAME).is(friend_username));
+            User friend = mongoTemplate.findOne(query, User.class);
+            String realNickname = friend.getNickname();
+            if (realNickname.contains(nickname)) {
+                result.add(friendship);
+            }
+        }
+        return result;
     }
 
 //    /** 添加分组 */
