@@ -3,6 +3,7 @@ package com.tsinghua.course.Base.Model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @描述 动态表，基类
@@ -17,6 +18,10 @@ public class Moment {
     int type;
     // 发布时间
     Date publishTime;
+    // 点赞数
+    int likes;
+    // 评论数
+    int comments;
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -29,4 +34,10 @@ public class Moment {
 
     public Date getPublishTime() { return publishTime; }
     public void setPublishTime(Date publishTime) { this.publishTime = publishTime; }
+
+    public int getLikes() { return likes; }
+    public void setLikes(int likes) { this.likes = likes; }
+
+    public int getComments() { return comments; }
+    public void setComments(int comments) { this.comments = comments; }
 }

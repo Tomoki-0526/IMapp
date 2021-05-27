@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
@@ -161,7 +160,7 @@ public class UserController {
 
         /* 获取个人信息 */
         String avatar = user.getAvatar();
-        int index = avatar.indexOf(RELATIVE_PATH);
+        int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
         String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
 
         String nickname = user.getNickname();

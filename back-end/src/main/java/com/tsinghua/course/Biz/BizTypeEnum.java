@@ -40,6 +40,9 @@ public enum BizTypeEnum {
     CHAT_GET_HISTORY(ChatController.class, "/chat/getHistory", "查看历史聊天记录"),
     CHAT_REMOVE_HISTORY(ChatController.class, "/chat/removeHistory", "删除历史记录"),
 
+    /** 动态业务类型 */
+    MOMENT_PUBLISH_MOMENT(MomentController.class, "/moment/publishMoment", "发布动态"),
+
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),
 
