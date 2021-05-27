@@ -391,3 +391,26 @@ Error Response:
     'msg': '提交申请失败'
 }
 ```
+
+# 取消星标好友
+
+Method: POST  
+URL: /friend/cancelStarFriend
+Request:
+```coffeescript
+{
+    'friend_username': 好友用户名
+}
+```
+Correct Response:
+```coffeescript
+{
+    'msg': '设置星标成功'
+}
+```
+Error Response:
+```coffeescript
+{
+    'msg': '设置星标失败'
+}
+```
