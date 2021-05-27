@@ -22,6 +22,7 @@ public enum BizTypeEnum {
     FRIEND_FIND_FRIEND(FriendController.class, "/friend/findFriend", "查找好友"),
     FRIEND_GET_STAR_FRIENDS(FriendController.class, "/friend/getStarFriends", "查看星标好友"),
     FRIEND_SET_STAR_FRIEND(FriendController.class, "/friend/setStarFriend", "设置星标好友"),
+    FRIEND_CANCEL_STAR_FRIEND(FriendController.class, "/friend/cancelStarFriend", "取消星标好友"),
     FRIEND_GET_FRIEND_INFO(FriendController.class, "/friend/getFriendInfo", "查看某一位好友的信息"),
     FRIEND_REMOVE_FRIEND(FriendController.class, "/friend/removeFriend", "删除好友"),
     FRIEND_SET_FRIEND_REMARK(FriendController.class, "/friend/setFriendRemark", "设置好友备注"),
@@ -39,6 +40,9 @@ public enum BizTypeEnum {
     CHAT_SEND_MESSAGE(ChatController.class, "/chat/sendMessage", "发送消息给指定用户"),
     CHAT_GET_HISTORY(ChatController.class, "/chat/getHistory", "查看历史聊天记录"),
     CHAT_REMOVE_HISTORY(ChatController.class, "/chat/removeHistory", "删除历史记录"),
+
+    /** 动态业务类型 */
+    MOMENT_PUBLISH_MOMENT(MomentController.class, "/moment/publishMoment", "发布动态"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

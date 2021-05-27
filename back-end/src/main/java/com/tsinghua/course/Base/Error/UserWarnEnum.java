@@ -18,7 +18,7 @@ public enum UserWarnEnum implements ExceptionInterface {
     INVALID_GENDER("UserWarn012", "性别不合法"),
     INVALID_BIRTHDAY("UserWarn013", "生日不合法"),
     INVALID_TELEPHONE("UserWarn014", "手机号不合法"),
-    FIND_STRANGER_NO_RESULT("UserWarn015", "未找到用户"),
+    FIND_STRANGER_NO_RESULT("UserWarn015", "未找到该用户"),
     FIND_FRIEND_NO_RESULT("UserWarn016", "未找到好友"),
     NO_STAR_FRIENDS("UserWarn017", "没有特别关心好友"),
     NO_FRIEND_REQUEST("UserWarn018", "没有新好友申请"),
@@ -26,7 +26,7 @@ public enum UserWarnEnum implements ExceptionInterface {
     DUPLICATE_GROUP("UserWarn020", "分组名重复"),
     NEED_NICKNAME("UserWarn021", "缺少昵称"),
     NEED_TELEPHONE("UserWarn022", "缺少手机号"),
-    ALREADY_FRIEND("UserWarn023", "对方已经是您的好友"),
+    ALREADY_FRIEND("UserWarn023", "该用户已经是您的好友"),
     ;
 
     UserWarnEnum(String code, String msg) {

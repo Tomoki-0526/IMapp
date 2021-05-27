@@ -8,7 +8,6 @@ import com.tsinghua.course.Base.Error.CourseWarn;
 import com.tsinghua.course.Base.Error.UserWarnEnum;
 import com.tsinghua.course.Base.Model.*;
 import com.tsinghua.course.Biz.BizTypeEnum;
-import com.tsinghua.course.Biz.Controller.Params.ChatParams.out.SendMessageOutParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.*;
@@ -21,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 
@@ -50,12 +47,15 @@ public class FriendController {
         /* 如果没找到该用户、找到自己或者好友，均视为没有找到结果 */
         String username = inParams.getUsername();
         Friendship friendship = friendProcessor.getFriendshipByUsername(username, stranger_username);
-        if (stranger == null || stranger.getUsername().equals(username) || friendship != null) {
+        if (stranger == null) {
             throw new CourseWarn(UserWarnEnum.FIND_STRANGER_NO_RESULT);
+        }
+        if (stranger.getUsername().equals(username) || friendship != null) {
+            throw new CourseWarn(UserWarnEnum.ALREADY_FRIEND);
         }
         String nickname = stranger.getNickname();
         String avatar = stranger.getAvatar();
-        int index = avatar.indexOf(RELATIVE_PATH);
+        int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
         String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
 
         FindStrangerOutParams outParams = new FindStrangerOutParams();
@@ -75,7 +75,7 @@ public class FriendController {
 
         String stranger_nickname = stranger.getNickname();
         String stranger_avatar = stranger.getAvatar();
-        int index = stranger_avatar.indexOf(RELATIVE_PATH);
+        int index = stranger_avatar.indexOf(AVATAR_RELATIVE_PATH);
         String stranger_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + stranger_avatar.substring(index);
         String stranger_gender = stranger.getGender();
         String stranger_signature = stranger.getSignature();
@@ -118,7 +118,7 @@ public class FriendController {
                 User friend = userProcessor.getUserByUsername(friend_username);
                 String friend_nickname = friend.getNickname();
                 String friend_avatar = friend.getAvatar();
-                int index = friend_avatar.indexOf(RELATIVE_PATH);
+                int index = friend_avatar.indexOf(AVATAR_RELATIVE_PATH);
                 String friend_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + friend_avatar.substring(index);
 
                 FriendItem item = new FriendItem();
@@ -153,7 +153,7 @@ public class FriendController {
             String friend_remark = starFriend.getRemark();
             User friend = userProcessor.getUserByUsername(friend_username);
             String friend_avatar = friend.getAvatar();
-            int index = friend_avatar.indexOf(RELATIVE_PATH);
+            int index = friend_avatar.indexOf(AVATAR_RELATIVE_PATH);
             String friend_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + friend_avatar.substring(index);
             String friend_nickname = friend.getNickname();
 
@@ -182,7 +182,7 @@ public class FriendController {
         Friendship friendship = friendProcessor.getFriendshipByUsername(username, friend_username);
 
         String avatar = friend.getAvatar();
-        int index = avatar.indexOf(RELATIVE_PATH);
+        int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
         String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
         String nickname = friend.getNickname();
         String remark = friendship.getRemark();
@@ -267,7 +267,18 @@ public class FriendController {
     public CommonOutParams friendSetStarFriend(SetStarFriendInParams inParams) throws Exception {
         String username = inParams.getUsername();
         String friend_username = inParams.getFriendUsername();
-        friendProcessor.setStarFriend(username, friend_username);
+        friendProcessor.setStarFriend(username, friend_username, true);
+
+        return new CommonOutParams(true);
+    }
+
+    /** 取消星标好友 */
+    @BizType(BizTypeEnum.FRIEND_CANCEL_STAR_FRIEND)
+    @NeedLogin
+    public CommonOutParams friendCancelStarFriend(CancelStarFriendInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String friend_username = inParams.getFriendUsername();
+        friendProcessor.setStarFriend(username, friend_username, false);
 
         return new CommonOutParams(true);
     }
@@ -303,7 +314,7 @@ public class FriendController {
             friendRequestItem.setFromUsername(fromUsername);
             friendRequestItem.setFromNickname(fromUser.getNickname());
             String avatar = fromUser.getAvatar();
-            int index = avatar.indexOf(RELATIVE_PATH);
+            int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
             String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
             friendRequestItem.setFromAvatar(avatar_url);
             friendRequestItem.setExtra(friendRequest.getExtra());
@@ -313,6 +324,7 @@ public class FriendController {
         }
 
         FriendRequestItem[] friendRequestItems = new FriendRequestItem[friendRequestItemList.size()];
+        Collections.reverse(friendRequestItemList);
         friendRequestItemList.toArray(friendRequestItems);
 
         GetFriendRequestOutParams outParams = new GetFriendRequestOutParams();
@@ -433,7 +445,7 @@ public class FriendController {
             User friend = userProcessor.getUserByUsername(friend_username);
 
             String friend_avatar = friend.getAvatar();
-            int index = friend_avatar.indexOf(RELATIVE_PATH);
+            int index = friend_avatar.indexOf(AVATAR_RELATIVE_PATH);
             String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + friend_avatar.substring(index);
             String friend_nickname = friend.getNickname();
             String friend_remark = friendship.getRemark();
@@ -445,6 +457,7 @@ public class FriendController {
             friendItem.setFriendRemark(friend_remark);
             friendItemList.add(friendItem);
         }
+
         FriendItem[] result = new FriendItem[friendItemList.size()];
         friendItemList.toArray(result);
 

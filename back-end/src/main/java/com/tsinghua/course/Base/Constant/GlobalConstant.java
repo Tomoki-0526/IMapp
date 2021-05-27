@@ -19,9 +19,13 @@ public class GlobalConstant {
     /** 头像保存路径 */
     public static final String WINDOWS_AVATAR_PATH = "D:/Eusford/Homework/app/IMapp/uploads/avatar/";
     public static final String LINUX_AVATAR_PATH = "/home/uploads/avatar/";
-    public static final String RELATIVE_PATH = "/avatar/";
+    public static final String AVATAR_RELATIVE_PATH = "/avatar/";
     /** 默认头像文件名 */
     public static final String DEFAULT_AVATAR = "default.png";
+    /** 动态文件保存路径 */
+    public static final String WINDOWS_MOMENT_PATH = "D:/Eusford/Homework/app/IMapp/uploads/moment/";
+    public static final String LINUX_MOMENT_PATH = "/home/uploads/moment/";
+    public static final String MOMENT_RELATIVE_PATH = "/moment/";
     /** 服务器IP */
     public static final String SERVER_IP = "8.140.133.34";
     /** 文件端口 */
