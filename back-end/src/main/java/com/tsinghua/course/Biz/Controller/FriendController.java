@@ -99,13 +99,11 @@ public class FriendController {
 
         List<Friendship> friendship_list = new ArrayList<>();
         /* 根据用户名查找 */
-        Friendship friendship_by_username = friendProcessor.getFriendshipByUsername(username, content);
-        if (friendship_by_username != null)
-            friendship_list.add(friendship_by_username);
-        /* 根据昵称查找 */
-        friendship_list.addAll(friendProcessor.getFriendshipByNickname(username, content));
+        friendship_list.addAll(friendProcessor.getFriendsByUsernameFuzzy(username, content));
         /* 根据备注查找 */
-        friendship_list.addAll(friendProcessor.getFriendshipByRemark(username, content));
+        friendship_list.addAll(friendProcessor.getFriendsByRemarkFuzzy(username, content));
+        /* 根据昵称查找 */
+        friendship_list.addAll(friendProcessor.getFriendsByNicknameFuzzy(username, content));
 
         if (friendship_list.isEmpty()) {
             throw new CourseWarn(UserWarnEnum.FIND_FRIEND_NO_RESULT);
