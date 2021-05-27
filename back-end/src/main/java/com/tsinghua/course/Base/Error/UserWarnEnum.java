@@ -27,6 +27,7 @@ public enum UserWarnEnum implements ExceptionInterface {
     NEED_NICKNAME("UserWarn021", "缺少昵称"),
     NEED_TELEPHONE("UserWarn022", "缺少手机号"),
     ALREADY_FRIEND("UserWarn023", "该用户已经是您的好友"),
+    USER_NO_EXIST("UserWarn024", "该用户不存在"),
     ;
 
     UserWarnEnum(String code, String msg) {
