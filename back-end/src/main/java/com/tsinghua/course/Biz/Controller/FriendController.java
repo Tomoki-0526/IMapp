@@ -218,6 +218,11 @@ public class FriendController {
         String from_username = inParams.getUsername();
         String to_username = inParams.getToUsername();
         String extra = inParams.getExtra();
+
+        User to_user = userProcessor.getUserByUsername(to_username);
+        if (to_user == null) {
+            throw new CourseWarn(UserWarnEnum.USER_NO_EXIST);
+        }
         friendProcessor.createFriendRequest(from_username, to_username, extra);
 
         // TODO
@@ -338,6 +343,11 @@ public class FriendController {
         String from_username = inParams.getFromUsername();
         String result_str = inParams.getResult();
         boolean result = result_str.equals("1");
+
+        User from_user = userProcessor.getUserByUsername(from_username);
+        if (from_user == null) {
+            throw new CourseWarn(UserWarnEnum.USER_NO_EXIST);
+        }
 
         /* 如果发起者已经是好友了则返回 */
         Friendship friendship = friendProcessor.getFriendshipByUsername(username, from_username);

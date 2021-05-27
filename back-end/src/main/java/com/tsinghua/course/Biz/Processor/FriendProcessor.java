@@ -69,7 +69,8 @@ public class FriendProcessor {
     /** 查找自己所有的星标好友 */
     public List<Friendship> getAllStarFriends(String username) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.STAR).is(true));
         return mongoTemplate.find(query, Friendship.class);
     }
 
@@ -211,7 +212,7 @@ public class FriendProcessor {
             String friend_username = friendship.getFriendUsername();
             Query query1 = new Query();
             query1.addCriteria(Criteria.where(KeyConstant.USERNAME).is(friend_username));
-            User friend = mongoTemplate.findOne(query, User.class);
+            User friend = mongoTemplate.findOne(query1, User.class);
             String realNickname = friend.getNickname();
             if (realNickname.contains(nickname)) {
                 result.add(friendship);
