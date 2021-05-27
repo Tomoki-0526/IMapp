@@ -104,13 +104,20 @@ public class FriendController {
         friendship_list.addAll(friendProcessor.getFriendsByRemarkFuzzy(username, content));
         /* 根据昵称查找 */
         friendship_list.addAll(friendProcessor.getFriendsByNicknameFuzzy(username, content));
+        /* 去重 */
+        List<Friendship> friendshipWithoutDuplicates = new ArrayList<>();
+        Set<String> set = new HashSet<String>();
+        for (Friendship friendship: friendship_list) {
+            if (set.add(friendship.getFriendUsername()))
+                friendshipWithoutDuplicates.add(friendship);
+        }
 
         if (friendship_list.isEmpty()) {
             throw new CourseWarn(UserWarnEnum.FIND_FRIEND_NO_RESULT);
         }
         else {
             List<FriendItem> temp = new ArrayList<>();
-            for (Friendship friendship: friendship_list) {
+            for (Friendship friendship: friendshipWithoutDuplicates) {
                 String friend_username = friendship.getFriendUsername();
                 String friend_remark = friendship.getRemark();
                 User friend = userProcessor.getUserByUsername(friend_username);
