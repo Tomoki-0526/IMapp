@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_margin="10dp"
+        app:cardPreventCornerOverlap="true"
+        >
+        <ImageView
+            android:id="@+id/iv_itemNewFriend_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_launcher_background"
+            android:scaleType="centerCrop"
+            />
+    </androidx.cardview.widget.CardView>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="40dp"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        >
+        <TextView
+            android:id="@+id/tv_itemNewFriend_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:text="默认名称"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/tv_itemNewFriend_extra"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="暂无extra"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:textSize="13sp"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_itemNewFriend_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="等待验证"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

@@ -1,10 +1,13 @@
 package com.example.course29.util;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class JsonMapUtil {
@@ -37,5 +40,16 @@ public class JsonMapUtil {
         JSONObject jsonObject = new JSONObject(map);
         String jsonStr = jsonObject.toString();
         return jsonStr;
+    }
+
+    public static List<Map<String, Object>> jsonArrayToList (JSONArray list) throws JSONException {
+        if(list.length()<1 || list ==null) return null;
+        List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
+        for (int i=0; i< list.length(); i++) {
+            String strJson = list.getJSONObject(i).toString();
+            Map<String, Object> valueMap = getMap(strJson);
+            res.add(valueMap);
+        }
+        return res;
     }
 }

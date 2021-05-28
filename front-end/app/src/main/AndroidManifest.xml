@@ -18,7 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".UserInfo.PrivacyActivity"></activity>
+        <activity android:name=".contact.friend.StarFriendsActivity"></activity>
+        <activity android:name=".contact.SearchActivity" />
+        <activity android:name=".contact.newFriend.StrangerInfoActivity" />
+        <activity android:name=".contact.newFriend.StrangerAddActivity" />
+        <activity android:name=".contact.friend.FriendActivity" />
+        <activity android:name=".contact.newFriend.NewFriendActivity" />
+        <activity android:name=".UserInfo.PrivacyActivity" />
         <activity android:name=".UserInfo.PasswordActivity" />
         <activity android:name=".UserInfo.UserActivity" />
         <activity android:name=".MenuActivity" />

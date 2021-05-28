@@ -38,7 +38,7 @@
             android:layout_margin="5dp"
             >
             <TextView
-                android:id="@+id/tv_menu_username"
+                android:id="@+id/tv_menu_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
