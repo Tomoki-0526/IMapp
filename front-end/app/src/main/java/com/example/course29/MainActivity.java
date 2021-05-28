@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 if (res.get("success").toString() == "true") {
                     ToastUtil.showMsg(MainActivity.this, getResources().getString(R.string.login_successfully));
                     intent = new Intent(MainActivity.this, MenuActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 //                overridePendingTransition(0,0);
                 }

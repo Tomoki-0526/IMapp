@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".UserInfo.UserActivity">
-
+    tools:context=".contact.friend.FriendActivity"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -14,7 +13,7 @@
         android:background="@color/yellow"
         >
         <ImageView
-            android:id="@+id/iv_userEdit_return"
+            android:id="@+id/iv_friend_return"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@mipmap/icon_arrow_left"
@@ -23,15 +22,24 @@
             android:scaleType="centerCrop"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="个人信息"
+            android:text="好友资料"
             android:layout_margin="10dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:textSize="18sp"
             />
+        <ImageView
+            android:id="@+id/iv_friend_more"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/icon_more"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,22 +62,24 @@
                 android:layout_gravity="center"
                 >
                 <ImageView
-                    android:id="@+id/iv_userEdit_profile"
+                    android:id="@+id/iv_friend_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_launcher_background"
                     android:scaleType="centerCrop"
                     />
             </androidx.cardview.widget.CardView>
-            <Button
+            <TextView
+                android:id="@+id/tv_friend_star"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
-                android:text="更换头像"
+                android:text="星标好友"
+                android:visibility="gone"
                 android:textSize="12sp"
                 android:textColor="@color/gray"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:background="@color/transparent"/>
-
         </LinearLayout>
 
         <LinearLayout
@@ -86,8 +96,54 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 />
-            <EditText
-                android:id="@+id/et_userEdit_nickname"
+            <TextView
+                android:id="@+id/tv_friend_nickname"
+                android:layout_width="0dp"
+                android:layout_weight="7"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_friebd_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:text="备注"
+                android:layout_margin="10dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/tv_friend_remark"
+                android:layout_width="0dp"
+                android:layout_weight="7"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:text="用户名"
+                android:layout_margin="10dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/tv_friend_username"
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="wrap_content"
@@ -109,15 +165,11 @@
                 android:gravity="center"
                 />
             <TextView
-                android:id="@+id/et_userEdit_gender"
+                android:id="@+id/tv_friend_gender"
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="wrap_content"
-                android:text="未知"
-                android:clickable="true"
                 android:layout_margin="10dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -135,15 +187,12 @@
                 android:gravity="center"
                 />
             <TextView
-                android:id="@+id/et_userEdit_birthday"
+                android:id="@+id/tv_friend_birthday"
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="wrap_content"
                 android:text="1970-01-01"
-                android:clickable="true"
                 android:layout_margin="10dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -160,8 +209,8 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 />
-            <EditText
-                android:id="@+id/et_userEdit_telephone"
+            <TextView
+                android:id="@+id/tv_friend_telephone"
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="wrap_content"
@@ -182,8 +231,8 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 />
-            <EditText
-                android:id="@+id/et_userEdit_signature"
+            <TextView
+                android:id="@+id/tv_friend_signature"
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="wrap_content"
@@ -196,12 +245,12 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_updateInfo"
+                android:id="@+id/btn_friend_startChat"
                 android:layout_width="120dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="60dp"
-                android:background="@color/teal_200"
-                android:text="保存"
+                android:background="@color/green"
+                android:text="发起聊天"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -209,7 +258,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-
-
 
 </LinearLayout>

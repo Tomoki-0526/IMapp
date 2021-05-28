@@ -30,7 +30,7 @@
 
 
         <TextView
-            android:id="@+id/tv_main_username"
+            android:id="@+id/tv_main_nickname"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="默认名称"
@@ -49,7 +49,7 @@
         >
 
         <FrameLayout
-            android:id="@+id/flFragment"
+            android:id="@+id/flMainFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"

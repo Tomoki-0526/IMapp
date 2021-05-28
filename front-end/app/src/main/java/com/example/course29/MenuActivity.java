@@ -1,6 +1,7 @@
 package com.example.course29;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,9 +16,14 @@ import android.widget.TextView;
 
 import com.example.course29.UserInfo.PrivacyActivity;
 import com.example.course29.UserInfo.UserActivity;
+import com.example.course29.chat.ChatFragment;
+import com.example.course29.contact.ContactFragment;
+import com.example.course29.moment.MomentFragment;
+import com.example.course29.nearby.NearbyFragment;
 import com.example.course29.util.BitmapUtil;
 import com.example.course29.util.HttpUtil;
 import com.example.course29.util.ToastUtil;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Map;
 
@@ -34,6 +40,8 @@ public class MenuActivity extends AppCompatActivity {
     private LinearLayout mLlMenuPicture;
     private LinearLayout mLlMenuSettings;
     private LinearLayout mLlMenuGeneral;
+    private BottomNavigationView mBtmNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +50,17 @@ public class MenuActivity extends AppCompatActivity {
 
         // 找到控件
         mIvMainProfile = findViewById(R.id.iv_main_profile);
-        mTvMainUsername = findViewById(R.id.tv_main_username);
+        mTvMainUsername = findViewById(R.id.tv_main_nickname);
         mSileMenu  = findViewById(R.id.sm_userInfoMenu);
         mIvMenuProfile = findViewById(R.id.iv_menu_profile);
-        mTvMenuUsername = findViewById(R.id.tv_menu_username);
+        mTvMenuUsername = findViewById(R.id.tv_menu_nickname);
         mTvMenuSignature = findViewById(R.id.tv_menu_signature);
         mBtnLogout = findViewById(R.id.btn_logout);
         mLlMenuPrivacy = findViewById(R.id.ll_menu_privacy);
         mLlMenuPicture = findViewById(R.id.ll_menu_picture);
         mLlMenuGeneral = findViewById(R.id.ll_menu_general);
         mLlMenuSettings = findViewById(R.id.ll_menu_settings);
+        mBtmNavigationView = findViewById(R.id.bottomNavigationView);
         initInfo();
         setListener();
         mIvMainProfile.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +88,30 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Fragment contactFragment = new ContactFragment();
+        Fragment chatFragment = new ChatFragment();
+        Fragment nearbyFragment = new NearbyFragment();
+        Fragment momentFragment = new MomentFragment();
+        setCurrentFragment(chatFragment);
+        mBtmNavigationView.setOnNavigationItemSelectedListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_chat:
+                            setCurrentFragment(chatFragment);
+                            return true;
+                        case R.id.navigation_contact:
+                            setCurrentFragment(contactFragment);
+                            return true;
+                        case R.id.navigation_nearby:
+                            setCurrentFragment(nearbyFragment);
+                            return true;
+                        case R.id.navigation_moment:
+                            setCurrentFragment(momentFragment);
+                            return true;
+                    }
+                    return false;
+                }
+        );
     }
 
     @Override
@@ -128,5 +161,9 @@ public class MenuActivity extends AppCompatActivity {
             }
             startActivity(intent);
         }
+    }
+
+    private void setCurrentFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.flMainFragment, fragment).commit();
     }
 }
