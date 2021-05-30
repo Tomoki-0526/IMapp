@@ -2,9 +2,13 @@ package com.tsinghua.course.Biz.Controller;
 
 import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.NeedLogin;
+import com.tsinghua.course.Base.Error.CourseWarn;
+import com.tsinghua.course.Base.Error.UserWarnEnum;
+import com.tsinghua.course.Base.Model.Moment;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.PublishMomentInParams;
+import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.RemoveMomentInParams;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.MomentProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
@@ -34,7 +38,9 @@ public class MomentController {
     @Autowired
     MomentProcessor momentProcessor;
 
-    /** 发布动态 */
+    /**
+     * 发布动态
+     */
     @BizType(BizTypeEnum.MOMENT_PUBLISH_MOMENT)
     @NeedLogin
     public CommonOutParams momentPublishMoment(PublishMomentInParams inParams) throws Exception {
@@ -54,7 +60,7 @@ public class MomentController {
         else if (type == 1) {
             MultipartFile[] images = inParams.getImages();
             List<String> imgPathList = new ArrayList<>();
-            for (MultipartFile file: images) {
+            for (MultipartFile file : images) {
                 // 获取原始文件名
                 String originalFilename = file.getOriginalFilename();
                 // 生成UUID名称
@@ -84,7 +90,7 @@ public class MomentController {
             String content = inParams.getContent();
             MultipartFile[] images = inParams.getImages();
             List<String> imgPathList = new ArrayList<>();
-            for (MultipartFile file: images) {
+            for (MultipartFile file : images) {
                 // 获取原始文件名
                 String originalFilename = file.getOriginalFilename();
                 // 生成UUID名称
@@ -134,4 +140,44 @@ public class MomentController {
 
         return new CommonOutParams(true);
     }
+
+    /**
+     * 删除动态
+     */
+    @BizType(BizTypeEnum.MOMENT_REMOVE_MOMENT)
+    @NeedLogin
+    public CommonOutParams momentRemoveMoment(RemoveMomentInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String momentId = inParams.getMomentId();
+
+        Moment moment = momentProcessor.getMoment(momentId);
+        if (moment == null)
+            throw new CourseWarn(UserWarnEnum.NO_SUCH_MOMENT);
+        if (!moment.getUsername().equals(username))
+            throw new CourseWarn(UserWarnEnum.MOMENT_USER_UNMATCHED);
+
+        /* 在删除数据之前先删除文件 */
+        int momentType = moment.getType();
+        if (momentType == 1 || momentType == 2) {
+            String[] imagesPath = moment.getImagesPath();
+            for (String imagePath : imagesPath) {
+                int index = imagePath.lastIndexOf("/");
+                String dir = imagePath.substring(0, index);
+                File dirFile = new File(dir);
+                if (dirFile.isDirectory()) {
+                    File[] files = dirFile.listFiles();
+                    for (File file : files) {
+                        if (file.isFile())
+                            file.delete();
+                    }
+                }
+                dirFile.delete();
+            }
+        }
+
+        momentProcessor.removeMoment(momentId);
+        return new CommonOutParams(true);
+    }
+
+    
 }

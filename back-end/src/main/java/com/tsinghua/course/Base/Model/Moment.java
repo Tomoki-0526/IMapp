@@ -22,6 +22,12 @@ public class Moment {
     int likes;
     // 评论数
     int comments;
+    // 文本内容
+    String textContent;
+    // 图片路径
+    String[] imagesPath;
+    // 视频路径
+    String videoPath;
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -40,4 +46,13 @@ public class Moment {
 
     public int getComments() { return comments; }
     public void setComments(int comments) { this.comments = comments; }
+
+    public String getTextContent() { return textContent; }
+    public void setTextContent(String textContent) { this.textContent = textContent; }
+
+    public String[] getImagesPath() { return imagesPath; }
+    public void setImagesPath(String[] imagesPath) { this.imagesPath = imagesPath; }
+
+    public String getVideoPath() { return videoPath; }
+    public void setVideoPath(String videoPath) { this.videoPath = videoPath; }
 }

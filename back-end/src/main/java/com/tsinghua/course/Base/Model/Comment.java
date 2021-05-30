@@ -2,6 +2,8 @@ package com.tsinghua.course.Base.Model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 /**
  * @描述 评论表
  */
@@ -15,6 +17,8 @@ public class Comment {
     String username;
     // 评论内容
     String content;
+    // 评论时间
+    Date commentTime;
 
     public String getId() {
         return id;
@@ -43,4 +47,7 @@ public class Comment {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public Date getCommentTime() { return commentTime; }
+    public void setCommentTime(Date commentTime) { this.commentTime = commentTime; }
 }

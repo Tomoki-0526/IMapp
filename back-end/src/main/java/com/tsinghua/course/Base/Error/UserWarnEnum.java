@@ -28,6 +28,8 @@ public enum UserWarnEnum implements ExceptionInterface {
     NEED_TELEPHONE("UserWarn022", "缺少手机号"),
     ALREADY_FRIEND("UserWarn023", "该用户已经是您的好友"),
     USER_NO_EXIST("UserWarn024", "该用户不存在"),
+    NO_SUCH_MOMENT("UserWarn025", "该动态不存在"),
+    MOMENT_USER_UNMATCHED("UserWarn026", "动态和用户不匹配"),
     ;
 
     UserWarnEnum(String code, String msg) {
