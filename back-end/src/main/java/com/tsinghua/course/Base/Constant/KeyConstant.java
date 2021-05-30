@@ -71,4 +71,7 @@ public class KeyConstant {
     public static final String SEND_TIME = "send_time";
     // 是否是最后一条消息
     public static final String LATEST = "latest";
+
+    /** Moment关键key */
+
 }

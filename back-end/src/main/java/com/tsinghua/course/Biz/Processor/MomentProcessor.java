@@ -1,11 +1,11 @@
 package com.tsinghua.course.Biz.Processor;
 
-import com.tsinghua.course.Base.Model.ImgMoment;
-import com.tsinghua.course.Base.Model.TextAndImgMoment;
-import com.tsinghua.course.Base.Model.TextMoment;
-import com.tsinghua.course.Base.Model.VideoMoment;
+import com.tsinghua.course.Base.Constant.KeyConstant;
+import com.tsinghua.course.Base.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -21,54 +21,77 @@ public class MomentProcessor {
 
     /** 发布文字动态 */
     public void publishTextMoment(String username, int type, String content) {
-        TextMoment textMoment = new TextMoment();
-        textMoment.setPublishTime(new Date());
-        textMoment.setUsername(username);
-        textMoment.setType(type);
-        textMoment.setLikes(0);
-        textMoment.setComments(0);
-        textMoment.setContent(content);
+        Moment moment = new Moment();
+        moment.setPublishTime(new Date());
+        moment.setUsername(username);
+        moment.setType(type);
+        moment.setLikes(0);
+        moment.setComments(0);
+        moment.setTextContent(content);
+        moment.setImagesPath(new String[0]);
+        moment.setVideoPath("");
 
-        mongoTemplate.insert(textMoment);
+        mongoTemplate.insert(moment);
     }
 
     /** 发布图片动态 */
     public void publishImgMoment(String username, int type, String[] imgs) {
-        ImgMoment imgMoment = new ImgMoment();
-        imgMoment.setPublishTime(new Date());
-        imgMoment.setUsername(username);
-        imgMoment.setType(type);
-        imgMoment.setLikes(0);
-        imgMoment.setComments(0);
-        imgMoment.setImgPath(imgs);
+        Moment moment = new Moment();
+        moment.setPublishTime(new Date());
+        moment.setUsername(username);
+        moment.setType(type);
+        moment.setLikes(0);
+        moment.setComments(0);
+        moment.setTextContent("");
+        moment.setImagesPath(imgs);
+        moment.setVideoPath("");
 
-        mongoTemplate.insert(imgMoment);
+        mongoTemplate.insert(moment);
     }
 
     /** 发布图文动态 */
     public void publishTextAndImgMoment(String username, int type, String content, String[] imgs) {
-        TextAndImgMoment textAndImgMoment = new TextAndImgMoment();
-        textAndImgMoment.setPublishTime(new Date());
-        textAndImgMoment.setUsername(username);
-        textAndImgMoment.setType(type);
-        textAndImgMoment.setLikes(0);
-        textAndImgMoment.setComments(0);
-        textAndImgMoment.setContent(content);
-        textAndImgMoment.setImgPath(imgs);
+        Moment moment = new Moment();
+        moment.setPublishTime(new Date());
+        moment.setUsername(username);
+        moment.setType(type);
+        moment.setLikes(0);
+        moment.setComments(0);
+        moment.setTextContent(content);
+        moment.setImagesPath(imgs);
+        moment.setVideoPath("");
 
-        mongoTemplate.insert(textAndImgMoment);
+        mongoTemplate.insert(moment);
     }
 
     /** 发布视频动态 */
     public void publishVideoMoment(String username, int type, String video) {
-        VideoMoment videoMoment = new VideoMoment();
-        videoMoment.setPublishTime(new Date());
-        videoMoment.setUsername(username);
-        videoMoment.setType(type);
-        videoMoment.setLikes(0);
-        videoMoment.setComments(0);
-        videoMoment.setVideoPath(video);
+        Moment moment = new Moment();
+        moment.setPublishTime(new Date());
+        moment.setUsername(username);
+        moment.setType(type);
+        moment.setLikes(0);
+        moment.setComments(0);
+        moment.setTextContent("");
+        moment.setImagesPath(new String[0]);
+        moment.setVideoPath(video);
 
-        mongoTemplate.insert(videoMoment);
+        mongoTemplate.insert(moment);
+    }
+
+    /** 通过id获取动态 */
+    public Moment getMoment(String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.ID).is(momentId));
+
+        return mongoTemplate.findOne(query, Moment.class);
+    }
+
+    /** 删除动态 */
+    public void removeMoment(String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.ID).is(momentId));
+
+        mongoTemplate.remove(query, Moment.class);
     }
 }

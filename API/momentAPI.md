@@ -1,6 +1,6 @@
 # 动态功能API
 
-## 发布动态
+## 发布动态 √
 
 Method: POST
 URL: /moment/publishMoment
@@ -14,7 +14,7 @@ Request:
 }
 ```
 
-## 删除动态
+## 删除动态 √
 
 Method: POST
 URL: /moment/removeMoment
@@ -42,6 +42,7 @@ Correct Response:
     "avatar": 发布者头像
     "nickname": 发布者昵称
     "remark": 发布者备注，如果没有则为空串
+    "publishTime": 发布时间
     "type": 0-文本 1-图片 2-图文 3-视频
     "content": string 文本内容，如果没有则为空串，下同
     "images": string 图片路径
@@ -58,6 +59,7 @@ Correct Response:
     "likeUsername":
     "likeNickname":
     "likeRemark":
+    "likeTime": 
 }
 ```
 一个评论的格式
@@ -65,6 +67,7 @@ Correct Response:
 {
     "commentUsername": 
     "commentContent":
+    "commentTime": 
 }
 ```
 

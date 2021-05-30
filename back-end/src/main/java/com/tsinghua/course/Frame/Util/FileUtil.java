@@ -1,16 +1,7 @@
 package com.tsinghua.course.Frame.Util;
 
-//import org.apache.commons.fileupload.FileItem;
-//import org.apache.commons.fileupload.FileItemFactory;
-//import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Random;
 import java.util.UUID;
 
@@ -59,36 +50,4 @@ public class FileUtil {
         Random random = new Random();
         return "/" + HEX_STR.charAt(random.nextInt(16)) + "/" + HEX_STR.charAt(random.nextInt(16));
     }
-
-//    /**
-//     * 将本地文件转换为MultipartFile以便返回给前端
-//     * @param filename 文件名
-//     * @return MultipartFile文件
-//     */
-//    public static MultipartFile fileToMultipartfile(String filename) {
-//        String OSName = System.getProperty("os.name");
-//        String avatarPath = OSName.toLowerCase().startsWith("win") ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
-//        filename = avatarPath + filename;
-//
-//        FileItemFactory factory = new DiskFileItemFactory(16, null);
-//        String textFieldName = "textField";
-//        int num = filename.lastIndexOf(".");
-//        String extFile = filename.substring(num);
-//        FileItem item = factory.createItem(textFieldName, "text/plain", true, "AvatarFile");
-//        File newfile = new File(filename);
-//        int bytesRead = 0;
-//        byte[] buffer = new byte[8192];
-//        try {
-//            FileInputStream inputStream = new FileInputStream(newfile);
-//            OutputStream outputStream = item.getOutputStream();
-//            while ((bytesRead = inputStream.read(buffer, 0, 8192)) != -1) {
-//                outputStream.write(buffer, 0, bytesRead);
-//            }
-//            outputStream.close();
-//            inputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return new CommonsMultipartFile(item);
-//    }
 }
