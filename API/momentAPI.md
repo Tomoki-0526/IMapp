@@ -40,16 +40,18 @@ Correct Response:
 {
     "momentId": string
     "avatar": 发布者头像
+    "username": 发布者用户名
     "nickname": 发布者昵称
     "remark": 发布者备注，如果没有则为空串
-    "publishTime": 发布时间
-    "type": 0-文本 1-图片 2-图文 3-视频
-    "content": string 文本内容，如果没有则为空串，下同
-    "images": string 图片路径
-    "video": string 视频路径
-    "likes": int 点赞数
-    "likeUsers": 点赞用户数组
-    "comments": 评论数组
+    "publishTime": 发布时间 "yyyy-MM-dd hh:mm:ss"
+    "type": int 0-文本 1-图片 2-图文 3-视频
+    "textContent": string 文本内容，如果没有则为空串
+    "images": string 图片路径数组，如果没有则为空数组
+    "video": string 视频路径，如果没有则为空串
+    "likesNum": int 点赞数
+    "likes": 点赞用户数组
+    "commentsNum": int 评论数
+    "comments": 评论用户数组
 }
 ```
 一个点赞用户的格式
@@ -66,6 +68,8 @@ Correct Response:
 ```coffeescript
 {
     "commentUsername": 
+    "commentNickname":
+    "commentRemark":
     "commentContent":
     "commentTime": 
 }

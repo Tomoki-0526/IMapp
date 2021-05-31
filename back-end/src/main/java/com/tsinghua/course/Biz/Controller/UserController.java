@@ -97,8 +97,9 @@ public class UserController {
         if (!telephone.matches(regex))
             throw new CourseWarn(UserWarnEnum.INVALID_TELEPHONE);
 
-        /* 创建新用户 */
+        /* 创建新用户并将自己加入通讯录 */
         userProcessor.createUser(username, password, nickname, telephone);
+        friendProcessor.addFriendship(username, username);
 
         return new CommonOutParams(true);
     }

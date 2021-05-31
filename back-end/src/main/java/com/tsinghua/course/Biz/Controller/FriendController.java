@@ -367,8 +367,6 @@ public class FriendController {
         if (result) {
             friendProcessor.addFriendship(username, from_username);
             friendProcessor.addFriendship(from_username, username);
-//            friendProcessor.addFriendToGroup(username, from_username, DEFAULT_GROUP);
-//            friendProcessor.addFriendToGroup(from_username, username, DEFAULT_GROUP);
 
             /* 给对方返回结果 */
             CheckFriendRequestOutParams outParams = new CheckFriendRequestOutParams();
@@ -380,72 +378,46 @@ public class FriendController {
         return new CommonOutParams(true);
     }
 
-//    /** 添加分组 */
-//    @BizType(BizTypeEnum.FRIEND_ADD_GROUP)
-//    @NeedLogin
-//    public CommonOutParams friendAddGroup(AddGroupInParams inParams) throws Exception {
-//        String username = inParams.getUsername();
-//        String group_name = inParams.getGroupName();
-//
-//        FriendGroup friendGroup = friendProcessor.getGroupByUsernameAndGroupName(username, group_name);
-//        if (friendGroup != null) {
-//            throw new CourseWarn(UserWarnEnum.DUPLICATE_GROUP);
-//        }
-//
-//        friendProcessor.addFriendGroup(username, group_name);
-//        return new CommonOutParams(true);
-//    }
+    /** 查看某一个用户的信息 */
+    @BizType(BizTypeEnum.FRIEND_GET_USER_INFO)
+    @NeedLogin
+    public GetUserInfoOutParams friendGetUserInfo(GetUserInfoInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String oppositeUsername = inParams.getOppositeUsername();
+        User user = userProcessor.getUserByUsername(oppositeUsername);
 
-//    /** 查看所有分组 */
-//    @BizType(BizTypeEnum.FRIEND_GET_GROUPS)
-//    @NeedLogin
-//    public GetGroupsOutParams friendGetGroups(CommonInParams inParams) throws Exception {
-//        String username = inParams.getUsername();
-//        List<FriendGroup> friendGroupList = friendProcessor.getAllGroups(username);
-//        List<String> groupName = new ArrayList<>();
-//        for (FriendGroup friendGroup: friendGroupList) {
-//            groupName.add(friendGroup.getGroupName());
-//        }
-//        String[] result = new String[groupName.size()];
-//        groupName.toArray(result);
-//
-//        GetGroupsOutParams outParams = new GetGroupsOutParams();
-//        outParams.setGroups(result);
-//        return outParams;
-//    }
+        Friendship friendship = friendProcessor.getFriendshipByUsername(username, oppositeUsername);
+        GetUserInfoOutParams outParams = new GetUserInfoOutParams();
+        String avatar = user.getAvatar();
+        int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
+        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+        outParams.setAvatar(avatar_url);
+        outParams.setUsername(oppositeUsername);
+        outParams.setNickname(user.getNickname());
+        outParams.setGender(user.getGender());
+        outParams.setSignature(user.getSignature());
 
-//    /** 将好友添加到分组 */
-//    @BizType(BizTypeEnum.FRIEND_ADD_FRIEND_TO_GROUP)
-//    @NeedLogin
-//    public CommonOutParams friendAddFriendToGroup(AddFriendToGroupInParams inParams) throws Exception {
-//        String username = inParams.getUsername();
-//        String friend_username = inParams.getFriendUsername();
-//        String group_name = inParams.getGroupName();
-//
-//        FriendGroup friendGroup = friendProcessor.getGroupByUsernameAndGroupName(username, group_name);
-//        if (friendGroup == null) {
-//            throw new CourseWarn(UserWarnEnum.NO_SUCH_GROUP);
-//        }
-//
-//        friendProcessor.addFriendToGroup(username, friend_username, group_name);
-//        return new CommonOutParams(true);
-//    }
+        if (friendship != null) {
+            outParams.setFriend(true);
+            outParams.setRemark(friendship.getRemark());
+            outParams.setStar(friendship.isStar());
+            outParams.setAge(user.getAge());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+            String birthdayStr = dateFormat.format(user.getBirthday());
+            outParams.setBirthday(birthdayStr);
+            outParams.setTelephone(user.getTelephone());
+        }
+        else {
+            outParams.setFriend(false);
+            outParams.setRemark("");
+            outParams.setAge(0);
+            outParams.setBirthday("");
+            outParams.setTelephone("");
+            outParams.setStar(false);
+        }
 
-//    /** 修改分组名称 */
-//    @BizType(BizTypeEnum.FRIEND_SET_GROUP_NAME)
-//    @NeedLogin
-//    public CommonOutParams friendSetGroupName(SetGroupNameInParams inParams) throws Exception {
-//        String username = inParams.getUsername();
-//        String old_group_name = inParams.getOldGroupName();
-//        String new_group_name = inParams.getNewGroupName();
-//
-//        FriendGroup friendGroup = friendProcessor.getGroupByUsernameAndGroupName(username, old_group_name);
-//        if (friendGroup == null) {
-//            throw new CourseWarn(UserWarnEnum.NO_SUCH_GROUP);
-//        }
-//        friendProcessor.setGroupName(username, old_group_name, new_group_name);
-//        return new CommonOutParams(true);
-//    }
+        return outParams;
+    }
 
     /** 获取通讯录 */
     @BizType(BizTypeEnum.FRIEND_GET_FRIENDS)

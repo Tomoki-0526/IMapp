@@ -2,13 +2,18 @@ package com.tsinghua.course.Biz.Controller;
 
 import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.NeedLogin;
+import com.tsinghua.course.Base.CustomizedClass.CommentItem;
+import com.tsinghua.course.Base.CustomizedClass.LikeItem;
+import com.tsinghua.course.Base.CustomizedClass.MomentItem;
 import com.tsinghua.course.Base.Error.CourseWarn;
 import com.tsinghua.course.Base.Error.UserWarnEnum;
-import com.tsinghua.course.Base.Model.Moment;
+import com.tsinghua.course.Base.Model.*;
 import com.tsinghua.course.Biz.BizTypeEnum;
+import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.PublishMomentInParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.RemoveMomentInParams;
+import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.GetMomentsOutParams;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.MomentProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
@@ -18,7 +23,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
@@ -38,9 +45,7 @@ public class MomentController {
     @Autowired
     MomentProcessor momentProcessor;
 
-    /**
-     * 发布动态
-     */
+    /** 发布动态 */
     @BizType(BizTypeEnum.MOMENT_PUBLISH_MOMENT)
     @NeedLogin
     public CommonOutParams momentPublishMoment(PublishMomentInParams inParams) throws Exception {
@@ -141,9 +146,7 @@ public class MomentController {
         return new CommonOutParams(true);
     }
 
-    /**
-     * 删除动态
-     */
+    /** 删除动态 */
     @BizType(BizTypeEnum.MOMENT_REMOVE_MOMENT)
     @NeedLogin
     public CommonOutParams momentRemoveMoment(RemoveMomentInParams inParams) throws Exception {
@@ -179,5 +182,117 @@ public class MomentController {
         return new CommonOutParams(true);
     }
 
-    
+    /** 查看动态 */
+    @BizType(BizTypeEnum.MOMENT_GET_MOMENTS)
+    @NeedLogin
+    public GetMomentsOutParams momentGetMoments(CommonInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+
+        /* 找到当前用户所有好友（包括自己）的动态 */
+        List<Moment> momentList = momentProcessor.getFriendMoments(username);
+
+        /* 组织数据 */
+        List<MomentItem> momentItemList = new ArrayList<>();
+        for (Moment moment: momentList) {
+            MomentItem momentItem = new MomentItem();
+            String publisherUsername = moment.getUsername();
+            User publisher = userProcessor.getUserByUsername(publisherUsername);
+            Friendship friendship = friendProcessor.getFriendshipByUsername(username, publisherUsername);
+            // 动态id
+            String momentId = moment.getId();
+            momentItem.setMomentId(momentId);
+            // 头像
+            String avatar = publisher.getAvatar();
+            int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
+            String avatarUrl = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+            momentItem.setAvatar(avatarUrl);
+            // 发布者用户名
+            momentItem.setUsername(publisherUsername);
+            // 发布者昵称
+            momentItem.setNickname(publisher.getNickname());
+            // 发布者备注
+            momentItem.setRemark(friendship.getRemark());
+            // 发布时间
+            Date publishTime = moment.getPublishTime();
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+            String publishTimeStr = dateFormat.format(publishTime);
+            momentItem.setPublishTime(publishTimeStr);
+            // 动态类型
+            momentItem.setType(moment.getType());
+            // 文本内容
+            momentItem.setTextContent(moment.getTextContent());
+            // 图片数组
+            String[] imagesPath = moment.getImagesPath();
+            for (int i = 0; i < imagesPath.length; ++i) {
+                index = imagesPath[i].indexOf(MOMENT_RELATIVE_PATH);
+                imagesPath[i] = "http://" + SERVER_IP + ":" + FILE_PORT + imagesPath[i].substring(index);
+            }
+            momentItem.setImages(imagesPath);
+            // 视频
+            String videoPath = moment.getVideoPath();
+            index = videoPath.indexOf(MOMENT_RELATIVE_PATH);
+            videoPath = "http://" + SERVER_IP + ":" + FILE_PORT + videoPath.substring(index);
+            momentItem.setVideo(videoPath);
+            // 点赞数
+            momentItem.setLikesNum(moment.getLikesNum());
+            // 点赞用户数组
+            List<Like> likeList = momentProcessor.getMomentLikes(momentId);
+            List<LikeItem> likeItemList = new ArrayList<>();
+            for (Like like: likeList) {
+                LikeItem likeItem = new LikeItem();
+                String likeUsername = like.getUsername();
+                User likeUser = userProcessor.getUserByUsername(likeUsername);
+                avatar = likeUser.getAvatar();
+                index = avatar.indexOf(AVATAR_RELATIVE_PATH);
+                avatarUrl = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+                likeItem.setLikeAvatar(avatarUrl);
+                likeItem.setLikeUsername(likeUsername);
+                likeItem.setLikeNickname(likeUser.getNickname());
+                likeItem.setLikeTime(dateFormat.format(like.getLikeTime()));
+                likeItem.setLikeRemark("");
+                // 判断这个人是不是本用户的好友
+                // 如果是的话获取备注
+                Friendship friendship1 = friendProcessor.getFriendshipByUsername(username, likeUsername);
+                if (friendship1 != null)
+                    likeItem.setLikeRemark(friendship1.getRemark());
+                likeItemList.add(likeItem);
+            }
+            LikeItem[] likes = new LikeItem[likeItemList.size()];
+            likeItemList.toArray(likes);
+            momentItem.setLikes(likes);
+            // 评论数
+            momentItem.setCommentsNum(moment.getCommentsNum());
+            // 评论用户数组
+            List<Comment> commentList = momentProcessor.getMomentComments(momentId);
+            List<CommentItem> commentItemList = new ArrayList<>();
+            for (Comment comment: commentList) {
+                CommentItem commentItem = new CommentItem();
+                String commentUsername = comment.getUsername();
+                User commentUser = userProcessor.getUserByUsername(commentUsername);
+                commentItem.setCommentUsername(commentUsername);
+                commentItem.setCommentNickname(commentUser.getNickname());
+                commentItem.setCommentContent(comment.getContent());
+                commentItem.setCommentTime(dateFormat.format(comment.getCommentTime()));
+                commentItem.setCommentRemark("");
+                // 判断这个人是不是本用户的好友
+                // 如果是的话获取备注
+                Friendship friendship1 = friendProcessor.getFriendshipByUsername(username, commentUsername);
+                if (friendship1 != null)
+                    commentItem.setCommentRemark(friendship1.getRemark());
+                commentItemList.add(commentItem);
+            }
+            CommentItem[] comments = new CommentItem[commentItemList.size()];
+            commentItemList.toArray(comments);
+            momentItem.setComments(comments);
+
+            // 加入item数组
+            momentItemList.add(momentItem);
+        }
+        MomentItem[] moments = new MomentItem[momentItemList.size()];
+        momentItemList.toArray(moments);
+
+        GetMomentsOutParams outParams = new GetMomentsOutParams();
+        outParams.setMoments(moments);
+        return outParams;
+    }
 }

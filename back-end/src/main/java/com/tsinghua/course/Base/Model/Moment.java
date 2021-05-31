@@ -19,9 +19,9 @@ public class Moment {
     // 发布时间
     Date publishTime;
     // 点赞数
-    int likes;
+    int likesNum;
     // 评论数
-    int comments;
+    int commentsNum;
     // 文本内容
     String textContent;
     // 图片路径
@@ -41,11 +41,11 @@ public class Moment {
     public Date getPublishTime() { return publishTime; }
     public void setPublishTime(Date publishTime) { this.publishTime = publishTime; }
 
-    public int getLikes() { return likes; }
-    public void setLikes(int likes) { this.likes = likes; }
+    public int getLikesNum() { return likesNum; }
+    public void setLikesNum(int likesNum) { this.likesNum = likesNum; }
 
-    public int getComments() { return comments; }
-    public void setComments(int comments) { this.comments = comments; }
+    public int getCommentsNum() { return commentsNum; }
+    public void setCommentsNum(int comments) { this.commentsNum = commentsNum; }
 
     public String getTextContent() { return textContent; }
     public void setTextContent(String textContent) { this.textContent = textContent; }

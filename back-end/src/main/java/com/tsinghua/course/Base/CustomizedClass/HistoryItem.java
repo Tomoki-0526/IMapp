@@ -1,10 +1,13 @@
 package com.tsinghua.course.Base.CustomizedClass;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 
 /**
  * @描述 历史消息记录
  */
+@Document("HistoryItem")
 public class HistoryItem {
     // 消息id
     String msg_id;
