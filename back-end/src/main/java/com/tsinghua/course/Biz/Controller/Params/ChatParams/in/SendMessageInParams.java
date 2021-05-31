@@ -14,23 +14,23 @@ import java.util.Date;
 public class SendMessageInParams extends CommonInParams {
     // 聊天关系id
     @Required
-    String link_id;
+    private String link_id;
 
     // 接收方用户名
     @Required
-    String to_username;
+    private String to_username;
 
     // 消息内容
     @Required
-    String content;
+    private String content;
 
     // 发送时间
     @Required
-    String send_time;
+    private String send_time;
 
     // 消息类型
     @Required
-    String type;
+    private String type;
 
     public String getLinkId() { return link_id; }
     public void setLinkId(String link_id) { this.link_id = link_id; }

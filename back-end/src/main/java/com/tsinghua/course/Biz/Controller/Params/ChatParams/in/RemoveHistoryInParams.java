@@ -12,10 +12,10 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class RemoveHistoryInParams extends CommonInParams {
     // 聊天关系id
     @Required
-    String link_id;
+    private String link_id;
     // 聊天记录id数组
     @Required
-    String[] msgs;
+    private String[] msgs;
 
     public String getLinkId() { return link_id; }
     public void setLinkId(String link_id) { this.link_id = link_id; }

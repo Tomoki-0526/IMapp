@@ -12,7 +12,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class QuitChatInParams extends CommonInParams {
     // 聊天关系id
     @Required
-    String link_id;
+    private String link_id;
 
     public String getLinkId() { return link_id; }
     public void setLinkId(String link_id) { this.link_id = link_id; }

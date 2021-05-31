@@ -83,6 +83,7 @@ Request:
 ```coffeescript
 {
     "momentId": string
+    "momentUsername": 发布动态的人
 }
 ```
 

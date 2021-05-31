@@ -13,13 +13,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class PublishMomentInParams extends CommonInParams {
     // 动态类型
     @Required
-    String type;
+    private String type;
     // 文本内容
-    String content;
+    private String content;
     // 图片数组
-    MultipartFile[] images;
+    private MultipartFile[] images;
     // 视频
-    MultipartFile video;
+    private MultipartFile video;
 
     public String getType() {
         return type;

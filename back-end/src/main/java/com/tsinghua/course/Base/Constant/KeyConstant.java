@@ -41,12 +41,6 @@ public class KeyConstant {
     public static final String REMARK = "remark";
     // 星标
     public static final String STAR = "star";
-    // 分组ID
-    public static final String GROUP_ID = "group_id";
-
-    /** FriendGroup关键key */
-    // 分组
-    public static final String GROUP_NAME = "group_name";
 
     /** FriendRequest关键key */
     // 发送方用户名
@@ -71,6 +65,10 @@ public class KeyConstant {
     public static final String SEND_TIME = "send_time";
     // 是否是最后一条消息
     public static final String LATEST = "latest";
+
+    /** Moment关键key */
+    // 点赞数
+    public static final String LIKES_NUM = "likesNum";
 
     /** Like关键key */
     // 动态id

@@ -11,7 +11,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.FRIEND_GET_FRIENDS)
 public class GetFriendsOutParams extends CommonOutParams {
     // 所有好友
-    FriendItem[] friends;
+    private FriendItem[] friends;
 
     public FriendItem[] getFriends() { return friends; }
     public void setFriends(FriendItem[] friends) { this.friends = friends; }
