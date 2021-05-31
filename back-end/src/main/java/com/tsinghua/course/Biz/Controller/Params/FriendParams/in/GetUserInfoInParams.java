@@ -12,7 +12,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class GetUserInfoInParams extends CommonInParams {
     // 该用户的用户名
     @Required
-    String oppositeUsername;
+    private String oppositeUsername;
 
     public String getOppositeUsername() {
         return oppositeUsername;

@@ -9,14 +9,23 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
  */
 @BizType(BizTypeEnum.FRIEND_CHECK_FRIEND_REQUEST)
 public class CheckFriendRequestOutParams extends CommonOutParams {
+    // 消息类型
+    private int type;
     // 接收方的用户名
-    String from_username;
-
+    private String to_username;
     // 附加信息
-    String extra;
+    private String extra;
 
-    public String getFromUsername() { return from_username; }
-    public void setFromUsername(String from_username) { this.from_username = from_username; }
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getToUsername() { return to_username; }
+    public void setToUsername(String to_username) { this.to_username = to_username; }
 
     public String getExtra() { return extra; }
     public void setExtra(String extra) { this.extra = extra; }

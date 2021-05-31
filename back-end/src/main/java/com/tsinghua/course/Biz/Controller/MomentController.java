@@ -11,13 +11,16 @@ import com.tsinghua.course.Base.Model.*;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
+import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.LikeMomentInParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.PublishMomentInParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.RemoveMomentInParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.GetMomentsOutParams;
+import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.LikeMomentOutParams;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.MomentProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.FileUtil;
+import com.tsinghua.course.Frame.Util.SocketUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -297,5 +300,31 @@ public class MomentController {
 
         outParams.setMoments(moments);
         return outParams;
+    }
+
+    /** 点赞动态 */
+    @BizType(BizTypeEnum.MOMENT_LIKE_MOMENT)
+    @NeedLogin
+    public CommonOutParams momentLikeMoment(LikeMomentInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String momentId = inParams.getMomentId();
+        String momentUsername = inParams.getMomentUsername();
+
+        /* 新建Like对象 */
+        momentProcessor.addLike(username, momentId);
+        /* 更新点赞数 */
+        momentProcessor.updateLikesNum(momentId, true);
+
+        /* 定向发送给被点赞用户 */
+        LikeMomentOutParams outParams = new LikeMomentOutParams();
+        User user = userProcessor.getUserByUsername(username);
+        Friendship friendship = friendProcessor.getFriendshipByUsername(momentUsername, username);
+        outParams.setType(2);
+        outParams.setUsername(username);
+        outParams.setNickname(user.getNickname());
+        outParams.setRemark(friendship.getRemark());
+        SocketUtil.sendMessageToUser(momentUsername, outParams);
+
+        return new CommonOutParams(true);
     }
 }

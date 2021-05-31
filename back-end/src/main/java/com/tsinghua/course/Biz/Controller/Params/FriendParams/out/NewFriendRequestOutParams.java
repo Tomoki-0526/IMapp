@@ -9,6 +9,8 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
  */
 @BizType(BizTypeEnum.FRIEND_NEW_FRIEND_REQUEST)
 public class NewFriendRequestOutParams extends CommonOutParams {
+    // 消息类型
+    private int type;
     // 发送者用户名
     private String from_username;
     // 发送者昵称
@@ -19,6 +21,14 @@ public class NewFriendRequestOutParams extends CommonOutParams {
     private String extra;
     // 状态
     private int status;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getFromUsername() { return from_username; }
     public void setFromUsername(String from_username) { this.from_username = from_username; }

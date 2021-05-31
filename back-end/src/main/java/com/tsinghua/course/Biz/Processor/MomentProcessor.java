@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -144,5 +145,30 @@ public class MomentProcessor {
         query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
 
         return mongoTemplate.find(query, Comment.class);
+    }
+
+    /** 新增点赞 */
+    public void addLike(String username, String momentId) {
+        Like like = new Like();
+        like.setLikeTime(new Date());
+        like.setMomentId(momentId);
+        like.setUsername(username);
+
+        mongoTemplate.insert(like);
+    }
+
+    /** 更新点赞数 */
+    public void updateLikesNum(String momentId, boolean like) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
+        Moment moment = mongoTemplate.findOne(query, Moment.class);
+        Update update = new Update();
+        if (like) {
+            update.set(KeyConstant.LIKES_NUM, moment.getLikesNum() + 1);
+        }
+        else {
+            update.set(KeyConstant.LIKES_NUM, moment.getLikesNum() - 1);
+        }
+        mongoTemplate.upsert(query, update, Moment.class);
     }
 }

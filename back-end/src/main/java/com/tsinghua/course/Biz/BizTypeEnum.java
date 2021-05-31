@@ -42,6 +42,7 @@ public enum BizTypeEnum {
     MOMENT_PUBLISH_MOMENT(MomentController.class, "/moment/publishMoment", "发布动态"),
     MOMENT_REMOVE_MOMENT(MomentController.class, "/moment/removeMoment", "删除动态"),
     MOMENT_GET_MOMENTS(MomentController.class, "/moment/getMoments", "查看动态"),
+    MOMENT_LIKE_MOMENT(MomentController.class, "/moment/likeMoment", "点赞动态"),
 
     /** 定时任务业务测试 */
     LOG_TEST(TimerController.class, null, "定时日志测试"),

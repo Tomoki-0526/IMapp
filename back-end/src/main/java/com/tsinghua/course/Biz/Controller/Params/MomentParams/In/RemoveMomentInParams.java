@@ -12,7 +12,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 public class RemoveMomentInParams extends CommonInParams {
     // 动态id
     @Required
-    String momentId;
+    private String momentId;
 
     public String getMomentId() { return momentId; }
     public void setMomentId(String momentId) { this.momentId = momentId; }

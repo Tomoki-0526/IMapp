@@ -11,7 +11,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.MOMENT_GET_MOMENTS)
 public class GetMomentsOutParams extends CommonOutParams {
     // 动态数组
-    MomentItem[] moments;
+    private MomentItem[] moments;
 
     public MomentItem[] getMoments() {
         return moments;

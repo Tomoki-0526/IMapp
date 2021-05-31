@@ -241,6 +241,7 @@ public class FriendController {
         outParams.setFromAvatar(from_user.getAvatar());
         outParams.setExtra(extra);
         outParams.setStatus(0);
+        outParams.setType(0);
 
         SocketUtil.sendMessageToUser(to_username, outParams);
 
@@ -370,8 +371,9 @@ public class FriendController {
 
             /* 给对方返回结果 */
             CheckFriendRequestOutParams outParams = new CheckFriendRequestOutParams();
-            outParams.setFromUsername(from_username);
+            outParams.setToUsername(username);
             outParams.setExtra("对方已接受您的好友申请");
+            outParams.setType(1);
             SocketUtil.sendMessageToUser(from_username, outParams);
         }
 
