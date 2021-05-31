@@ -106,7 +106,7 @@ public class MomentProcessor {
         for (Friendship friend: friendships) {
             String friendUsername = friend.getFriendUsername();
             Query query1 = new Query();
-            query1.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+            query1.addCriteria(Criteria.where(KeyConstant.USERNAME).is(friendUsername));
             momentList.addAll(mongoTemplate.find(query1, Moment.class));
         }
 

@@ -187,6 +187,7 @@ public class MomentController {
     @NeedLogin
     public GetMomentsOutParams momentGetMoments(CommonInParams inParams) throws Exception {
         String username = inParams.getUsername();
+        GetMomentsOutParams outParams = new GetMomentsOutParams();
 
         /* 找到当前用户所有好友（包括自己）的动态 */
         List<Moment> momentList = momentProcessor.getFriendMoments(username);
@@ -230,9 +231,12 @@ public class MomentController {
             momentItem.setImages(imagesPath);
             // 视频
             String videoPath = moment.getVideoPath();
-            index = videoPath.indexOf(MOMENT_RELATIVE_PATH);
-            videoPath = "http://" + SERVER_IP + ":" + FILE_PORT + videoPath.substring(index);
-            momentItem.setVideo(videoPath);
+            momentItem.setVideo("");
+            if (!videoPath.equals("")) {
+                index = videoPath.indexOf(MOMENT_RELATIVE_PATH);
+                videoPath = "http://" + SERVER_IP + ":" + FILE_PORT + videoPath.substring(index);
+                momentItem.setVideo(videoPath);
+            }
             // 点赞数
             momentItem.setLikesNum(moment.getLikesNum());
             // 点赞用户数组
@@ -291,7 +295,6 @@ public class MomentController {
         MomentItem[] moments = new MomentItem[momentItemList.size()];
         momentItemList.toArray(moments);
 
-        GetMomentsOutParams outParams = new GetMomentsOutParams();
         outParams.setMoments(moments);
         return outParams;
     }
