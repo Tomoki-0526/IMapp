@@ -1,8 +1,11 @@
 package com.tsinghua.course.Base.CustomizedClass;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * @描述 FriendRequestItem 前端用好友申请条目
  **/
+@Document("FriendRequestItem")
 public class FriendRequestItem {
     // 用户名
     String from_username;

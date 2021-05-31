@@ -414,3 +414,34 @@ Error Response:
     'msg': '设置星标失败'
 }
 ```
+
+# 查看某一位用户的信息
+
+Method: GET  
+URL: /friend/getUserInfo
+Request:
+```coffeescript
+{
+    oppositeUsername: 对方的用户名
+}
+```
+Correct Response:
+```coffeescript
+{
+    'isFriend': boolean 0-不是好友 1-是好友
+
+    // 如果不是好友只需要获取下面5个字段
+    'username': 陌生人用户名,
+    'nickname': 昵称,
+    'avatar': 头像,
+    'gender': 性别,
+    'signature': 个性签名
+
+    // 如果是好友还有以下字段
+    'remark': 备注名,
+    'age': int,
+    'birthday': string，格式"yyyy-MM-dd",
+    'telephone': 手机号码,
+    'star': 是否标星
+}
+```

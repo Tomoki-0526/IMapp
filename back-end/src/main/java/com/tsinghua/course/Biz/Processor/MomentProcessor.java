@@ -8,8 +8,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @描述 动态原子处理器
@@ -25,8 +24,8 @@ public class MomentProcessor {
         moment.setPublishTime(new Date());
         moment.setUsername(username);
         moment.setType(type);
-        moment.setLikes(0);
-        moment.setComments(0);
+        moment.setLikesNum(0);
+        moment.setCommentsNum(0);
         moment.setTextContent(content);
         moment.setImagesPath(new String[0]);
         moment.setVideoPath("");
@@ -40,8 +39,8 @@ public class MomentProcessor {
         moment.setPublishTime(new Date());
         moment.setUsername(username);
         moment.setType(type);
-        moment.setLikes(0);
-        moment.setComments(0);
+        moment.setLikesNum(0);
+        moment.setCommentsNum(0);
         moment.setTextContent("");
         moment.setImagesPath(imgs);
         moment.setVideoPath("");
@@ -55,8 +54,8 @@ public class MomentProcessor {
         moment.setPublishTime(new Date());
         moment.setUsername(username);
         moment.setType(type);
-        moment.setLikes(0);
-        moment.setComments(0);
+        moment.setLikesNum(0);
+        moment.setCommentsNum(0);
         moment.setTextContent(content);
         moment.setImagesPath(imgs);
         moment.setVideoPath("");
@@ -70,8 +69,8 @@ public class MomentProcessor {
         moment.setPublishTime(new Date());
         moment.setUsername(username);
         moment.setType(type);
-        moment.setLikes(0);
-        moment.setComments(0);
+        moment.setLikesNum(0);
+        moment.setCommentsNum(0);
         moment.setTextContent("");
         moment.setImagesPath(new String[0]);
         moment.setVideoPath(video);
@@ -93,5 +92,57 @@ public class MomentProcessor {
         query.addCriteria(Criteria.where(KeyConstant.ID).is(momentId));
 
         mongoTemplate.remove(query, Moment.class);
+    }
+
+    /** 查找当前用户的所有好友（包括自己）的动态 */
+    public List<Moment> getFriendMoments(String username) {
+        /* 列出所有好友 */
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+        List<Friendship> friendships = mongoTemplate.find(query, Friendship.class);
+
+        /* 列出所有好友的动态 */
+        List<Moment> momentList = new ArrayList<>();
+        for (Friendship friend: friendships) {
+            String friendUsername = friend.getFriendUsername();
+            Query query1 = new Query();
+            query1.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+            momentList.addAll(mongoTemplate.find(query1, Moment.class));
+        }
+
+        /* 时间排序 */
+        MomentSort(momentList);
+        return momentList;
+    }
+
+    /** 动态时间排序 */
+    private static void MomentSort(List<Moment> list) {
+        Collections.sort(list, new Comparator<Moment>() {
+            @Override
+            public int compare(Moment o1, Moment o2) {
+                Date dt1 = o1.getPublishTime();
+                Date dt2 = o2.getPublishTime();
+                if (dt1.getTime() < dt2.getTime())
+                    return 1;
+                else
+                    return -1;
+            }
+        });
+    }
+
+    /** 获取一条动态的点赞用户 */
+    public List<Like> getMomentLikes(String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
+
+        return mongoTemplate.find(query, Like.class);
+    }
+
+    /** 获取一条动态的评论 */
+    public List<Comment> getMomentComments(String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
+
+        return mongoTemplate.find(query, Comment.class);
     }
 }

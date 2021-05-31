@@ -72,6 +72,7 @@ public class KeyConstant {
     // 是否是最后一条消息
     public static final String LATEST = "latest";
 
-    /** Moment关键key */
-
+    /** Like关键key */
+    // 动态id
+    public static final String MOMENT_ID = "moment_id";
 }

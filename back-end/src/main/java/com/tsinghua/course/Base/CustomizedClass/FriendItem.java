@@ -1,8 +1,11 @@
 package com.tsinghua.course.Base.CustomizedClass;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * @描述 FriendItem 用于返回给客户端的一个好友的条目
  **/
+@Document("FriendItem")
 public class FriendItem {
     // 好友用户名
     String friend_username;
