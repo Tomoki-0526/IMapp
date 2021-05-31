@@ -25,7 +25,7 @@ Request:
 }
 ```
 
-## 查看动态
+## 查看动态 √
 
 Method: GET
 URL: /moment/getMoments
