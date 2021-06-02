@@ -69,6 +69,8 @@ public class KeyConstant {
     /** Moment关键key */
     // 点赞数
     public static final String LIKES_NUM = "likesNum";
+    // 评论数
+    public static final String COMMENTS_NUM = "commentsNum";
 
     /** Like关键key */
     // 动态id
