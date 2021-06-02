@@ -333,7 +333,6 @@ public class MomentController {
     @BizType(BizTypeEnum.MOMENT_CANCEL_LIKE_MOMENT)
     @NeedLogin
     public CommonOutParams momentCancelLikeMoment(CancelLikeMomentInParams inParams) throws Exception {
-        String username = inParams.getUsername();
         String momentId = inParams.getMomentId();
         String likeId = inParams.getLikeId();
 
@@ -377,7 +376,6 @@ public class MomentController {
     @BizType(BizTypeEnum.MOMENT_REMOVE_COMMENT)
     @NeedLogin
     public CommonOutParams momentRemoveComment(RemoveCommentInParams inParams) throws Exception {
-        String username = inParams.getUsername();
         String momentId = inParams.getMomentId();
         String commentId = inParams.getCommentId();
 
