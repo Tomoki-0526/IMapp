@@ -251,6 +251,7 @@ public class MomentController {
                 avatar = likeUser.getAvatar();
                 index = avatar.indexOf(AVATAR_RELATIVE_PATH);
                 avatarUrl = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+                likeItem.setLikeId(like.getId());
                 likeItem.setLikeAvatar(avatarUrl);
                 likeItem.setLikeUsername(likeUsername);
                 likeItem.setLikeNickname(likeUser.getNickname());
@@ -275,6 +276,7 @@ public class MomentController {
                 CommentItem commentItem = new CommentItem();
                 String commentUsername = comment.getUsername();
                 User commentUser = userProcessor.getUserByUsername(commentUsername);
+                commentItem.setCommentId(comment.getId());
                 commentItem.setCommentUsername(commentUsername);
                 commentItem.setCommentNickname(commentUser.getNickname());
                 commentItem.setCommentContent(comment.getContent());
@@ -331,11 +333,11 @@ public class MomentController {
     @BizType(BizTypeEnum.MOMENT_CANCEL_LIKE_MOMENT)
     @NeedLogin
     public CommonOutParams momentCancelLikeMoment(CancelLikeMomentInParams inParams) throws Exception {
-        String username = inParams.getUsername();
         String momentId = inParams.getMomentId();
+        String likeId = inParams.getLikeId();
 
         /* 删除对应的Like对象 */
-        momentProcessor.removeLike(username, momentId);
+        momentProcessor.removeLike(likeId);
         /* 更新点赞数 */
         momentProcessor.updateLikesNum(momentId, false);
 
@@ -374,11 +376,11 @@ public class MomentController {
     @BizType(BizTypeEnum.MOMENT_REMOVE_COMMENT)
     @NeedLogin
     public CommonOutParams momentRemoveComment(RemoveCommentInParams inParams) throws Exception {
-        String username = inParams.getUsername();
         String momentId = inParams.getMomentId();
+        String commentId = inParams.getCommentId();
 
         /* 删除对应的Comment对象 */
-        momentProcessor.removeComment(username, momentId);
+        momentProcessor.removeComment(commentId);
         /* 更新点赞数 */
         momentProcessor.updateCommentsNum(momentId, false);
 

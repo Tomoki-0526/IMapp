@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document("LikeItem")
 public class LikeItem {
+    // 点赞id
+    String likeId;
     // 头像
     String likeAvatar;
     // 用户名
@@ -17,6 +19,14 @@ public class LikeItem {
     String likeRemark;
     // 点赞时间
     String likeTime;
+
+    public String getLikeId() {
+        return likeId;
+    }
+
+    public void setLikeId(String likeId) {
+        this.likeId = likeId;
+    }
 
     public String getLikeAvatar() {
         return likeAvatar;

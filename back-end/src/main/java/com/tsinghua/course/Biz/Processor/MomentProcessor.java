@@ -158,10 +158,9 @@ public class MomentProcessor {
     }
 
     /** 删除点赞 */
-    public void removeLike(String username, String momentId) {
+    public void removeLike(String likeId) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
-                                    .and(KeyConstant.MOMENT_ID).is(momentId));
+        query.addCriteria(Criteria.where(KeyConstant.ID).is(likeId));
 
         mongoTemplate.remove(query, Like.class);
     }
@@ -194,10 +193,9 @@ public class MomentProcessor {
     }
 
     /** 删除评论 */
-    public void removeComment(String username, String momentId) {
+    public void removeComment(String commentId) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
-                                    .and(KeyConstant.MOMENT_ID).is(momentId));
+        query.addCriteria(Criteria.where(KeyConstant.ID).is(commentId));
 
         mongoTemplate.remove(query, Comment.class);
     }
