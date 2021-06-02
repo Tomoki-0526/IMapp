@@ -157,6 +157,15 @@ public class MomentProcessor {
         mongoTemplate.insert(like);
     }
 
+    /** 删除点赞 */
+    public void removeLike(String username, String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.MOMENT_ID).is(momentId));
+
+        mongoTemplate.remove(query, Like.class);
+    }
+
     /** 更新点赞数 */
     public void updateLikesNum(String momentId, boolean like) {
         Query query = new Query();
@@ -168,6 +177,42 @@ public class MomentProcessor {
         }
         else {
             update.set(KeyConstant.LIKES_NUM, moment.getLikesNum() - 1);
+        }
+
+        mongoTemplate.upsert(query, update, Moment.class);
+    }
+
+    /** 新增评论 */
+    public void addComment(String username, String momentId, String content) {
+        Comment comment = new Comment();
+        comment.setCommentTime(new Date());
+        comment.setMomentId(momentId);
+        comment.setContent(content);
+        comment.setUsername(username);
+
+        mongoTemplate.insert(comment);
+    }
+
+    /** 删除评论 */
+    public void removeComment(String username, String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username)
+                                    .and(KeyConstant.MOMENT_ID).is(momentId));
+
+        mongoTemplate.remove(query, Comment.class);
+    }
+
+    /** 更新评论数 */
+    public void updateCommentsNum(String momentId, boolean comment) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
+        Moment moment = mongoTemplate.findOne(query, Moment.class);
+        Update update = new Update();
+        if (comment) {
+            update.set(KeyConstant.COMMENTS_NUM, moment.getCommentsNum() + 1);
+        }
+        else {
+            update.set(KeyConstant.COMMENTS_NUM, moment.getCommentsNum() - 1);
         }
         mongoTemplate.upsert(query, update, Moment.class);
     }

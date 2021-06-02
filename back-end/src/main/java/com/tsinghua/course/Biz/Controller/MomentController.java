@@ -11,9 +11,8 @@ import com.tsinghua.course.Base.Model.*;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
-import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.LikeMomentInParams;
-import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.PublishMomentInParams;
-import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.RemoveMomentInParams;
+import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.*;
+import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.CommentOnMomentOutParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.GetMomentsOutParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.LikeMomentOutParams;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
@@ -324,6 +323,64 @@ public class MomentController {
         outParams.setNickname(user.getNickname());
         outParams.setRemark(friendship.getRemark());
         SocketUtil.sendMessageToUser(momentUsername, outParams);
+
+        return new CommonOutParams(true);
+    }
+
+    /** 撤销点赞 */
+    @BizType(BizTypeEnum.MOMENT_CANCEL_LIKE_MOMENT)
+    @NeedLogin
+    public CommonOutParams momentCancelLikeMoment(CancelLikeMomentInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String momentId = inParams.getMomentId();
+
+        /* 删除对应的Like对象 */
+        momentProcessor.removeLike(username, momentId);
+        /* 更新点赞数 */
+        momentProcessor.updateLikesNum(momentId, false);
+
+        return new CommonOutParams(true);
+    }
+
+    /** 评论动态 */
+    @BizType(BizTypeEnum.MOMENT_COMMENT_ON_MOMENT)
+    @NeedLogin
+    public CommonOutParams momentCommentOnMoment(CommentOnMomentInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String momentId = inParams.getMomentId();
+        String content = inParams.getContent();
+        String momentUsername = inParams.getMomentUsername();
+
+        /* 新建Comment对象 */
+        momentProcessor.addComment(username, momentId, content);
+        /* 更新评论数 */
+        momentProcessor.updateCommentsNum(momentId, true);
+
+        /* 及时推送 */
+        CommentOnMomentOutParams outParams = new CommentOnMomentOutParams();
+        User user = userProcessor.getUserByUsername(username);
+        Friendship friendship = friendProcessor.getFriendshipByUsername(momentUsername, username);
+        outParams.setType(3);
+        outParams.setUsername(username);
+        outParams.setNickname(user.getNickname());
+        outParams.setRemark(friendship.getRemark());
+        outParams.setContent(content);
+        SocketUtil.sendMessageToUser(momentUsername, outParams);
+
+        return new CommonOutParams(true);
+    }
+
+    /** 删除动态 */
+    @BizType(BizTypeEnum.MOMENT_REMOVE_COMMENT)
+    @NeedLogin
+    public CommonOutParams momentRemoveComment(RemoveCommentInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String momentId = inParams.getMomentId();
+
+        /* 删除对应的Comment对象 */
+        momentProcessor.removeComment(username, momentId);
+        /* 更新点赞数 */
+        momentProcessor.updateCommentsNum(momentId, false);
 
         return new CommonOutParams(true);
     }

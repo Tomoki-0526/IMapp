@@ -75,7 +75,7 @@ Correct Response:
 }
 ```
 
-## 点赞动态
+## 点赞动态 √
 
 Method: POST
 URL: /moment/likeMoment
@@ -87,7 +87,7 @@ Request:
 }
 ```
 
-## 撤销点赞动态
+## 撤销点赞动态 √
 
 Method: POST
 URL: /moment/cancelLikeMoment
@@ -98,7 +98,7 @@ Request:
 }
 ```
 
-## 评论动态
+## 评论动态 √
 
 Method: POST
 URL: /moment/commentOnMoment
@@ -107,6 +107,7 @@ Request:
 {
     "momentId": string
     "content": string
+    "momentUsername": 发布动态的人
 }
 ```
 Correct Response:
@@ -116,7 +117,7 @@ Correct Response:
 }
 ```
 
-## 删除评论
+## 删除评论 √
 
 Method: POST
 URL: /moment/removeComment
