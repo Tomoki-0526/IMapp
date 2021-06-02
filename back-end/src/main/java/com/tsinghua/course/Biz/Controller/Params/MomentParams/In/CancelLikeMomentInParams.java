@@ -10,9 +10,20 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
  */
 @BizType(BizTypeEnum.MOMENT_CANCEL_LIKE_MOMENT)
 public class CancelLikeMomentInParams extends CommonInParams {
+    // 点赞id
+    @Required
+    private String likeId;
     // 动态id
     @Required
     private String momentId;
+
+    public String getLikeId() {
+        return likeId;
+    }
+
+    public void setLikeId(String likeId) {
+        this.likeId = likeId;
+    }
 
     public String getMomentId() {
         return momentId;

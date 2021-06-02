@@ -57,6 +57,7 @@ Correct Response:
 一个点赞用户的格式
 ```coffeescript
 {
+    "likeId":
     "likeAvatar": 
     "likeUsername":
     "likeNickname":
@@ -94,7 +95,8 @@ URL: /moment/cancelLikeMoment
 Request:
 ```coffeescript
 {
-    "momentId": string
+    "likeId": 点赞id
+    "momentId": 动态id
 }
 ```
 
@@ -124,6 +126,7 @@ URL: /moment/removeComment
 Request:
 ```coffeescript
 {
-    "commentId": string
+    "commentId": 评论id
+    "momentId": 动态id
 }
 ```

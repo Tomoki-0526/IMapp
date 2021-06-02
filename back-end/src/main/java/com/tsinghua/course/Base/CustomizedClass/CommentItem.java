@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document("CommentItem")
 public class CommentItem {
+    // 评论id
+    String commentId;
     // 用户名
     String commentUsername;
     // 昵称
@@ -17,6 +19,14 @@ public class CommentItem {
     String commentContent;
     // 评论时间
     String commentTime;
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
 
     public String getCommentUsername() {
         return commentUsername;
