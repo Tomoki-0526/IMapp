@@ -56,7 +56,7 @@ public class FriendController {
         String nickname = stranger.getNickname();
         String avatar = stranger.getAvatar();
         int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+        String avatar_url = FILE_URL + avatar.substring(index);
 
         FindStrangerOutParams outParams = new FindStrangerOutParams();
         outParams.setStrangerUsername(stranger_username);
@@ -76,7 +76,7 @@ public class FriendController {
         String stranger_nickname = stranger.getNickname();
         String stranger_avatar = stranger.getAvatar();
         int index = stranger_avatar.indexOf(AVATAR_RELATIVE_PATH);
-        String stranger_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + stranger_avatar.substring(index);
+        String stranger_avatar_url = FILE_URL + stranger_avatar.substring(index);
         String stranger_gender = stranger.getGender();
         String stranger_signature = stranger.getSignature();
 
@@ -124,7 +124,7 @@ public class FriendController {
                 String friend_nickname = friend.getNickname();
                 String friend_avatar = friend.getAvatar();
                 int index = friend_avatar.indexOf(AVATAR_RELATIVE_PATH);
-                String friend_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + friend_avatar.substring(index);
+                String friend_avatar_url = FILE_URL + friend_avatar.substring(index);
 
                 FriendItem item = new FriendItem();
                 item.setFriendUsername(friend_username);
@@ -159,7 +159,7 @@ public class FriendController {
             User friend = userProcessor.getUserByUsername(friend_username);
             String friend_avatar = friend.getAvatar();
             int index = friend_avatar.indexOf(AVATAR_RELATIVE_PATH);
-            String friend_avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + friend_avatar.substring(index);
+            String friend_avatar_url = FILE_URL + friend_avatar.substring(index);
             String friend_nickname = friend.getNickname();
 
             FriendItem friendItem = new FriendItem();
@@ -188,7 +188,7 @@ public class FriendController {
 
         String avatar = friend.getAvatar();
         int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+        String avatar_url = FILE_URL + avatar.substring(index);
         String nickname = friend.getNickname();
         String remark = friendship.getRemark();
         String gender = friend.getGender();
@@ -326,7 +326,7 @@ public class FriendController {
             friendRequestItem.setFromNickname(fromUser.getNickname());
             String avatar = fromUser.getAvatar();
             int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-            String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+            String avatar_url = FILE_URL + avatar.substring(index);
             friendRequestItem.setFromAvatar(avatar_url);
             friendRequestItem.setExtra(friendRequest.getExtra());
             friendRequestItem.setStatus(friendRequest.getStatus());
@@ -392,7 +392,7 @@ public class FriendController {
         GetUserInfoOutParams outParams = new GetUserInfoOutParams();
         String avatar = user.getAvatar();
         int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+        String avatar_url = FILE_URL + avatar.substring(index);
         outParams.setAvatar(avatar_url);
         outParams.setUsername(oppositeUsername);
         outParams.setNickname(user.getNickname());
@@ -435,7 +435,7 @@ public class FriendController {
 
             String friend_avatar = friend.getAvatar();
             int index = friend_avatar.indexOf(AVATAR_RELATIVE_PATH);
-            String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + friend_avatar.substring(index);
+            String avatar_url = FILE_URL + friend_avatar.substring(index);
             String friend_nickname = friend.getNickname();
             String friend_remark = friendship.getRemark();
 

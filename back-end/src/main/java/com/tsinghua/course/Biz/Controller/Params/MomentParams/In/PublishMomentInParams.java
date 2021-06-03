@@ -4,6 +4,7 @@ import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.Required;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
+import io.netty.handler.codec.http.multipart.FileUpload;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -17,9 +18,9 @@ public class PublishMomentInParams extends CommonInParams {
     // 文本内容
     private String content;
     // 图片数组
-    private MultipartFile[] images;
+    private FileUpload[] images;
     // 视频
-    private MultipartFile video;
+    private FileUpload video;
 
     public String getType() {
         return type;
@@ -35,17 +36,17 @@ public class PublishMomentInParams extends CommonInParams {
         this.content = content;
     }
 
-    public MultipartFile[] getImages() {
+    public FileUpload[] getImages() {
         return images;
     }
-    public void setImages(MultipartFile[] images) {
+    public void setImages(FileUpload[] images) {
         this.images = images;
     }
 
-    public MultipartFile getVideo() {
+    public FileUpload getVideo() {
         return video;
     }
-    public void setVideo(MultipartFile video) {
+    public void setVideo(FileUpload video) {
         this.video = video;
     }
 }

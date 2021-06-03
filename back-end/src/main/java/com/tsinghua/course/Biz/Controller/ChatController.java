@@ -140,7 +140,7 @@ public class ChatController {
             User user = userProcessor.getUserByUsername(from_username);
             String avatar = user.getAvatar();
             int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-            String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+            String avatar_url = FILE_URL + avatar.substring(index);
 
             HistoryItem historyItem = new HistoryItem();
             historyItem.setMsgId(msg_id);

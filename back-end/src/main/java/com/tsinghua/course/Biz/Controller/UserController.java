@@ -14,11 +14,14 @@ import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.*;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.multipart.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -162,7 +165,7 @@ public class UserController {
         /* 获取个人信息 */
         String avatar = user.getAvatar();
         int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-        String avatar_url = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+        String avatar_url = FILE_URL + avatar.substring(index);
 
         String nickname = user.getNickname();
         String gender = user.getGender();
@@ -231,31 +234,14 @@ public class UserController {
         // 根据Windows和Linux配置不同的头像保存路径
         String OSName = System.getProperty(OS_NAME);
         String avatarPath = OSName.toLowerCase().startsWith(WIN) ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
+        // 若目录不存在，创建目录
+        File dir = new File(avatarPath);
+        if (!dir.exists())
+            dir.mkdirs();
 
         // 获取文件内容
-        MultipartFile file = inParams.getAvatar();
-        InputStream inputStream = file.getInputStream();
-        // 获取原始文件名
-        String originalFilename = file.getOriginalFilename();
-
-        // 生成uuid名称
-        assert originalFilename != null;
-        String uuidFilename = FileUtil.getUUIDName(originalFilename);
-
-        // 产生一个随机目录
-        String randomDir = FileUtil.getDir();
-
-        File fileDir = new File(avatarPath + randomDir);
-        // 若文件夹不存在，则创建文件夹
-        if (!fileDir.exists())
-            fileDir.mkdirs();
-        // 创建新的文件
-        File newFile = new File(avatarPath + randomDir, uuidFilename);
-        // 将文件输出到目标文件中
-        file.transferTo(newFile);
-
-        // 将保存的文件路径更新到用户信息中
-        String avatar = avatarPath + randomDir + "/" + uuidFilename;
+        FileUpload fileUpload = inParams.getAvatar();
+        String avatar = FileUtil.fileUploadToFile(fileUpload, avatarPath);
         String username = inParams.getUsername();
         userProcessor.updateAvatar(username, avatar);
 
