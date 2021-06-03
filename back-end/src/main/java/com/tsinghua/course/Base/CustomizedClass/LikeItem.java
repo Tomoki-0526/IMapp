@@ -19,6 +19,8 @@ public class LikeItem {
     String likeRemark;
     // 点赞时间
     String likeTime;
+    // 是否是好友
+    boolean isFriend;
 
     public String getLikeId() {
         return likeId;
@@ -66,5 +68,13 @@ public class LikeItem {
 
     public void setLikeTime(String likeTime) {
         this.likeTime = likeTime;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
+
+    public void setFriend(boolean friend) {
+        isFriend = friend;
     }
 }

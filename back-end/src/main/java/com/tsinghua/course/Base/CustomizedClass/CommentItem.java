@@ -19,6 +19,8 @@ public class CommentItem {
     String commentContent;
     // 评论时间
     String commentTime;
+    // 是否是好友
+    boolean isFriend;
 
     public String getCommentId() {
         return commentId;
@@ -66,5 +68,13 @@ public class CommentItem {
 
     public void setCommentTime(String commentTime) {
         this.commentTime = commentTime;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
+
+    public void setFriend(boolean friend) {
+        isFriend = friend;
     }
 }

@@ -380,46 +380,46 @@ public class FriendController {
         return new CommonOutParams(true);
     }
 
-    /** 查看某一个用户的信息 */
-    @BizType(BizTypeEnum.FRIEND_GET_USER_INFO)
-    @NeedLogin
-    public GetUserInfoOutParams friendGetUserInfo(GetUserInfoInParams inParams) throws Exception {
-        String username = inParams.getUsername();
-        String oppositeUsername = inParams.getOppositeUsername();
-        User user = userProcessor.getUserByUsername(oppositeUsername);
-
-        Friendship friendship = friendProcessor.getFriendshipByUsername(username, oppositeUsername);
-        GetUserInfoOutParams outParams = new GetUserInfoOutParams();
-        String avatar = user.getAvatar();
-        int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-        String avatar_url = FILE_URL + avatar.substring(index);
-        outParams.setAvatar(avatar_url);
-        outParams.setUsername(oppositeUsername);
-        outParams.setNickname(user.getNickname());
-        outParams.setGender(user.getGender());
-        outParams.setSignature(user.getSignature());
-
-        if (friendship != null) {
-            outParams.setFriend(true);
-            outParams.setRemark(friendship.getRemark());
-            outParams.setStar(friendship.isStar());
-            outParams.setAge(user.getAge());
-            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
-            String birthdayStr = dateFormat.format(user.getBirthday());
-            outParams.setBirthday(birthdayStr);
-            outParams.setTelephone(user.getTelephone());
-        }
-        else {
-            outParams.setFriend(false);
-            outParams.setRemark("");
-            outParams.setAge(0);
-            outParams.setBirthday("");
-            outParams.setTelephone("");
-            outParams.setStar(false);
-        }
-
-        return outParams;
-    }
+//    /** 查看某一个用户的信息 */
+//    @BizType(BizTypeEnum.FRIEND_GET_USER_INFO)
+//    @NeedLogin
+//    public GetUserInfoOutParams friendGetUserInfo(GetUserInfoInParams inParams) throws Exception {
+//        String username = inParams.getUsername();
+//        String oppositeUsername = inParams.getOppositeUsername();
+//        User user = userProcessor.getUserByUsername(oppositeUsername);
+//
+//        Friendship friendship = friendProcessor.getFriendshipByUsername(username, oppositeUsername);
+//        GetUserInfoOutParams outParams = new GetUserInfoOutParams();
+//        String avatar = user.getAvatar();
+//        int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
+//        String avatar_url = FILE_URL + avatar.substring(index);
+//        outParams.setAvatar(avatar_url);
+//        outParams.setUsername(oppositeUsername);
+//        outParams.setNickname(user.getNickname());
+//        outParams.setGender(user.getGender());
+//        outParams.setSignature(user.getSignature());
+//
+//        if (friendship != null) {
+//            outParams.setFriend(true);
+//            outParams.setRemark(friendship.getRemark());
+//            outParams.setStar(friendship.isStar());
+//            outParams.setAge(user.getAge());
+//            SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+//            String birthdayStr = dateFormat.format(user.getBirthday());
+//            outParams.setBirthday(birthdayStr);
+//            outParams.setTelephone(user.getTelephone());
+//        }
+//        else {
+//            outParams.setFriend(false);
+//            outParams.setRemark("");
+//            outParams.setAge(0);
+//            outParams.setBirthday("");
+//            outParams.setTelephone("");
+//            outParams.setStar(false);
+//        }
+//
+//        return outParams;
+//    }
 
     /** 获取通讯录 */
     @BizType(BizTypeEnum.FRIEND_GET_FRIENDS)

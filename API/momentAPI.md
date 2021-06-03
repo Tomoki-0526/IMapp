@@ -25,7 +25,7 @@ Request:
 }
 ```
 
-## 查看动态 √
+## 查看动态列表 √
 
 Method: GET
 URL: /moment/getMoments
@@ -63,6 +63,7 @@ Correct Response:
     "likeNickname":
     "likeRemark":
     "likeTime": 
+    "isFriend": boolean
 }
 ```
 一个评论的格式
@@ -73,6 +74,7 @@ Correct Response:
     "commentRemark":
     "commentContent":
     "commentTime": 
+    "isFriend": boolean
 }
 ```
 
@@ -128,5 +130,22 @@ Request:
 {
     "commentId": 评论id
     "momentId": 动态id
+}
+```
+
+## 查看一条动态 √
+
+Method: POST
+URL: /moment/getSingleMoment
+Request:
+```coffeescript
+{
+    "momentId": string
+}
+```
+Correct Response:
+```coffeescript
+{
+    "moment": 一个momentItem，格式同上
 }
 ```
