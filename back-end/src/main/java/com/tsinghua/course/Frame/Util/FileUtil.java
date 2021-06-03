@@ -1,7 +1,10 @@
 package com.tsinghua.course.Frame.Util;
 
+import io.netty.handler.codec.http.multipart.FileUpload;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 import java.util.UUID;
 
@@ -27,7 +30,6 @@ public class FileUtil {
 
     /**
      * 获取随机名称
-     *
      * @param realName 真实名称
      * @return uuid 随机名称
      */
@@ -49,5 +51,30 @@ public class FileUtil {
     public static String getDir() {
         Random random = new Random();
         return "/" + HEX_STR.charAt(random.nextInt(16)) + "/" + HEX_STR.charAt(random.nextInt(16));
+    }
+
+    /**
+     * 将FileUpload写入文件
+     * @param fileUpload 上传来的文件
+     * @param dir 保存到的目录
+     * @return 文件存储在服务器中的绝对路径
+     */
+    public static String fileUploadToFile(FileUpload fileUpload, String dir) {
+        if (fileUpload.isCompleted()) {
+            // 获取原始文件名
+            String originalFilename = fileUpload.getFilename();
+            // 生成uuid名称
+            String uuidFilename = getUUIDName(originalFilename);
+            // 创建新的文件
+            File file = new File(dir, uuidFilename);
+            // 将FileUpload写入目标文件
+            try {
+                fileUpload.renameTo(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return dir + uuidFilename;
+        }
+        return "";
     }
 }

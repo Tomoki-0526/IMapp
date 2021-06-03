@@ -20,15 +20,18 @@ import com.tsinghua.course.Biz.Processor.MomentProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.FileUtil;
 import com.tsinghua.course.Frame.Util.SocketUtil;
+import io.netty.handler.codec.http.multipart.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
@@ -58,6 +61,9 @@ public class MomentController {
         // 根据Windows和Linux配置不同的头像保存路径
         String OSName = System.getProperty(OS_NAME);
         String momentPath = OSName.toLowerCase().startsWith(WIN) ? WINDOWS_MOMENT_PATH : LINUX_MOMENT_PATH;
+        File dir = new File(momentPath);
+        if (!dir.exists())
+            dir.mkdirs();
         // 文本
         if (type == 0) {
             String content = inParams.getContent();
@@ -65,27 +71,11 @@ public class MomentController {
         }
         // 图片
         else if (type == 1) {
-            MultipartFile[] images = inParams.getImages();
+            FileUpload[] images = inParams.getImages();
             List<String> imgPathList = new ArrayList<>();
-            for (MultipartFile file : images) {
-                // 获取原始文件名
-                String originalFilename = file.getOriginalFilename();
-                // 生成UUID名称
-                assert originalFilename != null;
-                String uuidFilename = FileUtil.getUUIDName(originalFilename);
-                // 产生一个随机目录
-                String randomDir = FileUtil.getDir();
-                File fileDir = new File(momentPath + randomDir);
-                if (!fileDir.exists())
-                    fileDir.mkdirs();
-                // 创建新的文件
-                File newFile = new File(momentPath + randomDir, uuidFilename);
-                // 将文件输出到目标文件中
-                file.transferTo(newFile);
-
-                // 获取路径
-                String img = momentPath + randomDir + "/" + uuidFilename;
-                imgPathList.add(img);
+            for (FileUpload fileUpload : images) {
+                String imgPath = FileUtil.fileUploadToFile(fileUpload, momentPath);
+                imgPathList.add(imgPath);
             }
             String[] imgs = new String[imgPathList.size()];
             imgPathList.toArray(imgs);
@@ -95,27 +85,11 @@ public class MomentController {
         // 图文
         else if (type == 2) {
             String content = inParams.getContent();
-            MultipartFile[] images = inParams.getImages();
+            FileUpload[] images = inParams.getImages();
             List<String> imgPathList = new ArrayList<>();
-            for (MultipartFile file : images) {
-                // 获取原始文件名
-                String originalFilename = file.getOriginalFilename();
-                // 生成UUID名称
-                assert originalFilename != null;
-                String uuidFilename = FileUtil.getUUIDName(originalFilename);
-                // 产生一个随机目录
-                String randomDir = FileUtil.getDir();
-                File fileDir = new File(momentPath + randomDir);
-                if (!fileDir.exists())
-                    fileDir.mkdirs();
-                // 创建新的文件
-                File newFile = new File(momentPath + randomDir, uuidFilename);
-                // 将文件输出到目标文件中
-                file.transferTo(newFile);
-
-                // 获取路径
-                String img = momentPath + randomDir + "/" + uuidFilename;
-                imgPathList.add(img);
+            for (FileUpload fileUpload : images) {
+                String imgPath = FileUtil.fileUploadToFile(fileUpload, momentPath);
+                imgPathList.add(imgPath);
             }
             String[] imgs = new String[imgPathList.size()];
             imgPathList.toArray(imgs);
@@ -124,24 +98,8 @@ public class MomentController {
         }
         // 视频
         else if (type == 3) {
-            MultipartFile file = inParams.getVideo();
-            // 获取原始文件名
-            String originalFilename = file.getOriginalFilename();
-            // 生成UUID名称
-            assert originalFilename != null;
-            String uuidFilename = FileUtil.getUUIDName(originalFilename);
-            // 产生一个随机目录
-            String randomDir = FileUtil.getDir();
-            File fileDir = new File(momentPath + randomDir);
-            if (!fileDir.exists())
-                fileDir.mkdirs();
-            // 创建新的文件
-            File newFile = new File(momentPath + randomDir, uuidFilename);
-            // 将文件输出到目标文件中
-            file.transferTo(newFile);
-
-            // 写入数据库
-            String video = momentPath + randomDir + "/" + uuidFilename;
+            FileUpload fileUpload = inParams.getVideo();
+            String video = FileUtil.fileUploadToFile(fileUpload, momentPath);
             momentProcessor.publishVideoMoment(username, type, video);
         }
 
@@ -207,7 +165,7 @@ public class MomentController {
             // 头像
             String avatar = publisher.getAvatar();
             int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-            String avatarUrl = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+            String avatarUrl = FILE_URL + avatar.substring(index);
             momentItem.setAvatar(avatarUrl);
             // 发布者用户名
             momentItem.setUsername(publisherUsername);
@@ -228,7 +186,7 @@ public class MomentController {
             String[] imagesPath = moment.getImagesPath();
             for (int i = 0; i < imagesPath.length; ++i) {
                 index = imagesPath[i].indexOf(MOMENT_RELATIVE_PATH);
-                imagesPath[i] = "http://" + SERVER_IP + ":" + FILE_PORT + imagesPath[i].substring(index);
+                imagesPath[i] = FILE_URL + imagesPath[i].substring(index);
             }
             momentItem.setImages(imagesPath);
             // 视频
@@ -236,7 +194,7 @@ public class MomentController {
             momentItem.setVideo("");
             if (!videoPath.equals("")) {
                 index = videoPath.indexOf(MOMENT_RELATIVE_PATH);
-                videoPath = "http://" + SERVER_IP + ":" + FILE_PORT + videoPath.substring(index);
+                videoPath = FILE_URL + videoPath.substring(index);
                 momentItem.setVideo(videoPath);
             }
             // 点赞数
@@ -250,7 +208,7 @@ public class MomentController {
                 User likeUser = userProcessor.getUserByUsername(likeUsername);
                 avatar = likeUser.getAvatar();
                 index = avatar.indexOf(AVATAR_RELATIVE_PATH);
-                avatarUrl = "http://" + SERVER_IP + ":" + FILE_PORT + avatar.substring(index);
+                avatarUrl = FILE_URL + avatar.substring(index);
                 likeItem.setLikeId(like.getId());
                 likeItem.setLikeAvatar(avatarUrl);
                 likeItem.setLikeUsername(likeUsername);

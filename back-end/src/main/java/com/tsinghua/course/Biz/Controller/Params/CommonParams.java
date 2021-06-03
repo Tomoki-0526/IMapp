@@ -1,5 +1,6 @@
 package com.tsinghua.course.Biz.Controller.Params;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tsinghua.course.Base.Annotation.Required;
@@ -29,6 +30,25 @@ public abstract class CommonParams {
         return jsonObject;
     }
 
+    /** 嵌套JSON数组转Java默认数组 */
+    public static Object transferJsonArr(JSONArray srcArr, Class type) {
+        Object fillArr = Array.newInstance(type, srcArr.size());
+        for (int i = 0; i < srcArr.size(); ++i) {
+            Object subObj = srcArr.get(i);
+            if (srcArr.get(i) instanceof JSONArray) /** 解析嵌套数组 */
+                Array.set(fillArr, i, transferJsonArr((JSONArray) subObj, type.getComponentType()));
+            else {
+                /** 解析最终子元素 */
+                try {
+                    Array.set(fillArr, i, subObj);
+                } catch (Exception e) {
+                    Array.set(fillArr, i, JSON.parseObject(subObj.toString(), type));
+                }
+            }
+        }
+        return fillArr;
+    }
+
     /** 根据jsonObject对象解析参数 */
     public void fromJsonObject(JSONObject paramJson) throws Exception {
         /** 根据json中对应属性的键值来设置属性值 */
@@ -40,14 +60,21 @@ public abstract class CommonParams {
                 /** 解析数组需要特殊处理 */
                 if (field.getType().isArray()) {
                     Class subCls = field.getType().getComponentType();
-                    JSONArray arr = (JSONArray)obj;
-                    Object fillArr = Array.newInstance(subCls, arr.size());
-                    for (int i = 0; i < arr.size(); ++i)
-                        Array.set(fillArr, i, arr.get(i));
-                    field.set(this, fillArr);
+                    if (obj instanceof JSONArray) {
+                        JSONArray arr = (JSONArray) obj;
+                        field.set(this, transferJsonArr(arr, field.getType().getComponentType()));
+                    } else {
+                        Object fillArr = Array.newInstance(subCls, 1);
+                        Array.set(fillArr, 0, obj);
+                        field.set(this, fillArr);
+                    }
                 } else {
                     /** 不是数组直接赋值 */
-                    field.set(this, obj);
+                    try {
+                        field.set(this, obj);
+                    } catch (Exception e) {
+                        field.set(this, JSON.parseObject(obj.toString(), field.getType()));
+                    }
                 }
             } else if (field.isAnnotationPresent(Required.class)) {
                 throw new CourseWarn("default", field.getName() + "不能为空");
