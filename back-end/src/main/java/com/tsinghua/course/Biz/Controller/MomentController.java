@@ -29,10 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
@@ -152,12 +149,18 @@ public class MomentController {
 
         /* 找到当前用户所有好友（包括自己）的动态 */
         List<Moment> momentList = momentProcessor.getFriendMoments(username);
+        /* myMomentsSet存放已经找过的自己发过的动态，进行去重 */
+        Set<String> myMomentsSet = new HashSet<>();
 
         /* 组织数据 */
         List<MomentItem> momentItemList = new ArrayList<>();
         for (Moment moment: momentList) {
+            if (myMomentsSet.contains(moment.getId()))
+                continue;
             MomentItem momentItem = new MomentItem();
             String publisherUsername = moment.getUsername();
+            if (publisherUsername.equals(username))
+                myMomentsSet.add(moment.getId());
             User publisher = userProcessor.getUserByUsername(publisherUsername);
             Friendship friendship = friendProcessor.getFriendshipByUsername(username, publisherUsername);
             // 动态id

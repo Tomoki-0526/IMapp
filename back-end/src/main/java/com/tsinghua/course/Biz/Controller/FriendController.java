@@ -428,9 +428,14 @@ public class FriendController {
         String username = inParams.getUsername();
         List<Friendship> friendshipList = friendProcessor.getAllFriendship(username);
 
+        boolean self = false;
         List<FriendItem> friendItemList = new ArrayList<>();
         for (Friendship friendship: friendshipList) {
             String friend_username = friendship.getFriendUsername();
+            if (self)
+                continue;
+            if (friend_username.equals(username))
+                self = true;
             User friend = userProcessor.getUserByUsername(friend_username);
 
             String friend_avatar = friend.getAvatar();
