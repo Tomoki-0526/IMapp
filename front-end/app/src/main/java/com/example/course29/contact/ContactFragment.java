@@ -44,7 +44,6 @@ public class ContactFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static ContactFragment newInstance() {
         ContactFragment fragment = new ContactFragment();
         return fragment;

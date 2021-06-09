@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.course29.R;
 import com.example.course29.contact.friend.FriendActivity;
 import com.example.course29.util.BitmapUtil;
@@ -110,7 +111,10 @@ public class StrangerAddActivity extends AppCompatActivity {
         Map res = HttpUtil.post("/friend/getStrangerInfo",map, StrangerAddActivity.this);
         if (res.get("success").toString() == "true") {
             Bitmap bitmap = BitmapUtil.getHttpBitmap(res.get("stranger_avatar").toString());
-            mIvStrangerAddProfile.setImageBitmap(bitmap);
+//            mIvStrangerAddProfile.setImageBitmap(bitmap);
+            Glide.with(this)
+                    .load(res.get("stranger_avatar").toString())
+                    .into(mIvStrangerAddProfile);
             mTvStrangerAddSignature.setText(res.get("stranger_signature").toString());
             mTvStrangerAddNickname.setText(res.get("stranger_nickname").toString());
             switch (res.get("stranger_gender").toString()) {

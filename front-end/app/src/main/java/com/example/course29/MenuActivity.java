@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.course29.UserInfo.PrivacyActivity;
 import com.example.course29.UserInfo.UserActivity;
 import com.example.course29.chat.ChatFragment;
@@ -45,7 +46,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         setContentView(R.layout.activity_menu);
 
         // 找到控件
@@ -124,10 +125,17 @@ public class MenuActivity extends AppCompatActivity {
         Map res = HttpUtil.get("/user/getInfo", MenuActivity.this);
         if (res.get("success").toString() == "true") {
             Bitmap bitmap = BitmapUtil.getHttpBitmap(res.get("avatar").toString());
-            mIvMainProfile.setImageBitmap(bitmap);
+//            mIvMainProfile.setImageBitmap(bitmap);
+            Glide.with(this)
+                    .load(res.get("avatar").toString())
+                    .into(mIvMainProfile);
             mTvMainUsername.setText(res.get("nickname").toString());
-            mIvMenuProfile.setImageBitmap(bitmap);
-            mTvMenuUsername.setText(res.get("nickname").toString());
+//            mIvMenuProfile.setImageBitmap(bitmap);
+            Glide.with(this)
+                    .load(res.get("avatar").toString())
+                    .into(mIvMenuProfile);
+            mTvMenuUsername.setText(res.get("nicknam" +
+                    "e").toString());
             mTvMenuSignature.setText(res.get("signature").toString());
         }
         else {
