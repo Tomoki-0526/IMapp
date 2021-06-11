@@ -21,7 +21,6 @@
         android:padding="10dp"
         android:textSize="16sp"
         android:hint="用户名"
-        android:text="test1"
         />
 
     <EditText
@@ -36,8 +35,6 @@
         android:textSize="16sp"
         android:inputType="textPassword"
         android:hint="密 码"
-        android:text="Aa123456"
-
         />
 
     <LinearLayout

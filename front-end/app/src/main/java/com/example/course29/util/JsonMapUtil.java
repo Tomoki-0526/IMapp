@@ -43,7 +43,7 @@ public class JsonMapUtil {
     }
 
     public static List<Map<String, Object>> jsonArrayToList (JSONArray list) throws JSONException {
-        if(list.length()<1 || list ==null) return null;
+        if(list.length()<1 || list == null) return null;
         List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
         for (int i=0; i< list.length(); i++) {
             String strJson = list.getJSONObject(i).toString();

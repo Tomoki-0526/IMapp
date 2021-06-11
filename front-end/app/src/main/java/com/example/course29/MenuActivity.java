@@ -3,7 +3,9 @@ package com.example.course29;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.course29.UserInfo.PrivacyActivity;
 import com.example.course29.UserInfo.UserActivity;
 import com.example.course29.chat.ChatFragment;
@@ -45,7 +48,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         setContentView(R.layout.activity_menu);
 
         // 找到控件
@@ -77,6 +80,9 @@ public class MenuActivity extends AppCompatActivity {
                 Map res = HttpUtil.get("/user/logout",MenuActivity.this);
 //                Log.e("11", String.valueOf(res.get("msg")==null));
                 if (res.get("success").toString() == "true") {
+                    SharedPreferences share = getSharedPreferences("Login",
+                            Context.MODE_PRIVATE);
+                    share.edit().putBoolean("LoginBool", false).commit();
                     ToastUtil.showMsg(MenuActivity.this, getResources().getString(R.string.logout_successfully));
                     intent = new Intent(MenuActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -124,10 +130,17 @@ public class MenuActivity extends AppCompatActivity {
         Map res = HttpUtil.get("/user/getInfo", MenuActivity.this);
         if (res.get("success").toString() == "true") {
             Bitmap bitmap = BitmapUtil.getHttpBitmap(res.get("avatar").toString());
-            mIvMainProfile.setImageBitmap(bitmap);
+//            mIvMainProfile.setImageBitmap(bitmap);
+            Glide.with(this)
+                    .load(res.get("avatar").toString())
+                    .into(mIvMainProfile);
             mTvMainUsername.setText(res.get("nickname").toString());
-            mIvMenuProfile.setImageBitmap(bitmap);
-            mTvMenuUsername.setText(res.get("nickname").toString());
+//            mIvMenuProfile.setImageBitmap(bitmap);
+            Glide.with(this)
+                    .load(res.get("avatar").toString())
+                    .into(mIvMenuProfile);
+            mTvMenuUsername.setText(res.get("nicknam" +
+                    "e").toString());
             mTvMenuSignature.setText(res.get("signature").toString());
         }
         else {

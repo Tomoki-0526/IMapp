@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.course29.R;
 import com.example.course29.contact.newFriend.StrangerAddActivity;
 import com.example.course29.contact.newFriend.StrangerInfoActivity;
@@ -52,7 +53,7 @@ public class FriendActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         setContentView(R.layout.activity_friend);
 
         Intent getIntent = getIntent();
@@ -255,7 +256,10 @@ public class FriendActivity extends AppCompatActivity {
         Map res = HttpUtil.post("/friend/getFriendInfo",map, FriendActivity.this);
         if (res.get("success").toString() == "true") {
             Bitmap bitmap = BitmapUtil.getHttpBitmap(res.get("avatar").toString());
-            mIvFriendAvatar.setImageBitmap(bitmap);
+//            mIvFriendAvatar.setImageBitmap(bitmap);
+            Glide.with(this)
+                    .load(res.get("avatar").toString())
+                    .into(mIvFriendAvatar);
             mTvFriendSignature.setText(res.get("signature").toString());
             mTvFriendTelephone.setText(res.get("telephone").toString());
             mTvFriendBirthday.setText(res.get("birthday").toString());

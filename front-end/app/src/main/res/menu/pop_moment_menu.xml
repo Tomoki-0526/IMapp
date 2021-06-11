@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/moment_text"
+        android:icon="@mipmap/icon_text"
+        android:title="文字动态" />
+
+    <item
+        android:id="@+id/moment_picture"
+        android:icon="@mipmap/icon_picture"
+        android:title="图片动态" />
+
+    <item
+        android:id="@+id/moment_video"
+        android:icon="@mipmap/icon_video"
+        android:title="视频动态" />
+
+</menu>

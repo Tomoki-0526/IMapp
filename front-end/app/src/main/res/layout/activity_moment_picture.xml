@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".moment.MomentPictureActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@color/yellow"
+        >
+        <ImageView
+            android:id="@+id/iv_momentPicture_return"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/icon_arrow_left"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:scaleType="centerCrop"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="图片动态"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            />
+        <ImageView
+            android:id="@+id/iv_momentPicture_confirm"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/icon_correct"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+        <EditText
+            android:id="@+id/et_momentPicture_text"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:hint="这一刻的想法..."
+            android:gravity="top"
+            android:background="@null"
+            android:textSize="16sp"/>
+        <ImageButton
+            android:id="@+id/ib_momentPicture_addPicture"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/icon_picture"
+            android:scaleType="centerCrop"
+            android:background="@color/transparent"/>
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="2">
+
+            <ImageView
+                android:id="@+id/iv_momentPicture_0"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_column="0"
+                android:layout_rowSpan="1"
+                android:layout_row="0"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/we_chat"
+                android:visibility="gone"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/iv_momentPicture_1"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_column="1"
+                android:layout_rowSpan="1"
+                android:layout_row="0"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/we_chat"
+                android:visibility="gone"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/iv_momentPicture_2"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_column="0"
+                android:layout_rowSpan="1"
+                android:layout_row="1"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/we_chat"
+                android:visibility="gone"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/iv_momentPicture_3"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_column="1"
+                android:layout_rowSpan="1"
+                android:layout_row="1"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/we_chat"
+                android:visibility="gone"
+                android:contentDescription="@string/app_name" />
+        </GridLayout>
+    </LinearLayout>
+
+</LinearLayout>

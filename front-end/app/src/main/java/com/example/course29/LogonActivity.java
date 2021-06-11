@@ -2,7 +2,9 @@ package com.example.course29;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -57,9 +59,18 @@ public class LogonActivity extends AppCompatActivity {
                 //TODO:二次验证
                 Map res = HttpUtil.post("/user/register",map,LogonActivity.this);
                 if (res.get("success").toString() == "true") {
+                    SharedPreferences share = getSharedPreferences("Login",
+                            Context.MODE_PRIVATE);
+                    // 获取编辑器来存储数据到sharedpreferences中
+                    SharedPreferences.Editor editor = share.edit();
+                    editor.putString("Username", mEtUsername.getText().toString());
+                    editor.putString("Password", mEtPassword.getText().toString());
+                    editor.putBoolean("LoginBool", false);
+                    // 将数据提交到sharedpreferences中
+                    editor.commit();
+
                     ToastUtil.showMsg(LogonActivity.this, getResources().getString(R.string.logon_successfully));
-                    intent = new Intent(LogonActivity.this,MainActivity.class);
-                    startActivity(intent);
+                    finish();
 //                overridePendingTransition(0,0);
                 }
                 else {
@@ -72,9 +83,7 @@ public class LogonActivity extends AppCompatActivity {
         mBtnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = null;
-                intent = new Intent(LogonActivity.this,MainActivity.class);
-                startActivity(intent);
+                finish();
 //                overridePendingTransition(0,0);
             }
         });

@@ -34,7 +34,7 @@ public class NewFriendActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         setContentView(R.layout.activity_new_friend);
 
         mRvNewFriendList = findViewById(R.id.rv_newFriend_list);
@@ -127,10 +127,12 @@ public class NewFriendActivity extends AppCompatActivity {
             for (int i=0; i<list.size(); i++)
             {
                 Map<String,Object> map = list.get(i);
+                String extra = map.get("extra")==null?"":map.get("extra").toString();
                 newFriends.add(new NewFriend(map.get("fromAvatar").toString(),
                         map.get("fromUsername").toString(),
                         map.get("fromNickname").toString(),
-                        map.get("extra").toString(),
+                        extra,
+//                        map.get("extra").toString(),
                         map.get("status").toString()));
 
             }

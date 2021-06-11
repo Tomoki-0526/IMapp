@@ -34,8 +34,6 @@ public class BitmapUtil {
         }catch(Exception e){
             e.printStackTrace();
         }
-        if(bitmap == null)
-            Log.e("bitmap","null");
         return bitmap;
 
     }

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.course29.R;
 import com.example.course29.contact.friend.FriendActivity;
 import com.example.course29.util.BitmapUtil;
@@ -104,7 +105,10 @@ public class StrangerInfoActivity extends AppCompatActivity {
         Map res = HttpUtil.post("/friend/getStrangerInfo",map, StrangerInfoActivity.this);
         if (res.get("success").toString() == "true") {
             Bitmap bitmap = BitmapUtil.getHttpBitmap(res.get("stranger_avatar").toString());
-            mIvStrangerInfoProfile.setImageBitmap(bitmap);
+//            mIvStrangerInfoProfile.setImageBitmap(bitmap);
+            Glide.with(this)
+                    .load(res.get("stranger_avatar").toString())
+                    .into(mIvStrangerInfoProfile);
             mTvStrangerInfoSignature.setText(res.get("stranger_signature").toString());
             mTvStrangerInfoNickname.setText(res.get("stranger_nickname").toString());
             switch (res.get("stranger_gender").toString()) {
