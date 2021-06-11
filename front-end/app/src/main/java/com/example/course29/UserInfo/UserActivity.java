@@ -351,6 +351,7 @@ public class UserActivity extends AppCompatActivity {
                 case UCrop.REQUEST_CROP: {
                     // 裁剪照片
                     final Uri croppedUri = UCrop.getOutput(data);
+                    Log.e("uri",croppedUri.toString());
                     try {
                         if(croppedUri!=null) {
                             Glide.with(this)

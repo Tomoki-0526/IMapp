@@ -2,7 +2,9 @@ package com.example.course29.UserInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +47,9 @@ public class PasswordActivity extends AppCompatActivity {
                 map.put("confirm_pwd",mEtConfirmPassword.getText().toString());
                 Map res = HttpUtil.post("/user/modifyPassword",map, PasswordActivity.this);
                 if (res.get("success").toString() == "true") {
+                    SharedPreferences share = getSharedPreferences("Login",
+                            Context.MODE_PRIVATE);
+                    share.edit().putString("Password", mEtNewPassword.getText().toString()).commit();
                     ToastUtil.showMsg(PasswordActivity.this, getResources().getString(R.string.modify_successfully));
                     finish();
 //                overridePendingTransition(0,0);

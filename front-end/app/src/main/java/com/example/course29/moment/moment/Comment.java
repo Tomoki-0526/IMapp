@@ -1,6 +1,7 @@
 package com.example.course29.moment.moment;
 
 public class Comment {
+    private String commentId;
     private String commentUsername; //用户名
     private String commentNickname; //昵称
     private String commentRemark; //备注
@@ -8,14 +9,19 @@ public class Comment {
     private String commentTime; //评论时间
     private String isFriend; //是否朋友
 
-    public Comment(String commentUsername, String commentNickname, String commentRemark,
-                   String commentContent, String commentTime, String isFriend) {
+    public Comment(String commentId, String commentUsername, String commentNickname,
+                   String commentRemark, String commentContent, String commentTime, String isFriend) {
+        this.commentId = commentId;
         this.commentUsername = commentUsername;
         this.commentNickname = commentNickname;
         this.commentRemark = commentRemark;
         this.commentTime = commentTime;
         this.commentContent = commentContent;
         this.isFriend = isFriend;
+    }
+
+    public String getCommentId() {
+        return commentId;
     }
 
     public String getCommentUsername() {

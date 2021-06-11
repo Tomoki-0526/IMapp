@@ -4,15 +4,12 @@ import android.content.Context;
 import android.os.Looper;
 import android.util.Log;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
 import okhttp3.Call;
@@ -102,7 +99,7 @@ public class HttpUtil {
         String jsonStr = JsonMapUtil.getJson(params);
         RequestBody requestBody =  RequestBody.create(MediaType.parse("application/json;charset=utf-8")
                 , jsonStr);
-        Log.e("jsonstr",jsonStr);
+        Log.e("jsonStr",jsonStr);
         //构建Request对象
         Request request = new Request.Builder()
                 .url(headUrl.concat(url))
@@ -147,17 +144,24 @@ public class HttpUtil {
         return ans[0];
     }
 
-    public static Map postFiles (String url, Map params, List<File> files, String fileKey, Context context) {
+    public static Map postFiles (String url, Map<String,Object> params, List<File> files, String fileKey, Context context) {
 
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder()
                 .setType(MediaType.parse("multipart/form-data"));
         //创建RequestBody
         if (params != null) {
             String jsonStr = JsonMapUtil.getJson(params);
-            RequestBody paramsBody =  RequestBody.create(MediaType.parse("multipart/form-data")
-                    , jsonStr);
-            Log.e("jsonstr",jsonStr);
-            multipartBodyBuilder.addPart(paramsBody);
+//            RequestBody paramsBody =  RequestBody.create(MediaType.parse("multipart/form-data")
+//                    , jsonStr);
+            Log.e("jsonStr",jsonStr);
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                String key = entry.getKey();
+                String value = String.valueOf(entry.getValue());
+                //将请求参数逐一遍历添加到我们的请求构建类中
+                Log.e("kf",key+value);
+                multipartBodyBuilder.addFormDataPart(key, value);
+            }
+//            multipartBodyBuilder.addPart(paramsBody);
         }
         if (files != null){
             Log.e("files",files.toString());

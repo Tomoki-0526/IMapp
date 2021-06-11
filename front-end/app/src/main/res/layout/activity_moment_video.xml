@@ -14,7 +14,7 @@
         android:background="@color/yellow"
         >
         <ImageView
-            android:id="@+id/iv_momentPicture_return"
+            android:id="@+id/iv_momentVideo_return"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@mipmap/icon_arrow_left"
@@ -52,6 +52,13 @@
             android:layout_height="100dp"
             android:src="@mipmap/icon_add"
             android:background="@color/lightGray"/>
+        <ImageView
+            android:id="@+id/iv_momentVideo_video"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:src="@mipmap/icon_video"
+            android:visibility="gone"
+            android:scaleType="fitStart"/>
     </LinearLayout>
 
 

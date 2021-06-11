@@ -30,7 +30,7 @@ public class NewFriendAdapter extends BaseQuickAdapter<NewFriend, BaseViewHolder
         switch (item.getStatus()){
             case "0":
                 helper.setText(R.id.tv_itemNewFriend_status,"等到验证");
-//                helper.setTextColor(R.id.tv_itemNewFriend_status, mContext.getResources().getColor(R.color.teal_200));
+                helper.setTextColor(R.id.tv_itemNewFriend_status, mContext.getResources().getColor(R.color.gray));
                 break;
             case "1":
                 helper.setText(R.id.tv_itemNewFriend_status,"已通过");

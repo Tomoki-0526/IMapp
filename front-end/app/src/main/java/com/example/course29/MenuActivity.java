@@ -3,7 +3,9 @@ package com.example.course29;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -78,6 +80,9 @@ public class MenuActivity extends AppCompatActivity {
                 Map res = HttpUtil.get("/user/logout",MenuActivity.this);
 //                Log.e("11", String.valueOf(res.get("msg")==null));
                 if (res.get("success").toString() == "true") {
+                    SharedPreferences share = getSharedPreferences("Login",
+                            Context.MODE_PRIVATE);
+                    share.edit().putBoolean("LoginBool", false).commit();
                     ToastUtil.showMsg(MenuActivity.this, getResources().getString(R.string.logout_successfully));
                     intent = new Intent(MenuActivity.this, MainActivity.class);
                     startActivity(intent);

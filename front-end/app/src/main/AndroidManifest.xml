@@ -23,8 +23,10 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".moment.MomentVideoActivity"></activity>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".moment.VideoActivity"></activity>
+        <activity android:name=".moment.MomentVideoActivity" />
         <activity android:name=".moment.MomentPictureActivity" />
         <activity android:name=".moment.MomentTextActivity" />
         <activity android:name=".contact.friend.StarFriendsActivity" />
