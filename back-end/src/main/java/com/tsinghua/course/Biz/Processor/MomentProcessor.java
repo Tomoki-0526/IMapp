@@ -168,14 +168,15 @@ public class MomentProcessor {
     /** 更新点赞数 */
     public void updateLikesNum(String momentId, boolean like) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
+        query.addCriteria(Criteria.where(KeyConstant.ID).is(momentId));
         Moment moment = mongoTemplate.findOne(query, Moment.class);
+        int oldLikesNum = moment.getLikesNum();
         Update update = new Update();
         if (like) {
-            update.set(KeyConstant.LIKES_NUM, moment.getLikesNum() + 1);
+            update.set(KeyConstant.LIKES_NUM, oldLikesNum + 1);
         }
         else {
-            update.set(KeyConstant.LIKES_NUM, moment.getLikesNum() - 1);
+            update.set(KeyConstant.LIKES_NUM, oldLikesNum - 1);
         }
 
         mongoTemplate.upsert(query, update, Moment.class);
@@ -203,14 +204,15 @@ public class MomentProcessor {
     /** 更新评论数 */
     public void updateCommentsNum(String momentId, boolean comment) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
+        query.addCriteria(Criteria.where(KeyConstant.ID).is(momentId));
         Moment moment = mongoTemplate.findOne(query, Moment.class);
+        int oldCommentsNum = moment.getCommentsNum();
         Update update = new Update();
         if (comment) {
-            update.set(KeyConstant.COMMENTS_NUM, moment.getCommentsNum() + 1);
+            update.set(KeyConstant.COMMENTS_NUM, oldCommentsNum + 1);
         }
         else {
-            update.set(KeyConstant.COMMENTS_NUM, moment.getCommentsNum() - 1);
+            update.set(KeyConstant.COMMENTS_NUM, oldCommentsNum - 1);
         }
         mongoTemplate.upsert(query, update, Moment.class);
     }

@@ -114,12 +114,6 @@ Request:
     "momentUsername": 发布动态的人
 }
 ```
-Correct Response:
-```coffeescript
-{
-    "commentId": string
-}
-```
 
 ## 删除评论 √
 
