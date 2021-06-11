@@ -1,6 +1,6 @@
 # 动态功能API
 
-## 发布动态 √
+## 发布动态 √√
 
 Method: POST
 URL: /moment/publishMoment
@@ -14,7 +14,7 @@ Request:
 }
 ```
 
-## 删除动态 √
+## 删除动态 √√
 
 Method: POST
 URL: /moment/removeMoment
@@ -25,7 +25,7 @@ Request:
 }
 ```
 
-## 查看动态列表 √
+## 查看动态列表 √√
 
 Method: GET
 URL: /moment/getMoments
@@ -78,7 +78,7 @@ Correct Response:
 }
 ```
 
-## 点赞动态 √
+## 点赞动态 √√
 
 Method: POST
 URL: /moment/likeMoment
@@ -90,7 +90,7 @@ Request:
 }
 ```
 
-## 撤销点赞动态 √
+## 撤销点赞动态 √√
 
 Method: POST
 URL: /moment/cancelLikeMoment
@@ -115,7 +115,7 @@ Request:
 }
 ```
 
-## 删除评论 √
+## 删除评论 √√
 
 Method: POST
 URL: /moment/removeComment
@@ -127,7 +127,7 @@ Request:
 }
 ```
 
-## 查看一条动态 √
+## 查看一条动态 √√
 
 Method: POST
 URL: /moment/getSingleMoment
