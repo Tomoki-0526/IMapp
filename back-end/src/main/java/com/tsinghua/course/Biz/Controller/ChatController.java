@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 
@@ -94,6 +95,7 @@ public class ChatController {
         }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         Date send_time = dateFormat.parse(send_time_str);
 
         /* 把消息插入数据库 */
@@ -150,6 +152,7 @@ public class ChatController {
             historyItem.setType(type);
 
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             String send_time_str = dateFormat.format(send_time);
             historyItem.setSendTime(send_time_str);
             historyItemList.add(historyItem);

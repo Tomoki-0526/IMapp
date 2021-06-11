@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.DATE_PATTERN;
 
@@ -78,6 +79,7 @@ public class User {
     public Date getBirthday() { return birthday; }
     public void setBirthday(String birthday_str) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         try {
             if (birthday_str.equals(""))
                 birthday = dateFormat.parse("1970-01-01");

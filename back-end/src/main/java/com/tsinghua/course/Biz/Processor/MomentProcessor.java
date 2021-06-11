@@ -173,6 +173,15 @@ public class MomentProcessor {
         mongoTemplate.insert(like);
     }
 
+    /** 查找一条点赞 */
+    public Like getLike(String username, String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId)
+                                    .and(KeyConstant.USERNAME).is(username));
+
+        return mongoTemplate.findOne(query, Like.class);
+    }
+
     /** 删除点赞 */
     public void removeLike(String likeId) {
         Query query = new Query();

@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.DATETIME_PATTERN;
@@ -61,6 +62,7 @@ public class FriendProcessor {
         FriendRequest.SubObj subObj = new FriendRequest.SubObj();
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         subObj.setTime(dateFormat.format(now));
         friendRequest.setSubObj(subObj);
 
@@ -131,6 +133,7 @@ public class FriendProcessor {
         Friendship.SubObj subObj = new Friendship.SubObj();
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         subObj.setTime(dateFormat.format(now));
         friendship.setSubObj(subObj);
 

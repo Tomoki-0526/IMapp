@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
@@ -175,6 +176,7 @@ public class UserController {
         String signature = user.getSignature();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         String birthday_str = dateFormat.format(birthday);
 
         /* 组织Response */
