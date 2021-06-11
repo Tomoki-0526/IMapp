@@ -120,20 +120,18 @@ public class MomentController {
         if (momentType == 1 || momentType == 2) {
             String[] imagesPath = moment.getImagesPath();
             for (String imagePath : imagesPath) {
-                int index = imagePath.lastIndexOf("/");
-                String dir = imagePath.substring(0, index);
-                File dirFile = new File(dir);
-                if (dirFile.isDirectory()) {
-                    File[] files = dirFile.listFiles();
-                    for (File file : files) {
-                        if (file.isFile())
-                            file.delete();
-                    }
-                }
-                dirFile.delete();
+                File file = new File(imagePath);
+                file.delete();
             }
         }
+        else if(momentType == 3) {
+            String videoPath = moment.getVideoPath();
+            File file = new File(videoPath);
+            file.delete();
+        }
 
+        momentProcessor.removeLikesOfMoment(momentId);
+        momentProcessor.removeCommentsOnMoment(momentId);
         momentProcessor.removeMoment(momentId);
         return new CommonOutParams(true);
     }
