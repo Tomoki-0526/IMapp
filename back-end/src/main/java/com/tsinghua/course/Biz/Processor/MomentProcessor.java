@@ -95,6 +95,22 @@ public class MomentProcessor {
         mongoTemplate.remove(query, Moment.class);
     }
 
+    /** 删除一条动态的点赞 */
+    public void removeLikesOfMoment(String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
+
+        mongoTemplate.remove(query, Like.class);
+    }
+
+    /** 删除一条动态的评论 */
+    public void removeCommentsOnMoment(String momentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
+
+        mongoTemplate.remove(query, Comment.class);
+    }
+
     /** 查找当前用户的所有好友（包括自己）的动态 */
     public List<Moment> getFriendMoments(String username) {
         /* 列出所有好友 */
