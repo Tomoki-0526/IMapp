@@ -134,16 +134,13 @@ public class MomentProcessor {
 
     /** 动态时间排序 */
     private static void MomentSort(List<Moment> list) {
-        Collections.sort(list, new Comparator<Moment>() {
-            @Override
-            public int compare(Moment o1, Moment o2) {
-                Date dt1 = o1.getPublishTime();
-                Date dt2 = o2.getPublishTime();
-                if (dt1.getTime() < dt2.getTime())
-                    return 1;
-                else
-                    return -1;
-            }
+        list.sort((o1, o2) -> {
+            Date dt1 = o1.getPublishTime();
+            Date dt2 = o2.getPublishTime();
+            if (dt1.before(dt2))
+                return 1;
+            else
+                return -1;
         });
     }
 
@@ -152,7 +149,22 @@ public class MomentProcessor {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
 
-        return mongoTemplate.find(query, Like.class);
+        List<Like> likeList = mongoTemplate.find(query, Like.class);
+        /* 时间顺序排列 */
+        LikeSort(likeList);
+        return likeList;
+    }
+
+    /** 点赞时间排序 */
+    private static void LikeSort(List<Like> list) {
+        list.sort((o1, o2) -> {
+            Date dt1 = o1.getLikeTime();
+            Date dt2 = o2.getLikeTime();
+            if (dt1.after(dt2))
+                return 1;
+            else
+                return -1;
+        });
     }
 
     /** 获取一条动态的评论 */
@@ -160,7 +172,22 @@ public class MomentProcessor {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.MOMENT_ID).is(momentId));
 
-        return mongoTemplate.find(query, Comment.class);
+        List<Comment> commentList = mongoTemplate.find(query, Comment.class);
+        /* 评论时间排序 */
+        CommentSort(commentList);
+        return commentList;
+    }
+
+    /** 评论时间排序 */
+    private static void CommentSort(List<Comment> list) {
+        list.sort((o1, o2) -> {
+            Date dt1 = o1.getCommentTime();
+            Date dt2 = o2.getCommentTime();
+            if (dt1.after(dt2))
+                return 1;
+            else
+                return -1;
+        });
     }
 
     /** 新增点赞 */
