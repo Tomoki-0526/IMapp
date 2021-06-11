@@ -74,5 +74,5 @@ public class KeyConstant {
 
     /** Like关键key */
     // 动态id
-    public static final String MOMENT_ID = "moment_id";
+    public static final String MOMENT_ID = "momentId";
 }

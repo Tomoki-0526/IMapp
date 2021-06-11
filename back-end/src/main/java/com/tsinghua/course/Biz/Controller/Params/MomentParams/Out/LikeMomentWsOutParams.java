@@ -5,20 +5,18 @@ import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 
 /**
- * @描述 评论动态定向推送出参
+ * @描述 点赞定向出参
  */
-@BizType(BizTypeEnum.MOMENT_COMMENT_ON_MOMENT)
-public class CommentOnMomentOutParams extends CommonOutParams {
+@BizType(BizTypeEnum.MOMENT_LIKE_MOMENT)
+public class LikeMomentWsOutParams extends CommonOutParams {
     // 消息类型
     private int type;
-    // 评论用户名
+    // 点赞用户名
     private String username;
-    // 评论用户昵称
+    // 点赞用户昵称
     private String nickname;
-    // 评论用户备注
+    // 点赞用户备注
     private String remark;
-    // 评论内容
-    private String content;
 
     public int getType() {
         return type;
@@ -50,13 +48,5 @@ public class CommentOnMomentOutParams extends CommonOutParams {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 }

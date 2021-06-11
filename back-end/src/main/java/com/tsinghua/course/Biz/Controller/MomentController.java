@@ -12,10 +12,10 @@ import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.In.*;
-import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.CommentOnMomentOutParams;
+import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.CommentOnMomentWsOutParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.GetMomentsOutParams;
 import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.GetSingleMomentOutParams;
-import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.LikeMomentOutParams;
+import com.tsinghua.course.Biz.Controller.Params.MomentParams.Out.LikeMomentWsOutParams;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.MomentProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
@@ -24,10 +24,8 @@ import com.tsinghua.course.Frame.Util.SocketUtil;
 import io.netty.handler.codec.http.multipart.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -285,14 +283,14 @@ public class MomentController {
         momentProcessor.updateLikesNum(momentId, true);
 
         /* 定向发送给被点赞用户 */
-        LikeMomentOutParams outParams = new LikeMomentOutParams();
+        LikeMomentWsOutParams wsOutParams = new LikeMomentWsOutParams();
         User user = userProcessor.getUserByUsername(username);
         Friendship friendship = friendProcessor.getFriendshipByUsername(momentUsername, username);
-        outParams.setType(2);
-        outParams.setUsername(username);
-        outParams.setNickname(user.getNickname());
-        outParams.setRemark(friendship.getRemark());
-        SocketUtil.sendMessageToUser(momentUsername, outParams);
+        wsOutParams.setType(2);
+        wsOutParams.setUsername(username);
+        wsOutParams.setNickname(user.getNickname());
+        wsOutParams.setRemark(friendship.getRemark());
+        SocketUtil.sendMessageToUser(momentUsername, wsOutParams);
 
         return new CommonOutParams(true);
     }
@@ -327,15 +325,15 @@ public class MomentController {
         momentProcessor.updateCommentsNum(momentId, true);
 
         /* 及时推送 */
-        CommentOnMomentOutParams outParams = new CommentOnMomentOutParams();
+        CommentOnMomentWsOutParams wsOutParams = new CommentOnMomentWsOutParams();
         User user = userProcessor.getUserByUsername(username);
         Friendship friendship = friendProcessor.getFriendshipByUsername(momentUsername, username);
-        outParams.setType(3);
-        outParams.setUsername(username);
-        outParams.setNickname(user.getNickname());
-        outParams.setRemark(friendship.getRemark());
-        outParams.setContent(content);
-        SocketUtil.sendMessageToUser(momentUsername, outParams);
+        wsOutParams.setType(3);
+        wsOutParams.setUsername(username);
+        wsOutParams.setNickname(user.getNickname());
+        wsOutParams.setRemark(friendship.getRemark());
+        wsOutParams.setContent(content);
+        SocketUtil.sendMessageToUser(momentUsername, wsOutParams);
 
         return new CommonOutParams(true);
     }
