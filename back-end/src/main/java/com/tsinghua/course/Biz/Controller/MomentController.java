@@ -115,24 +115,20 @@ public class MomentController {
         if (!moment.getUsername().equals(username))
             throw new CourseWarn(UserWarnEnum.MOMENT_USER_UNMATCHED);
 
-//        /* 在删除数据之前先删除文件 */
-//        int momentType = moment.getType();
-//        if (momentType == 1 || momentType == 2) {
-//            String[] imagesPath = moment.getImagesPath();
-//            for (String imagePath : imagesPath) {
-//                int index = imagePath.lastIndexOf("/");
-//                String dir = imagePath.substring(0, index);
-//                File dirFile = new File(dir);
-//                if (dirFile.isDirectory()) {
-//                    File[] files = dirFile.listFiles();
-//                    for (File file : files) {
-//                        if (file.isFile())
-//                            file.delete();
-//                    }
-//                }
-//                dirFile.delete();
-//            }
-//        }
+        /* 在删除数据之前先删除文件 */
+        int momentType = moment.getType();
+        if (momentType == 1 || momentType == 2) {
+            String[] imagesPath = moment.getImagesPath();
+            for (String imagePath : imagesPath) {
+                File file = new File(imagePath);
+                file.delete();
+            }
+        }
+        else if(momentType == 3) {
+            String videoPath = moment.getVideoPath();
+            File file = new File(videoPath);
+            file.delete();
+        }
 
         momentProcessor.removeLikesOfMoment(momentId);
         momentProcessor.removeCommentsOnMoment(momentId);
