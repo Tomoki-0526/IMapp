@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
 import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
@@ -49,6 +50,7 @@ public class UserProcessor {
         User.SubObj subObj = new User.SubObj();
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         subObj.setTime(dateFormat.format(now));
         user.setSubObj(subObj);
 
@@ -87,6 +89,7 @@ public class UserProcessor {
         if (birthday_str != null) {
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
                 Date birthday = dateFormat.parse(birthday_str);
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(birthday);
@@ -114,6 +117,7 @@ public class UserProcessor {
         }
         else {
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             try {
                 update.set(KeyConstant.BIRTHDAY, dateFormat.parse("1970-01-01"));
             } catch (ParseException e) {

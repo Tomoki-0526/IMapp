@@ -176,6 +176,7 @@ public class MomentController {
             // 发布时间
             Date publishTime = moment.getPublishTime();
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             String publishTimeStr = dateFormat.format(publishTime);
             momentItem.setPublishTime(publishTimeStr);
             // 动态类型
@@ -275,6 +276,12 @@ public class MomentController {
         String momentId = inParams.getMomentId();
         String momentUsername = inParams.getMomentUsername();
 
+        /* 如果已经点过赞了直接返回 */
+        Like like = momentProcessor.getLike(username, momentId);
+        if (like != null) {
+            throw new CourseWarn(UserWarnEnum.LIKE_EXISTS);
+        }
+
         /* 新建Like对象 */
         momentProcessor.addLike(username, momentId);
         /* 更新点赞数 */
@@ -299,6 +306,13 @@ public class MomentController {
     public CommonOutParams momentCancelLikeMoment(CancelLikeMomentInParams inParams) throws Exception {
         String momentId = inParams.getMomentId();
         String likeId = inParams.getLikeId();
+        String username = inParams.getUsername();
+
+        /* 如果还没点过赞直接返回 */
+        Like like = momentProcessor.getLike(username, momentId);
+        if (like == null) {
+            throw new CourseWarn(UserWarnEnum.LIKE_EXISTS);
+        }
 
         /* 删除对应的Like对象 */
         momentProcessor.removeLike(likeId);
@@ -380,6 +394,7 @@ public class MomentController {
         // 发布时间
         Date publishTime = moment.getPublishTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         String publishTimeStr = dateFormat.format(publishTime);
         momentItem.setPublishTime(publishTimeStr);
         // 动态类型

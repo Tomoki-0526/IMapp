@@ -21,7 +21,7 @@ public class ChatMessage {
     String content;
     // 发送时间
     Date send_time;
-    // 消息类型
+    // 消息类型（0-文本 1-图片 2-音频 3-视频 4-定位）
     int type;
     // 是否是最后一条消息
     boolean latest;
