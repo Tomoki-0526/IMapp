@@ -1,8 +1,5 @@
 # 聊天功能API
 
-HttpRequest的URL为  http://8.140.133.34:7563 + /xxx  
-Websocket的URL为    ws://8.140.133.34:7562 + /ws/xxx  
-
 ## 1. 获取聊天关系 √
 
 ※ 用户点击“聊天”或聊天列表中的一项进入聊天界面时调用  
@@ -12,13 +9,13 @@ URL: /chat/getChatUserLink
 Request:
 ```coffeescript
 {
-    "to_username": string 接收方用户名
+    "toUsername": string 接收方用户名
 }
 ```
 Correct Response:
 ```coffeescript
 {
-    "link_id": string 聊天关系id
+    "linkId": string 聊天关系id
 }
 ```
 
@@ -31,7 +28,7 @@ URL: /chat/quitChat
 Request:
 ```coffeescript
 {
-    "link_id": 聊天关系id
+    "linkId": 聊天关系id
 }
 ```
 
@@ -42,10 +39,10 @@ URL: /ws/chat/sendMessage
 Request:
 ```coffeescript
 {
-    "link_id": string 聊天关系id,
-    "to_username": string 接收方用户名,
+    "linkId": string 聊天关系id,
+    "toUsername": string 接收方用户名,
     "content": string 消息内容,
-    "send_time": string 发送时间(yyyy-MM-dd hh:mm:ss),
+    "sendTime": string 发送时间(yyyy-MM-dd hh:mm:ss),
     "type": int 消息类型(0-文本 1-图片 2-音频 3-视频 4-位置信息)
 }
 ```
@@ -66,7 +63,7 @@ URL: /chat/getHistory
 Request:
 ```coffeescript
 {
-    "link_id": 聊天关系id
+    "linkId": 聊天关系id
 }
 ```
 Correct Response:
@@ -78,9 +75,9 @@ Correct Response:
 一条历史记录的格式为
 ```coffeescript
 {
-    "msg_id": 聊天记录id,
-    "from_avatar": 发送方头像,
-    "from_username": 发送方用户名,
+    "msgId": 聊天记录id,
+    "fromAvatar": 发送方头像,
+    "fromUsername": 发送方用户名,
     "content": 内容,
     "type": 类型,
     "send_time": 发送时间
@@ -94,7 +91,7 @@ URL: /chat/removeHistory
 Request:
 ```coffeescript
 {
-    "link_id": 聊天关系id,
+    "linkId": 聊天关系id,
     "msgs": string[] 聊天记录id数组
 }
 ```

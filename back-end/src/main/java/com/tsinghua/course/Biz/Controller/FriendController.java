@@ -12,7 +12,6 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.in.*;
 import com.tsinghua.course.Biz.Controller.Params.FriendParams.out.*;
-import com.tsinghua.course.Biz.Processor.ChatProcessor;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.*;
@@ -34,8 +33,6 @@ public class FriendController {
     UserProcessor userProcessor;
     @Autowired
     FriendProcessor friendProcessor;
-    @Autowired
-    ChatProcessor chatProcessor;
 
     /** 搜索陌生人 */
     @BizType(BizTypeEnum.FRIEND_FIND_STRANGER)
@@ -261,14 +258,6 @@ public class FriendController {
         /* 更新好友请求状态 */
         friendProcessor.updateFriendRequestStatus(username, friend_username);
         friendProcessor.updateFriendRequestStatus(friend_username, username);
-
-        /* 删除聊天条目（单向）和关系 */
-        ChatUserLink chatUserLink = chatProcessor.getChatUserLink(username, friend_username);
-        if (chatUserLink != null) {
-            String link_id = chatUserLink.getId();
-            chatProcessor.removeChatItem(link_id, username);
-            chatProcessor.removeChatUserLink(link_id);
-        }
 
         return new CommonOutParams(true);
     }

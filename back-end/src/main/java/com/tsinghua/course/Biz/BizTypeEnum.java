@@ -28,15 +28,9 @@ public enum BizTypeEnum {
     FRIEND_SET_FRIEND_REMARK(FriendController.class, "/friend/setFriendRemark", "设置好友备注"),
     FRIEND_GET_FRIEND_REQUEST(FriendController.class, "/friend/getFriendRequest", "查看好友申请"),
     FRIEND_CHECK_FRIEND_REQUEST(FriendController.class, "/friend/checkFriendRequest", "审核好友申请"),
-//    FRIEND_GET_USER_INFO(FriendController.class, "/friend/getUserInfo", "查看某一个用户信息"),
     FRIEND_GET_FRIENDS(FriendController.class, "/friend/getFriends", "获取通讯录"),
 
     /** 聊天业务类型 */
-    CHAT_GET_CHAT_USER_LINK(ChatController.class, "/chat/getChatUserLink", "获取聊天关系"),
-    CHAT_QUIT_CHAT(ChatController.class, "/chat/quitChat", "退出聊天"),
-    CHAT_SEND_MESSAGE(ChatController.class, "/chat/sendMessage", "发送消息给指定用户"),
-    CHAT_GET_HISTORY(ChatController.class, "/chat/getHistory", "查看历史聊天记录"),
-    CHAT_REMOVE_HISTORY(ChatController.class, "/chat/removeHistory", "删除历史记录"),
 
     /** 动态业务类型 */
     MOMENT_PUBLISH_MOMENT(MomentController.class, "/moment/publishMoment", "发布动态"),
