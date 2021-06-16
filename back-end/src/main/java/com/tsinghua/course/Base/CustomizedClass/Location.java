@@ -12,6 +12,15 @@ public class Location {
     // 纬度
     double latitude;
 
+    public Location() {
+        longitude = latitude = 0.0;
+    }
+
+    public Location(double longitude, double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public double getLongitude() {
         return longitude;
     }

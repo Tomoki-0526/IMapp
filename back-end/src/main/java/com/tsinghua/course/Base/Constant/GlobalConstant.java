@@ -26,6 +26,10 @@ public class GlobalConstant {
     public static final String WINDOWS_MOMENT_PATH = "D:/Eusford/Homework/app/uploads/moment/";
     public static final String LINUX_MOMENT_PATH = "/home/uploads/moment/";
     public static final String MOMENT_RELATIVE_PATH = "/moment/";
+    /** 消息文件保存路径 */
+    public static final String WINDOWS_MESSAGE_PATH = "D:/Eusford/Homework/app/uploads/message/";
+    public static final String LINUX_MESSAGE_PATH = "/home/uploads/message/";
+    public static final String MESSAGE_RELATIVE_PATH = "/message/";
     /** 文件URL */
     public static final String FILE_URL = "http://8.140.133.34:7561";
     /** 消息类型 */

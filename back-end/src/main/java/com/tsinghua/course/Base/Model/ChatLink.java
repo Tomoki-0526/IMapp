@@ -12,10 +12,10 @@ import java.util.Set;
 public class ChatLink {
     // mongodb唯一id
     String id;
-    // 聊天类型（0-私聊 1-单聊）
-    boolean multiple;
-    // 用户组
-    Set<String> users;
+    // 用户A
+    String usernameA;
+    // 用户B
+    String usernameB;
     // 创建时间
     Date createTime;
 
@@ -27,20 +27,20 @@ public class ChatLink {
         this.id = id;
     }
 
-    public boolean isMultiple() {
-        return multiple;
+    public String getUsernameA() {
+        return usernameA;
     }
 
-    public void setMultiple(boolean multiple) {
-        this.multiple = multiple;
+    public void setUsernameA(String usernameA) {
+        this.usernameA = usernameA;
     }
 
-    public Set<String> getUsers() {
-        return users;
+    public String getUsernameB() {
+        return usernameB;
     }
 
-    public void setUsers(Set<String> users) {
-        this.users = users;
+    public void setUsernameB(String usernameB) {
+        this.usernameB = usernameB;
     }
 
     public Date getCreateTime() {
