@@ -31,6 +31,10 @@ public enum BizTypeEnum {
     FRIEND_GET_FRIENDS(FriendController.class, "/friend/getFriends", "获取通讯录"),
 
     /** 聊天业务类型 */
+    CHAT_GET_CHAT_LINK(ChatController.class, "/chat/getChatLink", "获取聊天关系（暂时是私聊）"),
+    CHAT_QUIT_CHAT(ChatController.class, "/chat/quitChat", "退出聊天"),
+    CHAT_SEND_MESSAGE(ChatController.class, "/chat/sendMessage", "发送消息"),
+    CHAT_GET_CHATTINGS(ChatController.class, "/chat/getChattings", "获取所有聊天"),
 
     /** 动态业务类型 */
     MOMENT_PUBLISH_MOMENT(MomentController.class, "/moment/publishMoment", "发布动态"),

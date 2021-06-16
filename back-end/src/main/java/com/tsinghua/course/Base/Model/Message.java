@@ -3,6 +3,8 @@ package com.tsinghua.course.Base.Model;
 import com.tsinghua.course.Base.CustomizedClass.Location;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 /**
  * @描述 消息表
  */
@@ -12,10 +14,14 @@ public class Message {
     String id;
     // 聊天关系id
     String linkId;
+    // 是否是群聊
+    boolean isMultiple;
     // 消息发送方
     String username;
     // 消息类型（0-文本 1-图片 2-音频 3-视频 4-定位）
     int type;
+    // 发送时间
+    Date sendTime;
     // 文本内容
     String text;
     // 图片路径
@@ -26,6 +32,8 @@ public class Message {
     String video;
     // 定位信息
     Location location;
+    // 是否是最后一条消息
+    boolean isLatest;
 
     public String getId() {
         return id;
@@ -43,6 +51,14 @@ public class Message {
         this.linkId = linkId;
     }
 
+    public boolean isMultiple() {
+        return isMultiple;
+    }
+
+    public void setMultiple(boolean multiple) {
+        isMultiple = multiple;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -53,6 +69,14 @@ public class Message {
 
     public int getType() {
         return type;
+    }
+
+    public Date getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
     }
 
     public void setType(int type) {
@@ -97,5 +121,13 @@ public class Message {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public boolean isLatest() {
+        return isLatest;
+    }
+
+    public void setLatest(boolean latest) {
+        isLatest = latest;
     }
 }

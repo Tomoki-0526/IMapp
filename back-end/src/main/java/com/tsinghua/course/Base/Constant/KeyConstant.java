@@ -50,22 +50,6 @@ public class KeyConstant {
     // 状态
     public static final String STATUS = "status";
 
-    /** ChatItem关键key */
-    // 聊天关系id
-    public static final String LINK_ID = "link_id";
-    // from_user在线状态
-    public static final String FROM_WINDOW = "from_window";
-    // to_user在线状态
-    public static final String TO_WINDOW = "to_window";
-    // 未读数
-    public static final String UNREAD = "unread";
-
-    /** ChatMessage关键key */
-    // 发送时间
-    public static final String SEND_TIME = "send_time";
-    // 是否是最后一条消息
-    public static final String LATEST = "latest";
-
     /** Moment关键key */
     // 点赞数
     public static final String LIKES_NUM = "likesNum";
@@ -75,4 +59,22 @@ public class KeyConstant {
     /** Like关键key */
     // 动态id
     public static final String MOMENT_ID = "momentId";
+
+    /** ChatLink关键key */
+    // 聊天关系id
+    public static final String LINK_ID = "link_id";
+    // 用户A
+    public static final String USERNAME_A = "usernameA";
+    // 用户B
+    public static final String USERNAME_B = "usernameB";
+
+    /** ChatManager关键key */
+    // 窗口值
+    public static final String IN_WINDOW = "inWindow";
+    // 未读数
+    public static final String UNREAD = "unread";
+
+    /** Message关键key */
+    // 最新消息
+    public static final String IS_LATEST = "isLatest";
 }
