@@ -198,7 +198,7 @@ public class ChatController {
     public GetChattingsOutParams chatGetChattings(CommonInParams inParams) throws Exception {
         String username = inParams.getUsername();
 
-        // TODO
+        // TODO: 明天的任务之一
         GetChattingsOutParams outParams = new GetChattingsOutParams();
         return outParams;
     }
