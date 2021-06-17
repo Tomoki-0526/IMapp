@@ -65,6 +65,10 @@ public class FileUtil {
             String originalFilename = fileUpload.getFilename();
             // 生成uuid名称
             String uuidFilename = getUUIDName(originalFilename);
+            // 检查是否有该目录
+            File dirFile = new File(dir);
+            if (!dirFile.exists())
+                dirFile.mkdirs();
             // 创建新的文件
             File file = new File(dir, uuidFilename);
             // 将FileUpload写入目标文件

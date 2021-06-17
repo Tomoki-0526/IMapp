@@ -2,10 +2,10 @@
 
 ## 1. 获取聊天关系（暂时是私聊） √
 
-※ 用户点击“聊天”或聊天列表中的一项进入聊天界面时调用  
+※ 用户进入聊天界面时调用  
 
 Method: POST  
-URL: /chat/getChatUserLink  
+URL: /chat/getChatLink  
 Request:
 ```coffeescript
 {
@@ -20,6 +20,22 @@ Correct Response:
     "nickname":
     "remark":
     "avatar":
+    "msgs": msgItem[] 消息列表
+}
+```
+一条msgItem:
+```coffeescript
+{
+    "msgId": string 消息id
+    "sendTime": 
+    "fromMyself": boolean 是不是由自己发出的
+    "type": 0-文本 1-图片 ……
+    "text":
+    "image":
+    "audio":
+    "video":
+    "longitude": double 经度
+    "latitude": double 纬度
 }
 ```
 
@@ -39,7 +55,7 @@ Request:
 ## 3. 发送消息 √
 
 Method: POST  
-URL: /ws/chat/sendMessage  
+URL: /chat/sendMessage  
 Request:
 ```coffeescript
 {
@@ -62,6 +78,7 @@ Request:
     "linkId": string 聊天id
     "username": 发送方用户名
     "isMultiple": boolean 是不是群聊 0-私聊 1-群聊
+    "msgId": string 消息id
     "sendTime": string
     "text":
     "image":
@@ -76,7 +93,7 @@ Request:
 ## 4. 删除历史聊天记录(批量)
 
 Method: POST  
-URL: /chat/removeHistory  
+URL: /chat/removeMessages  
 Request:
 ```coffeescript
 {
@@ -85,7 +102,7 @@ Request:
 }
 ```
 
-## 5. 查看当前所有聊天
+## 5. 查看当前所有聊天 √
 
 Method: GET
 URL: /chat/getChattings
@@ -100,7 +117,7 @@ Correct Response:
 {
     "avatar": 
     "linkId": 
-    "isMultiple": 
+    "multiple": 这里我写的是isMultiple但是不知道怎么就变了
     "name": 
     "latestMsg": 
     "sendTime": 

@@ -1,6 +1,7 @@
 package com.tsinghua.course.Biz.Controller.Params.ChatParams.Out;
 
 import com.tsinghua.course.Base.Annotation.BizType;
+import com.tsinghua.course.Base.CustomizedClass.MsgItem;
 import com.tsinghua.course.Biz.BizTypeEnum;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 
@@ -19,6 +20,8 @@ public class GetChatLinkOutParams extends CommonOutParams {
     String remark;
     // 对方头像
     String avatar;
+    // 消息列表
+    MsgItem[] msgs;
 
     public String getLinkId() {
         return linkId;
@@ -58,5 +61,13 @@ public class GetChatLinkOutParams extends CommonOutParams {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public MsgItem[] getMsgs() {
+        return msgs;
+    }
+
+    public void setMsgs(MsgItem[] msgs) {
+        this.msgs = msgs;
     }
 }

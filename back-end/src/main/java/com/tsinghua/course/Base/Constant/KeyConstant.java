@@ -62,7 +62,7 @@ public class KeyConstant {
 
     /** ChatLink关键key */
     // 聊天关系id
-    public static final String LINK_ID = "link_id";
+    public static final String LINK_ID = "linkId";
     // 用户A
     public static final String USERNAME_A = "usernameA";
     // 用户B

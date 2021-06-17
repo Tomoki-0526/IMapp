@@ -18,7 +18,7 @@ public class ChatItem {
     // 最新消息类型
     int type;
     // 最新消息
-    String content;
+    String latestMsg;
     // 发送时间
     String sendTime;
 
@@ -42,8 +42,8 @@ public class ChatItem {
         return isMultiple;
     }
 
-    public void setMultiple(boolean multiple) {
-        isMultiple = multiple;
+    public void setMultiple(boolean isMultiple) {
+        this.isMultiple = isMultiple;
     }
 
     public String getName() {
@@ -62,12 +62,12 @@ public class ChatItem {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getLatestMsg() {
+        return latestMsg;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setLatestMsg(String latestMsg) {
+        this.latestMsg = latestMsg;
     }
 
     public String getSendTime() {

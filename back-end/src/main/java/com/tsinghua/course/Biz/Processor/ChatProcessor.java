@@ -5,6 +5,7 @@ import com.tsinghua.course.Base.CustomizedClass.Location;
 import com.tsinghua.course.Base.Model.ChatLink;
 import com.tsinghua.course.Base.Model.ChatManager;
 import com.tsinghua.course.Base.Model.Message;
+import com.tsinghua.course.Base.Model.MsgVisibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @描述 聊天原子处理器
@@ -22,7 +24,7 @@ public class ChatProcessor {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    /** 根据ID查抄聊天关系 */
+    /** 根据ID查找聊天关系 */
     public ChatLink getChatLinkById(String linkId) {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.ID).is(linkId));
@@ -37,6 +39,18 @@ public class ChatProcessor {
                                     .and(KeyConstant.USERNAME_B).is(usernameB));
 
         return mongoTemplate.findOne(query, ChatLink.class);
+    }
+
+    /** 根据用户名查找这个用户的所有聊天 */
+    public List<ChatLink> getChatLinksByUsername(String username) {
+        Criteria c1 = Criteria.where(KeyConstant.USERNAME_A).is(username);
+        Criteria c2 = Criteria.where(KeyConstant.USERNAME_B).is(username);
+        Criteria c = new Criteria();
+
+        Query query = new Query();
+        query.addCriteria(c.orOperator(c1, c2));
+
+        return mongoTemplate.find(query, ChatLink.class);
     }
 
     /** 根据两人用户名创建聊天关系 */
@@ -196,9 +210,41 @@ public class ChatProcessor {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.LINK_ID).is(linkId)
                                     .and(KeyConstant.IS_LATEST).is(true));
+
+        Message message = mongoTemplate.findOne(query, Message.class);
+        if (message == null)
+            return;
+
         Update update = new Update();
         update.set(KeyConstant.IS_LATEST, false);
 
         mongoTemplate.upsert(query, update, Message.class);
+    }
+
+    /** 获取最新消息 */
+    public Message getLatestMessage(String linkId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.LINK_ID).is(linkId)
+                                    .and(KeyConstant.IS_LATEST).is(true));
+
+        return mongoTemplate.findOne(query, Message.class);
+    }
+
+    /** 获取一个聊天中的全部消息 */
+    public List<Message> getMessages(String linkId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.LINK_ID).is(linkId));
+
+        return mongoTemplate.find(query, Message.class);
+    }
+
+    /** 建立可见性表 */
+    public void createVisibility(String msgId, String username) {
+        MsgVisibility msgVisibility = new MsgVisibility();
+        msgVisibility.setMsgId(msgId);
+        msgVisibility.setUsername(username);
+        msgVisibility.setVisible(true);
+
+        mongoTemplate.insert(msgVisibility);
     }
 }
