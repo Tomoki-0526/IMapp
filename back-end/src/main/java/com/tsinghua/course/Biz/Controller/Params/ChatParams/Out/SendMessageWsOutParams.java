@@ -17,6 +17,8 @@ public class SendMessageWsOutParams extends CommonOutParams {
     boolean isMultiple;
     // 消息类型
     int type;
+    // 消息id
+    String msgId;
     // 发送时间
     String sendTime;
     // 文本内容
@@ -64,6 +66,14 @@ public class SendMessageWsOutParams extends CommonOutParams {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
     }
 
     public String getSendTime() {
