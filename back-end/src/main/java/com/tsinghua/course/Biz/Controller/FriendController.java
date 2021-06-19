@@ -367,10 +367,10 @@ public class FriendController {
             friendProcessor.addFriendship(from_username, username);
 
             /* 给对方返回结果 */
-            CheckFriendRequestOutParams outParams = new CheckFriendRequestOutParams();
+            CheckFriendRequestWsOutParams outParams = new CheckFriendRequestWsOutParams();
             outParams.setToUsername(username);
             outParams.setExtra("对方已接受您的好友申请");
-            outParams.setType(1);
+            outParams.setFlag(1);
             SocketUtil.sendMessageToUser(from_username, outParams);
         }
 

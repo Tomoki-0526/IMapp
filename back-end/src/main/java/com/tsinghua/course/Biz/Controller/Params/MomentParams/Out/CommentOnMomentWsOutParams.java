@@ -10,7 +10,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.MOMENT_COMMENT_ON_MOMENT)
 public class CommentOnMomentWsOutParams extends CommonOutParams {
     // 消息类型
-    private int type;
+    private int flag;
     // 评论用户名
     private String username;
     // 评论用户昵称
@@ -20,12 +20,12 @@ public class CommentOnMomentWsOutParams extends CommonOutParams {
     // 评论内容
     private String content;
 
-    public int getType() {
-        return type;
+    public int getFlag() {
+        return flag;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
     public String getUsername() {

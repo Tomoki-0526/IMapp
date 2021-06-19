@@ -2,10 +2,7 @@ package com.tsinghua.course.Biz.Processor;
 
 import com.tsinghua.course.Base.Constant.KeyConstant;
 import com.tsinghua.course.Base.CustomizedClass.Location;
-import com.tsinghua.course.Base.Model.ChatLink;
-import com.tsinghua.course.Base.Model.ChatManager;
-import com.tsinghua.course.Base.Model.Message;
-import com.tsinghua.course.Base.Model.MsgVisibility;
+import com.tsinghua.course.Base.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -56,7 +53,6 @@ public class ChatProcessor {
     /** 根据两人用户名创建聊天关系 */
     public ChatLink createChatLinkByUsernames(String usernameA, String usernameB) {
         ChatLink chatLink = new ChatLink();
-        chatLink.setCreateTime(new Date());
         chatLink.setUsernameA(usernameA);
         chatLink.setUsernameB(usernameB);
 
@@ -246,5 +242,42 @@ public class ChatProcessor {
         msgVisibility.setVisible(true);
 
         mongoTemplate.insert(msgVisibility);
+    }
+
+    /** 修改一条消息对某一个用户的可见性 */
+    public void modifyVisibility(String msgId, String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MSG_ID).is(msgId)
+                                    .and(KeyConstant.USERNAME).is(username));
+        Update update = new Update();
+        update.set(KeyConstant.VISIBLE, false);
+
+        mongoTemplate.upsert(query, update, MsgVisibility.class);
+    }
+
+    /** 获得一条消息对某一个用户的可见性 */
+    public MsgVisibility getVisibility(String msgId, String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.MSG_ID).is(msgId)
+                .and(KeyConstant.USERNAME).is(username));
+
+        return mongoTemplate.findOne(query, MsgVisibility.class);
+    }
+
+    /** 创建群聊 */
+    public GroupLink createGroup(String groupName) {
+        GroupLink groupLink = new GroupLink();
+        groupLink.setGroupName(groupName);
+
+        return mongoTemplate.insert(groupLink);
+    }
+
+    /** 创建群成员 */
+    public void createGroupMember(String groupLinkId, String username) {
+        GroupMember groupMember = new GroupMember();
+        groupMember.setGroupLinkId(groupLinkId);
+        groupMember.setUsername(username);
+
+        mongoTemplate.insert(groupMember);
     }
 }

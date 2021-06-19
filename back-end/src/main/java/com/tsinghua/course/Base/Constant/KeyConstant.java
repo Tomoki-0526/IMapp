@@ -77,4 +77,10 @@ public class KeyConstant {
     /** Message关键key */
     // 最新消息
     public static final String IS_LATEST = "isLatest";
+
+    /** MsgVisibility关键key */
+    // 消息id
+    public static final String MSG_ID = "msgId";
+    // 可见性
+    public static final String VISIBLE = "visible";
 }
