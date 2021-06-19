@@ -10,7 +10,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 @BizType(BizTypeEnum.MOMENT_LIKE_MOMENT)
 public class LikeMomentWsOutParams extends CommonOutParams {
     // 消息类型
-    private int type;
+    private int flag;
     // 点赞用户名
     private String username;
     // 点赞用户昵称
@@ -18,12 +18,12 @@ public class LikeMomentWsOutParams extends CommonOutParams {
     // 点赞用户备注
     private String remark;
 
-    public int getType() {
-        return type;
+    public int getFlag() {
+        return flag;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
     public String getUsername() {

@@ -8,20 +8,20 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
  * @描述 审核好友申请的定向推送
  */
 @BizType(BizTypeEnum.FRIEND_CHECK_FRIEND_REQUEST)
-public class CheckFriendRequestOutParams extends CommonOutParams {
+public class CheckFriendRequestWsOutParams extends CommonOutParams {
     // 消息类型
-    private int type;
+    private int flag;
     // 接收方的用户名
     private String to_username;
     // 附加信息
     private String extra;
 
-    public int getType() {
-        return type;
+    public int getFlag() {
+        return flag;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
     public String getToUsername() { return to_username; }

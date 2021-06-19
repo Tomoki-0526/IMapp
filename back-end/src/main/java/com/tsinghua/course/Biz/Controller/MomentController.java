@@ -291,7 +291,7 @@ public class MomentController {
         LikeMomentWsOutParams wsOutParams = new LikeMomentWsOutParams();
         User user = userProcessor.getUserByUsername(username);
         Friendship friendship = friendProcessor.getFriendshipByUsername(momentUsername, username);
-        wsOutParams.setType(2);
+        wsOutParams.setFlag(2);
         wsOutParams.setUsername(username);
         wsOutParams.setNickname(user.getNickname());
         wsOutParams.setRemark(friendship.getRemark());
@@ -340,7 +340,7 @@ public class MomentController {
         CommentOnMomentWsOutParams wsOutParams = new CommentOnMomentWsOutParams();
         User user = userProcessor.getUserByUsername(username);
         Friendship friendship = friendProcessor.getFriendshipByUsername(momentUsername, username);
-        wsOutParams.setType(3);
+        wsOutParams.setFlag(3);
         wsOutParams.setUsername(username);
         wsOutParams.setNickname(user.getNickname());
         wsOutParams.setRemark(friendship.getRemark());

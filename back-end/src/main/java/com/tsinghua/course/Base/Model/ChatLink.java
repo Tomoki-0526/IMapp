@@ -3,7 +3,6 @@ package com.tsinghua.course.Base.Model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
-import java.util.Set;
 
 /**
  * @描述 聊天关系表
@@ -16,8 +15,6 @@ public class ChatLink {
     String usernameA;
     // 用户B
     String usernameB;
-    // 创建时间
-    Date createTime;
 
     public String getId() {
         return id;
@@ -41,13 +38,5 @@ public class ChatLink {
 
     public void setUsernameB(String usernameB) {
         this.usernameB = usernameB;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 }

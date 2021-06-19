@@ -3,15 +3,13 @@ package com.tsinghua.course.Biz.Controller;
 import com.tsinghua.course.Base.Annotation.BizType;
 import com.tsinghua.course.Base.Annotation.NeedLogin;
 import com.tsinghua.course.Base.CustomizedClass.ChatItem;
-import com.tsinghua.course.Base.CustomizedClass.Location;
 import com.tsinghua.course.Base.CustomizedClass.MsgItem;
 import com.tsinghua.course.Base.Error.CourseWarn;
 import com.tsinghua.course.Base.Error.UserWarnEnum;
 import com.tsinghua.course.Base.Model.*;
 import com.tsinghua.course.Biz.BizTypeEnum;
-import com.tsinghua.course.Biz.Controller.Params.ChatParams.In.GetChatLinkInParams;
-import com.tsinghua.course.Biz.Controller.Params.ChatParams.In.QuitChatInParams;
-import com.tsinghua.course.Biz.Controller.Params.ChatParams.In.SendMessageInParams;
+import com.tsinghua.course.Biz.Controller.Params.ChatParams.In.*;
+import com.tsinghua.course.Biz.Controller.Params.ChatParams.Out.CreateGroupWsOutParams;
 import com.tsinghua.course.Biz.Controller.Params.ChatParams.Out.GetChatLinkOutParams;
 import com.tsinghua.course.Biz.Controller.Params.ChatParams.Out.GetChattingsOutParams;
 import com.tsinghua.course.Biz.Controller.Params.ChatParams.Out.SendMessageWsOutParams;
@@ -26,13 +24,11 @@ import io.netty.handler.codec.http.multipart.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
-import static com.tsinghua.course.Base.Constant.GlobalConstant.LINUX_MOMENT_PATH;
 import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
 import static com.tsinghua.course.Base.Constant.NameConstant.WIN;
 
@@ -90,7 +86,12 @@ public class ChatController {
         List<MsgItem> msgItemList = new ArrayList<>();
         for (Message message: messageList) {
             String msgId = message.getId();
-            Date sendTime = message.getSendTime();
+
+            // 检验可见性
+            MsgVisibility msgVisibility = chatProcessor.getVisibility(msgId, username);
+            if (!msgVisibility.isVisible())
+                continue;
+
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
             dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             String sendTimeStr = dateFormat.format(message.getSendTime());
@@ -246,6 +247,10 @@ public class ChatController {
                 outParams.setVideo(message.getVideo());
                 outParams.setLongitude(message.getLocation().getLongitude());
                 outParams.setLatitude(message.getLocation().getLatitude());
+                if (type == 0)
+                    outParams.setFlag(4);
+                else
+                    outParams.setFlag(8);
             }
             else if(type == 1){
                 outParams.setText(message.getText());
@@ -257,6 +262,7 @@ public class ChatController {
                 outParams.setVideo(message.getVideo());
                 outParams.setLongitude(message.getLocation().getLongitude());
                 outParams.setLatitude(message.getLocation().getLatitude());
+                outParams.setFlag(5);
             }
             else if(type == 2) {
                 outParams.setText(message.getText());
@@ -268,6 +274,7 @@ public class ChatController {
                 outParams.setVideo(message.getVideo());
                 outParams.setLongitude(message.getLocation().getLongitude());
                 outParams.setLatitude(message.getLocation().getLatitude());
+                outParams.setFlag(6);
             }
             else if(type == 3) {
                 outParams.setText(message.getText());
@@ -279,6 +286,7 @@ public class ChatController {
                 outParams.setVideo(videoUrl);
                 outParams.setLongitude(message.getLocation().getLongitude());
                 outParams.setLatitude(message.getLocation().getLatitude());
+                outParams.setFlag(7);
             }
 
             SocketUtil.sendMessageToUser(toUsername, outParams);
@@ -304,6 +312,7 @@ public class ChatController {
             // 如果从没发过消息，不显示在前端
             if (message == null)
                 continue;
+            // TODO: 检验可见性
 
             int type = message.getType();
             String latestMsg;
@@ -355,6 +364,48 @@ public class ChatController {
         GetChattingsOutParams outParams = new GetChattingsOutParams();
         outParams.setChattings(chatItems);
         return outParams;
+    }
+
+    /** 删除聊天记录 */
+    @BizType(BizTypeEnum.CHAT_REMOVE_MESSAGES)
+    @NeedLogin
+    public CommonOutParams chatRemoveMessages(RemoveMessagesInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String[] msgs = inParams.getMsgs();
+
+        for (String msgId: msgs) {
+            chatProcessor.modifyVisibility(msgId, username);
+        }
+
+        return new CommonOutParams(true);
+    }
+
+    /** 创建群聊 */
+    @BizType(BizTypeEnum.CHAT_CREATE_GROUP)
+    @NeedLogin
+    public CommonOutParams chatCreateGroup(CreateGroupInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String groupName = inParams.getGroupName();
+        String[] members = inParams.getMembers();
+
+        /* 创建群组 */
+        GroupLink groupLink = chatProcessor.createGroup(groupName);
+
+        /* 创建群成员表 */
+        chatProcessor.createGroupMember(groupLink.getId(), username);
+        for (String member: members) {
+            chatProcessor.createGroupMember(groupLink.getId(), member);
+        }
+
+        /* ws出参 */
+        for (String member: members) {
+            CreateGroupWsOutParams outParams = new CreateGroupWsOutParams();
+            outParams.setFlag(9);
+            outParams.setGroupName(groupName);
+            SocketUtil.sendMessageToUser(member, outParams);
+        }
+
+        return new CommonOutParams(true);
     }
 
     private static void ChatItemSort(List<ChatItem> list) {

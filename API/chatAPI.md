@@ -90,7 +90,7 @@ Request:
 }
 ```
 
-## 4. 删除历史聊天记录(批量)
+## 4. 删除历史聊天记录(批量) √
 
 Method: POST  
 URL: /chat/removeMessages  
@@ -123,3 +123,18 @@ Correct Response:
     "sendTime": 
 }
 ```
+
+---
+
+## 6. 创建群聊
+
+Method: POST
+URL: /chat/createGroup
+Request:
+```
+{
+    groupName: 群名称
+    members: string[] 拉进来的用户名，不包含自己
+}
+```
+ws出参

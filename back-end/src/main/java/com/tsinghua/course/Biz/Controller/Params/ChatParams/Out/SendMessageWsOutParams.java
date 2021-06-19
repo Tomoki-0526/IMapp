@@ -35,6 +35,8 @@ public class SendMessageWsOutParams extends CommonOutParams {
     double latitude;
     // 未读数
     int unread;
+    // 定向推送消息类型
+    int flag;
 
     public String getLinkId() {
         return linkId;
@@ -138,5 +140,13 @@ public class SendMessageWsOutParams extends CommonOutParams {
 
     public void setUnread(int unread) {
         this.unread = unread;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }
