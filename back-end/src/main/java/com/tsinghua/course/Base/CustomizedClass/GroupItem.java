@@ -1,26 +1,18 @@
-package com.tsinghua.course.Base.Model;
+package com.tsinghua.course.Base.CustomizedClass;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * @描述 群聊表
+ * @描述 一个群聊项目
  */
-@Document("GroupLink")
-public class GroupLink {
-    // mongodb唯一id
-    String id;
+@Document("GroupItem")
+public class GroupItem {
+    // 群id
+    String groupId;
     // 群名称
     String groupName;
     // 群头像
     String avatar;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getGroupName() {
         return groupName;
@@ -28,6 +20,14 @@ public class GroupLink {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public String getAvatar() {

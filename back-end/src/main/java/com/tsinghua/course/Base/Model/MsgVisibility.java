@@ -14,7 +14,7 @@ public class MsgVisibility {
     // 用户名
     String username;
     // 可见性
-    boolean visible;
+    boolean isVisible;
 
     public String getId() {
         return id;
@@ -41,10 +41,10 @@ public class MsgVisibility {
     }
 
     public boolean isVisible() {
-        return visible;
+        return isVisible;
     }
 
     public void setVisible(boolean visible) {
-        this.visible = visible;
+        this.isVisible = visible;
     }
 }

@@ -10,8 +10,13 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.tsinghua.course.Base.Constant.GlobalConstant.*;
+import static com.tsinghua.course.Base.Constant.NameConstant.OS_NAME;
+import static com.tsinghua.course.Base.Constant.NameConstant.WIN;
 
 /**
  * @描述 聊天原子处理器
@@ -69,14 +74,14 @@ public class ChatProcessor {
     }
 
     /** 为一个用户创建聊天管理器 */
-    public ChatManager createChatManager(String linkId, String username, boolean window) {
+    public void createChatManager(String linkId, String username, boolean window) {
         ChatManager chatManager = new ChatManager();
         chatManager.setLinkId(linkId);
         chatManager.setInWindow(window);
         chatManager.setUsername(username);
         chatManager.setUnread(0);
 
-        return mongoTemplate.insert(chatManager);
+        mongoTemplate.insert(chatManager);
     }
 
     /** 根据聊天id和用户名查找聊天管理器 */
@@ -109,6 +114,46 @@ public class ChatProcessor {
         update.set(KeyConstant.UNREAD, newUnread);
 
         mongoTemplate.upsert(query, update, ChatManager.class);
+    }
+
+    /** 更新群聊窗口值和未读数 */
+    public void updateGroupWindowUnread(String groupLinkId, String username, boolean window) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.GROUP_LINK_ID).is(groupLinkId)
+                                    .and(KeyConstant.USERNAME).is(username));
+        Update update = new Update();
+        update.set(KeyConstant.IN_WINDOW, window);
+        if (window)
+            update.set(KeyConstant.UNREAD, 0);
+
+        mongoTemplate.upsert(query, update, GroupMember.class);
+    }
+
+    /** 群聊未读数加一 */
+    public void addGroupUnread(String groupMemberId, int newUnread) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.ID).is(groupMemberId));
+        Update update = new Update();
+        update.set(KeyConstant.UNREAD, newUnread);
+
+        mongoTemplate.upsert(query, update, GroupMember.class);
+    }
+
+    /** 退出当前用户的所有聊天 */
+    public void quitAllChat(String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+
+        Update update = new Update();
+        update.set(KeyConstant.IN_WINDOW, false);
+
+        List<ChatManager> chatManagers = mongoTemplate.find(query, ChatManager.class);
+        if (!chatManagers.isEmpty())
+            mongoTemplate.upsert(query, update, ChatManager.class);
+
+        List<GroupMember> groupMembers = mongoTemplate.find(query, GroupMember.class);
+        if (!groupMembers.isEmpty())
+            mongoTemplate.upsert(query, update, GroupMember.class);
     }
 
     /** 新建文字消息 */
@@ -234,6 +279,22 @@ public class ChatProcessor {
         return mongoTemplate.find(query, Message.class);
     }
 
+    /** 获取一个群聊中的全部消息 */
+    public List<Message> getGroupMessages(String groupLinkId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.LINK_ID).is(groupLinkId));
+
+        return mongoTemplate.find(query, Message.class);
+    }
+
+    /** 根据群聊id获得一个群聊 */
+    public GroupLink getGroupById(String groupLinkId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.ID).is(groupLinkId));
+
+        return mongoTemplate.findOne(query, GroupLink.class);
+    }
+
     /** 建立可见性表 */
     public void createVisibility(String msgId, String username) {
         MsgVisibility msgVisibility = new MsgVisibility();
@@ -244,13 +305,14 @@ public class ChatProcessor {
         mongoTemplate.insert(msgVisibility);
     }
 
-    /** 修改一条消息对某一个用户的可见性 */
-    public void modifyVisibility(String msgId, String username) {
+    /** 修改一条消息对某一个用户的可见性，改为不可见 */
+    public void modifyVisibilityToFalse(String msgId, String username) {
         Query query = new Query();
         query.addCriteria(Criteria.where(KeyConstant.MSG_ID).is(msgId)
                                     .and(KeyConstant.USERNAME).is(username));
+
         Update update = new Update();
-        update.set(KeyConstant.VISIBLE, false);
+        update.set(KeyConstant.IS_VISIBLE, false);
 
         mongoTemplate.upsert(query, update, MsgVisibility.class);
     }
@@ -269,6 +331,10 @@ public class ChatProcessor {
         GroupLink groupLink = new GroupLink();
         groupLink.setGroupName(groupName);
 
+        String OSName = System.getProperty(OS_NAME);
+        String avatarPath = OSName.toLowerCase().startsWith(WIN) ? WINDOWS_AVATAR_PATH : LINUX_AVATAR_PATH;
+        groupLink.setAvatar(avatarPath + DEFAULT_GROUP_AVATAR);
+
         return mongoTemplate.insert(groupLink);
     }
 
@@ -277,7 +343,52 @@ public class ChatProcessor {
         GroupMember groupMember = new GroupMember();
         groupMember.setGroupLinkId(groupLinkId);
         groupMember.setUsername(username);
+        groupMember.setInWindow(false);
+        groupMember.setUnread(0);
 
         mongoTemplate.insert(groupMember);
+    }
+
+    /** 根据用户名查找所在群聊 */
+    public List<GroupLink> getGroupsByUsername(String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.USERNAME).is(username));
+
+        List<GroupMember> groupMemberList = mongoTemplate.find(query, GroupMember.class);
+        List<GroupLink> groupLinkList = new ArrayList<>();
+        for (GroupMember groupMember: groupMemberList) {
+            String groupLinkId = groupMember.getGroupLinkId();
+            Query query1 = new Query();
+            query1.addCriteria(Criteria.where(KeyConstant.ID).is(groupLinkId));
+            groupLinkList.add(mongoTemplate.findOne(query1, GroupLink.class));
+        }
+
+        return groupLinkList;
+    }
+
+    /** 根据用户名查找群成员 */
+    public GroupMember getGroupMemberByUsername(String groupLinkId, String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.GROUP_LINK_ID).is(groupLinkId)
+                                    .and(KeyConstant.USERNAME).is(username));
+
+        return mongoTemplate.findOne(query, GroupMember.class);
+    }
+
+    /** 查看一个群聊的所有群成员 */
+    public List<GroupMember> getGroupMembers(String groupLinkId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.GROUP_LINK_ID).is(groupLinkId));
+
+        return mongoTemplate.find(query, GroupMember.class);
+    }
+
+    /** 删除群成员 */
+    public void removeMember(String groupLinkId, String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(KeyConstant.GROUP_LINK_ID).is(groupLinkId)
+                                    .and(KeyConstant.USERNAME).is(username));
+
+        mongoTemplate.remove(query, GroupMember.class);
     }
 }

@@ -235,14 +235,14 @@ public class FriendController {
 
         // TODO
         /* 调用websocket给接收者客户端定向发送消息 */
-        NewFriendRequestOutParams outParams = new NewFriendRequestOutParams();
+        NewFriendRequestWsOutParams outParams = new NewFriendRequestWsOutParams();
         User from_user = userProcessor.getUserByUsername(from_username);
         outParams.setFromUsername(from_username);
         outParams.setFromNickname(from_user.getNickname());
         outParams.setFromAvatar(from_user.getAvatar());
         outParams.setExtra(extra);
         outParams.setStatus(0);
-        outParams.setType(0);
+        outParams.setFlag(0);
 
         SocketUtil.sendMessageToUser(to_username, outParams);
 

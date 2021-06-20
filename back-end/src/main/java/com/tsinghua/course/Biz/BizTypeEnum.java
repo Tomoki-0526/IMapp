@@ -37,6 +37,12 @@ public enum BizTypeEnum {
     CHAT_GET_CHATTINGS(ChatController.class, "/chat/getChattings", "获取所有聊天"),
     CHAT_REMOVE_MESSAGES(ChatController.class, "/chat/removeMessages", "删除聊天记录"),
     CHAT_CREATE_GROUP(ChatController.class, "/chat/createGroup", "创建群聊"),
+    CHAT_GET_GROUPS(ChatController.class, "/chat/getGroups", "查看所有群"),
+    CHAT_ENTER_GROUP_CHAT(ChatController.class, "/chat/enterGroupChat", "进入群聊"),
+    CHAT_QUIT_GROUP_CHAT(ChatController.class, "/chat/quitGroupChat", "离开群聊界面"),
+    CHAT_GET_GROUP_MEMBERS(ChatController.class, "/chat/getGroupMembers", "查看群成员"),
+    CHAT_INVITE_TO_GROUP(ChatController.class, "/chat/inviteToGroup", "邀请好友进入群聊"),
+    CHAT_QUIT_GROUP(ChatController.class, "/chat/quitGroup", "退出群聊"),
 
     /** 动态业务类型 */
     MOMENT_PUBLISH_MOMENT(MomentController.class, "/moment/publishMoment", "发布动态"),

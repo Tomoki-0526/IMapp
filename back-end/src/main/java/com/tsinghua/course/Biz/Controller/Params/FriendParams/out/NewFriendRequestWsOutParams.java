@@ -8,9 +8,9 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
  * @描述 定向发送给接收方的好友申请
  */
 @BizType(BizTypeEnum.FRIEND_NEW_FRIEND_REQUEST)
-public class NewFriendRequestOutParams extends CommonOutParams {
+public class NewFriendRequestWsOutParams extends CommonOutParams {
     // 消息类型
-    private int type;
+    private int flag;
     // 发送者用户名
     private String from_username;
     // 发送者昵称
@@ -22,12 +22,12 @@ public class NewFriendRequestOutParams extends CommonOutParams {
     // 状态
     private int status;
 
-    public int getType() {
-        return type;
+    public int getFlag() {
+        return flag;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
     public String getFromUsername() { return from_username; }
