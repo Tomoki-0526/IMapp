@@ -10,6 +10,7 @@ import com.tsinghua.course.Biz.Controller.Params.CommonInParams;
 import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 import com.tsinghua.course.Biz.Controller.Params.UserParams.In.*;
 import com.tsinghua.course.Biz.Controller.Params.UserParams.Out.GetInfoOutParams;
+import com.tsinghua.course.Biz.Processor.ChatProcessor;
 import com.tsinghua.course.Biz.Processor.FriendProcessor;
 import com.tsinghua.course.Biz.Processor.UserProcessor;
 import com.tsinghua.course.Frame.Util.*;
@@ -17,12 +18,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.multipart.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -41,6 +38,8 @@ public class UserController {
     UserProcessor userProcessor;
     @Autowired
     FriendProcessor friendProcessor;
+    @Autowired
+    ChatProcessor chatProcessor;
 
     /** 用户登录业务 */
     @BizType(BizTypeEnum.USER_LOGIN)
@@ -112,6 +111,11 @@ public class UserController {
     @BizType(BizTypeEnum.USER_LOGOUT)
     @NeedLogin
     public CommonOutParams userLogout(CommonInParams inParams) throws Exception {
+        /* 退出所有聊天 */
+        String username = inParams.getUsername();
+        // 退出所有私聊
+        chatProcessor.quitAllChat(username);
+
         ChannelHandlerContext ctx = ThreadUtil.getCtx();
         if (ctx != null) {
             SocketUtil.removeSocket(ctx);

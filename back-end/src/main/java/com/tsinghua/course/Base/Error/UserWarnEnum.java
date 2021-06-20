@@ -28,6 +28,8 @@ public enum UserWarnEnum implements ExceptionInterface {
     LIKE_EXISTS("UserWarn027", "请勿重复点赞"),
     LIKE_NO_EXISTS("UserWarn028", "您尚未点赞"),
     NOT_FRIEND("UserWarn029", "对方还不是您的好友"),
+    NOT_MEMBER("UserWarn030", "您无权查看群成员"),
+    GROUP_NO_EXIST("UserWarn031", "群聊不存在"),
     ;
 
     UserWarnEnum(String code, String msg) {

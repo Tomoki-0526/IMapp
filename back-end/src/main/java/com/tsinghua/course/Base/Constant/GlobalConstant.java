@@ -22,6 +22,8 @@ public class GlobalConstant {
     public static final String AVATAR_RELATIVE_PATH = "/avatar/";
     /** 默认头像文件名 */
     public static final String DEFAULT_AVATAR = "default.png";
+    /** 默认群聊头像文件名 */
+    public static final String DEFAULT_GROUP_AVATAR = "group_default.png";
     /** 动态文件保存路径 */
     public static final String WINDOWS_MOMENT_PATH = "D:/Eusford/Homework/app/uploads/moment/";
     public static final String LINUX_MOMENT_PATH = "/home/uploads/moment/";

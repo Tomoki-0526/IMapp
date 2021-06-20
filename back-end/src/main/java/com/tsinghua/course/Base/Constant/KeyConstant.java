@@ -82,5 +82,9 @@ public class KeyConstant {
     // 消息id
     public static final String MSG_ID = "msgId";
     // 可见性
-    public static final String VISIBLE = "visible";
+    public static final String IS_VISIBLE = "isVisible";
+
+    /** GroupMember关键key */
+    // 群聊id
+    public static final String GROUP_LINK_ID = "groupLinkId";
 }

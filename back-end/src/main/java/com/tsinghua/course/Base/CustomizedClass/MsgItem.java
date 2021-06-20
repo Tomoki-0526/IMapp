@@ -11,6 +11,10 @@ public class MsgItem {
     String msgId;
     // 发送时间
     String sendTime;
+    // 发送人
+    String username;
+    // 发送人头像
+    String avatar;
     // 是不是由自己发出的
     boolean fromMyself;
     // 消息类型
@@ -42,6 +46,22 @@ public class MsgItem {
 
     public void setSendTime(String sendTime) {
         this.sendTime = sendTime;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setFromMyself(boolean fromMyself) {
