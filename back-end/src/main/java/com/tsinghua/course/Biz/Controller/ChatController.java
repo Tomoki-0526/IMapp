@@ -241,7 +241,7 @@ public class ChatController {
 
                 SendMessageWsOutParams outParams = new SendMessageWsOutParams();
                 outParams.setLinkId(linkId);
-                outParams.setUsername(username);
+                outParams.setName(groupLink.getGroupName());
                 outParams.setMultiple(true);
                 SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
                 dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
@@ -318,7 +318,11 @@ public class ChatController {
 
             SendMessageWsOutParams outParams = new SendMessageWsOutParams();
             outParams.setLinkId(linkId);
-            outParams.setUsername(username);
+            User user = userProcessor.getUserByUsername(username);
+            outParams.setName(user.getNickname());
+            Friendship friendship = friendProcessor.getFriendshipByUsername(toUsername, username);
+            if (friendship != null)
+                outParams.setName(friendship.getRemark());
             outParams.setMultiple(false);
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
             dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
@@ -744,9 +748,9 @@ public class ChatController {
                 continue;
             chatProcessor.createGroupMember(groupLinkId, user);
             /* ws出参 */
-            CreateGroupWsOutParams outParams = new CreateGroupWsOutParams();
+            InviteToGroupWsOutParams outParams = new InviteToGroupWsOutParams();
             GroupLink groupLink = chatProcessor.getGroupById(groupLinkId);
-            outParams.setFlag(9);
+            outParams.setFlag(10);
             outParams.setGroupName(groupLink.getGroupName());
             SocketUtil.sendMessageToUser(user, outParams);
         }

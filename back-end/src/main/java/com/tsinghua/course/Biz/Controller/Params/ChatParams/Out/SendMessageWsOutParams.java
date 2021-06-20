@@ -11,8 +11,8 @@ import com.tsinghua.course.Biz.Controller.Params.CommonOutParams;
 public class SendMessageWsOutParams extends CommonOutParams {
     // 聊天id
     String linkId;
-    // 消息发送方用户名
-    String username;
+    // 消息发送方名称
+    String name;
     // 是不是群聊
     boolean isMultiple;
     // 消息类型
@@ -46,12 +46,12 @@ public class SendMessageWsOutParams extends CommonOutParams {
         this.linkId = linkId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isMultiple() {
