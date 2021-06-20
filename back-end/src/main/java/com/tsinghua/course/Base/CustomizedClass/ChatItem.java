@@ -13,6 +13,8 @@ public class ChatItem {
     String linkId;
     // 是否是群聊
     boolean isMultiple;
+    // 对方用户名（如果是群聊，为空串）
+    String username;
     // 聊天名称（私聊优先显示备注，其次昵称，群聊显示群名称）
     String name;
     // 最新消息类型
@@ -44,6 +46,14 @@ public class ChatItem {
 
     public void setMultiple(boolean isMultiple) {
         this.isMultiple = isMultiple;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {

@@ -388,10 +388,11 @@ public class FriendController {
         List<FriendItem> friendItemList = new ArrayList<>();
         for (Friendship friendship: friendshipList) {
             String friend_username = friendship.getFriendUsername();
-            if (self)
-                continue;
-            if (friend_username.equals(username))
+            if (friend_username.equals(username)) {
+                if (self)
+                    continue;
                 self = true;
+            }
             User friend = userProcessor.getUserByUsername(friend_username);
 
             String friend_avatar = friend.getAvatar();
