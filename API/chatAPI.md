@@ -72,7 +72,7 @@ Request:
     "latitude": 纬度
 }
 ```
-定向发送给接收方的推送
+ws出参
 ```coffeescript
 {
     "linkId": string 聊天id
