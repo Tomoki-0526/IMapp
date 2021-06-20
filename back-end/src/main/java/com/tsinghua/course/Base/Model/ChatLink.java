@@ -2,8 +2,6 @@ package com.tsinghua.course.Base.Model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-
 /**
  * @描述 聊天关系表
  */

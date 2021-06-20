@@ -118,6 +118,7 @@ Correct Response:
     "avatar": 
     "linkId": 
     "multiple": 这里我写的是isMultiple但是不知道怎么就变了
+    "username": 如果是群聊，内容为空串
     "name": 
     "latestMsg": 
     "sendTime": 

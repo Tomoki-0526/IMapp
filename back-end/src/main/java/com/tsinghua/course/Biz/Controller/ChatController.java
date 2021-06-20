@@ -452,6 +452,7 @@ public class ChatController {
             chatItem.setAvatar(avatar_url);
             chatItem.setMultiple(false);
             chatItem.setLinkId(linkId);
+            chatItem.setUsername(toUsername);
             chatItem.setName(name);
             chatItem.setType(type);
             chatItem.setLatestMsg(latestMsg);
@@ -506,6 +507,7 @@ public class ChatController {
             chatItem.setAvatar(avatar_url);
             chatItem.setMultiple(true);
             chatItem.setLinkId(groupLinkId);
+            chatItem.setUsername("");
             chatItem.setName(groupName);
             chatItem.setType(type);
             chatItem.setLatestMsg(latestMsg);
