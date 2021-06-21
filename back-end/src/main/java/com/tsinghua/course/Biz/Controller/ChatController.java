@@ -123,10 +123,12 @@ public class ChatController {
             String fromUsername = message.getUsername();
             msgItem.setUsername(fromUsername);
             User fromUser = userProcessor.getUserByUsername(fromUsername);
+            msgItem.setNickname(fromUser.getNickname());
             String fromAvatar = fromUser.getAvatar();
             int fromIndex = fromAvatar.indexOf(AVATAR_RELATIVE_PATH);
             String fromAvatarUrl = FILE_URL + fromAvatar.substring(fromIndex);
             msgItem.setAvatar(fromAvatarUrl);
+            msgItem.setRemark(friendship.getRemark());
 
             msgItem.setFromMyself(fromMyself);
             msgItem.setType(type);
@@ -650,11 +652,18 @@ public class ChatController {
             String fromUsername = message.getUsername();
             msgItem.setUsername(fromUsername);
             User fromUser = userProcessor.getUserByUsername(fromUsername);
+            msgItem.setNickname(fromUser.getNickname());
 
             String fromAvatar = fromUser.getAvatar();
             int fromIndex = fromAvatar.indexOf(AVATAR_RELATIVE_PATH);
             String fromAvatarUrl = FILE_URL + fromAvatar.substring(fromIndex);
             msgItem.setAvatar(fromAvatarUrl);
+
+            Friendship friendship = friendProcessor.getFriendshipByUsername(username, fromUsername);
+            if (friendship != null)
+                msgItem.setRemark(friendship.getRemark());
+            else
+                msgItem.setRemark("");
 
             msgItem.setFromMyself(fromMyself);
             msgItem.setType(type);
