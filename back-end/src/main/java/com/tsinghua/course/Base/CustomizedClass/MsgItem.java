@@ -13,6 +13,10 @@ public class MsgItem {
     String sendTime;
     // 发送人
     String username;
+    // 发送人昵称
+    String nickname;
+    // 发送人备注
+    String remark;
     // 发送人头像
     String avatar;
     // 是不是由自己发出的
@@ -62,6 +66,22 @@ public class MsgItem {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public void setFromMyself(boolean fromMyself) {
