@@ -237,8 +237,8 @@ public class ChatController {
                 chatProcessor.createVisibility(message.getId(), member.getUsername());
 
                 /* ws推送 */
-                if (member.getUsername().equals(username))
-                    continue;
+//                if (member.getUsername().equals(username))
+//                    continue;
                 int unread = member.getUnread();
                 if (!member.isInWindow()) {
                     unread++;
@@ -387,6 +387,10 @@ public class ChatController {
             }
 
             SocketUtil.sendMessageToUser(toUsername, outParams);
+
+            // 给自己也发一条
+            outParams.setName(user.getNickname());
+            SocketUtil.sendMessageToUser(username, outParams);
         }
 
         return new CommonOutParams(true);
