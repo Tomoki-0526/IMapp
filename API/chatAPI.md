@@ -127,7 +127,7 @@ Correct Response:
 
 ---
 
-## 6. 创建群聊 √
+## 6. 创建群聊 √√
 
 Method: POST  
 URL: /chat/createGroup  
@@ -195,7 +195,7 @@ Request:
 }
 ```
 
-## 10. 查看群成员 √
+## 10. 查看群成员 √√
 
 Method: GET  
 URL: /chat/getGroupMembers  
@@ -222,7 +222,7 @@ Correct Response:
 }
 ```
 
-## 11. 邀请好友进入群聊 √
+## 11. 邀请好友进入群聊 √√
 
 Method: POST  
 URL: /chat/inviteToGroup  
@@ -241,7 +241,7 @@ ws出参
 }
 ```
 
-## 12. 退出群聊 √
+## 12. 退出群聊 √√
 
 Method: POST
 URL: /chat/quitGroup
