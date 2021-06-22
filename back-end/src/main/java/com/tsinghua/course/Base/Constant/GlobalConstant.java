@@ -34,15 +34,6 @@ public class GlobalConstant {
     public static final String MESSAGE_RELATIVE_PATH = "/message/";
     /** 文件URL */
     public static final String FILE_URL = "http://8.140.133.34:7561";
-    /** 消息类型 */
-    // 文本
-    public static final int MESSAGE_TYPE_TEXT = 0;
-    // 图片
-    public static final int MESSAGE_TYPE_IMAGE = 1;
-    // 音频
-    public static final int MESSAGE_TYPE_AUDIO = 2;
-    // 视频
-    public static final int MESSAGE_TYPE_VIDEO = 3;
-    // 位置信息
-    public static final int MESSAGE_TYPE_LOCATION = 4;
+    /** 默认群组名 */
+    public static final String DEFAULT_GROUP = "群聊";
 }

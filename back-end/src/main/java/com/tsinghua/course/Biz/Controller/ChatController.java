@@ -547,6 +547,8 @@ public class ChatController {
         String username = inParams.getUsername();
         String groupName = inParams.getGroupName();
         String[] members = inParams.getMembers();
+        if (groupName == null)
+            groupName = DEFAULT_GROUP;
 
         /* 创建群组 */
         GroupLink groupLink = chatProcessor.createGroup(groupName);
