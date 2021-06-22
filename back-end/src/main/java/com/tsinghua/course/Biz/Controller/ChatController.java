@@ -812,7 +812,7 @@ public class ChatController {
             double longitude = message.getLocation().getLongitude();
             double latitude = message.getLocation().getLatitude();
 
-            int index = 0;
+            int index;
             if(type == 1){
                 index = image.indexOf(MESSAGE_RELATIVE_PATH);
                 image = FILE_URL + image.substring(index);
