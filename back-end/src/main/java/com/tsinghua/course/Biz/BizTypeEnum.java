@@ -43,6 +43,7 @@ public enum BizTypeEnum {
     CHAT_GET_GROUP_MEMBERS(ChatController.class, "/chat/getGroupMembers", "查看群成员"),
     CHAT_INVITE_TO_GROUP(ChatController.class, "/chat/inviteToGroup", "邀请好友进入群聊"),
     CHAT_QUIT_GROUP(ChatController.class, "/chat/quitGroup", "退出群聊"),
+    CHAT_GET_HISTORY(ChatController.class, "/chat/getHistory", "查看历史记录"),
 
     /** 动态业务类型 */
     MOMENT_PUBLISH_MOMENT(MomentController.class, "/moment/publishMoment", "发布动态"),

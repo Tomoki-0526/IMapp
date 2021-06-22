@@ -783,6 +783,87 @@ public class ChatController {
         return new CommonOutParams(true);
     }
 
+    /** 查看历史记录 */
+    @BizType(BizTypeEnum.CHAT_GET_HISTORY)
+    @NeedLogin
+    public GetHistoryOutParams chatGetHistory(GetHistoryInParams inParams) throws Exception {
+        String username = inParams.getUsername();
+        String linkId = inParams.getLinkId();
+
+        List<Message> messageList = chatProcessor.getMessages(linkId);
+        List<MsgItem> msgItemList = new ArrayList<>();
+        for (Message message: messageList) {
+            String msgId = message.getId();
+
+            // 检验可见性
+            MsgVisibility msgVisibility = chatProcessor.getVisibility(msgId, username);
+            if (!msgVisibility.isVisible())
+                continue;
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+            String sendTimeStr = dateFormat.format(message.getSendTime());
+            boolean fromMyself = message.getUsername().equals(username);
+            int type = message.getType();
+            String text = message.getText();
+            String image = message.getImage();
+            String audio = message.getAudio();
+            String video = message.getVideo();
+            double longitude = message.getLocation().getLongitude();
+            double latitude = message.getLocation().getLatitude();
+
+            int index = 0;
+            if(type == 1){
+                index = image.indexOf(MESSAGE_RELATIVE_PATH);
+                image = FILE_URL + image.substring(index);
+            }
+            else if(type == 2) {
+                index = audio.indexOf(MESSAGE_RELATIVE_PATH);
+                audio = FILE_URL + audio.substring(index);
+            }
+            else if(type == 3) {
+                index = video.indexOf(MESSAGE_RELATIVE_PATH);
+                video = FILE_URL + video.substring(index);
+            }
+
+            MsgItem msgItem = new MsgItem();
+            msgItem.setMsgId(msgId);
+            msgItem.setSendTime(sendTimeStr);
+
+            String fromUsername = message.getUsername();
+            msgItem.setUsername(fromUsername);
+            User fromUser = userProcessor.getUserByUsername(fromUsername);
+            msgItem.setNickname(fromUser.getNickname());
+
+            String fromAvatar = fromUser.getAvatar();
+            int fromIndex = fromAvatar.indexOf(AVATAR_RELATIVE_PATH);
+            String fromAvatarUrl = FILE_URL + fromAvatar.substring(fromIndex);
+            msgItem.setAvatar(fromAvatarUrl);
+
+            Friendship friendship = friendProcessor.getFriendshipByUsername(username, fromUsername);
+            if (friendship != null)
+                msgItem.setRemark(friendship.getRemark());
+            else
+                msgItem.setRemark("");
+
+            msgItem.setFromMyself(fromMyself);
+            msgItem.setType(type);
+            msgItem.setText(text);
+            msgItem.setImage(image);
+            msgItem.setAudio(audio);
+            msgItem.setVideo(video);
+            msgItem.setLongitude(longitude);
+            msgItem.setLatitude(latitude);
+            msgItemList.add(msgItem);
+        }
+        MsgItem[] msgs = new MsgItem[msgItemList.size()];
+        msgItemList.toArray(msgs);
+
+        GetHistoryOutParams outParams = new GetHistoryOutParams();
+        outParams.setMsgs(msgs);
+        return outParams;
+    }
+
     /** 聊天项按最新消息时间排序 */
     private static void ChatItemSort(List<ChatItem> list) {
         list.sort((o1, o2) -> {
