@@ -229,7 +229,8 @@ public class ChatProcessor {
     }
 
     /** 新建定位消息 */
-    public Message createLocationMessage(String linkId, boolean isMultiple, String username, int type, double longitude, double latitude) {
+    public Message createLocationMessage(String linkId, boolean isMultiple, String username,
+                                         int type, double longitude, double latitude, String locationInfo) {
         Message message = new Message();
         message.setLinkId(linkId);
         message.setMultiple(isMultiple);
@@ -240,7 +241,7 @@ public class ChatProcessor {
         message.setImage("");
         message.setAudio("");
         message.setVideo("");
-        message.setLocation(new Location(longitude, latitude));
+        message.setLocation(new Location(longitude, latitude, locationInfo));
         message.setLatest(true);
 
         return mongoTemplate.insert(message);

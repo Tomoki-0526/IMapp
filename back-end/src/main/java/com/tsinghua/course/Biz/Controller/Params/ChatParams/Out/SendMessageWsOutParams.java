@@ -33,6 +33,8 @@ public class SendMessageWsOutParams extends CommonOutParams {
     double longitude;
     // 纬度
     double latitude;
+    // 定位信息
+    String locationInfo;
     // 未读数
     int unread;
     // 定向推送消息类型
@@ -132,6 +134,14 @@ public class SendMessageWsOutParams extends CommonOutParams {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getLocationInfo() {
+        return locationInfo;
+    }
+
+    public void setLocationInfo(String locationInfo) {
+        this.locationInfo = locationInfo;
     }
 
     public int getUnread() {

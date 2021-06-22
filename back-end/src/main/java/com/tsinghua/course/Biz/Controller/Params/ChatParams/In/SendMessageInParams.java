@@ -32,6 +32,8 @@ public class SendMessageInParams extends CommonInParams {
     String longitude;
     // 纬度
     String latitude;
+    // 定位信息
+    String locationInfo;
 
     public String getLinkId() {
         return linkId;
@@ -103,5 +105,13 @@ public class SendMessageInParams extends CommonInParams {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public String getLocationInfo() {
+        return locationInfo;
+    }
+
+    public void setLocationInfo(String locationInfo) {
+        this.locationInfo = locationInfo;
     }
 }

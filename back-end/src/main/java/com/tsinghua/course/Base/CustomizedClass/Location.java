@@ -11,14 +11,18 @@ public class Location {
     double longitude;
     // 纬度
     double latitude;
+    // 附加信息
+    String locationInfo;
 
     public Location() {
         longitude = latitude = 0.0;
+        locationInfo = "";
     }
 
-    public Location(double longitude, double latitude) {
+    public Location(double longitude, double latitude, String locationInfo) {
         this.longitude = longitude;
         this.latitude = latitude;
+        this.locationInfo = locationInfo;
     }
 
     public double getLongitude() {
@@ -35,5 +39,13 @@ public class Location {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getLocationInfo() {
+        return locationInfo;
+    }
+
+    public void setLocationInfo(String locationInfo) {
+        this.locationInfo = locationInfo;
     }
 }

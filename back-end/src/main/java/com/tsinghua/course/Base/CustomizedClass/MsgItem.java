@@ -35,6 +35,8 @@ public class MsgItem {
     double longitude;
     // 纬度
     double latitude;
+    // 定位信息
+    String locationInfo;
 
     public String getMsgId() {
         return msgId;
@@ -146,5 +148,13 @@ public class MsgItem {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getLocationInfo() {
+        return locationInfo;
+    }
+
+    public void setLocationInfo(String locationInfo) {
+        this.locationInfo = locationInfo;
     }
 }

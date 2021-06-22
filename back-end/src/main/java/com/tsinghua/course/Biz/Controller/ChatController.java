@@ -103,6 +103,7 @@ public class ChatController {
             String video = message.getVideo();
             double longitude = message.getLocation().getLongitude();
             double latitude = message.getLocation().getLatitude();
+            String locationInfo = message.getLocation().getLocationInfo();
 
             if(type == 1){
                 index = image.indexOf(MESSAGE_RELATIVE_PATH);
@@ -139,6 +140,7 @@ public class ChatController {
             msgItem.setVideo(video);
             msgItem.setLongitude(longitude);
             msgItem.setLatitude(latitude);
+            msgItem.setLocationInfo(locationInfo);
             msgItemList.add(msgItem);
         }
 
@@ -224,7 +226,9 @@ public class ChatController {
         else {
             double longitude = Double.parseDouble(inParams.getLongitude());
             double latitude = Double.parseDouble(inParams.getLatitude());
-            message = chatProcessor.createLocationMessage(linkId, isMultiple, username, type, longitude, latitude);
+            String locationInfo = inParams.getLocationInfo();
+            message = chatProcessor.createLocationMessage(linkId, isMultiple, username, type,
+                    longitude, latitude, locationInfo);
         }
 
         /* 建立可见性表并定向推送 */
@@ -260,6 +264,7 @@ public class ChatController {
                     outParams.setVideo(message.getVideo());
                     outParams.setLongitude(message.getLocation().getLongitude());
                     outParams.setLatitude(message.getLocation().getLatitude());
+                    outParams.setLocationInfo(message.getLocation().getLocationInfo());
                     if (type == 0)
                         outParams.setFlag(4);
                     else
@@ -275,6 +280,7 @@ public class ChatController {
                     outParams.setVideo(message.getVideo());
                     outParams.setLongitude(message.getLocation().getLongitude());
                     outParams.setLatitude(message.getLocation().getLatitude());
+                    outParams.setLocationInfo(message.getLocation().getLocationInfo());
                     outParams.setFlag(5);
                 }
                 else if(type == 2) {
@@ -287,6 +293,7 @@ public class ChatController {
                     outParams.setVideo(message.getVideo());
                     outParams.setLongitude(message.getLocation().getLongitude());
                     outParams.setLatitude(message.getLocation().getLatitude());
+                    outParams.setLocationInfo(message.getLocation().getLocationInfo());
                     outParams.setFlag(6);
                 }
                 else if(type == 3) {
@@ -299,6 +306,7 @@ public class ChatController {
                     outParams.setVideo(videoUrl);
                     outParams.setLongitude(message.getLocation().getLongitude());
                     outParams.setLatitude(message.getLocation().getLatitude());
+                    outParams.setLocationInfo(message.getLocation().getLocationInfo());
                     outParams.setFlag(7);
                 }
 
@@ -341,6 +349,7 @@ public class ChatController {
                 outParams.setVideo(message.getVideo());
                 outParams.setLongitude(message.getLocation().getLongitude());
                 outParams.setLatitude(message.getLocation().getLatitude());
+                outParams.setLocationInfo(message.getLocation().getLocationInfo());
                 if (type == 0)
                     outParams.setFlag(4);
                 else
@@ -356,6 +365,7 @@ public class ChatController {
                 outParams.setVideo(message.getVideo());
                 outParams.setLongitude(message.getLocation().getLongitude());
                 outParams.setLatitude(message.getLocation().getLatitude());
+                outParams.setLocationInfo(message.getLocation().getLocationInfo());
                 outParams.setFlag(5);
             }
             else if(type == 2) {
@@ -368,6 +378,7 @@ public class ChatController {
                 outParams.setVideo(message.getVideo());
                 outParams.setLongitude(message.getLocation().getLongitude());
                 outParams.setLatitude(message.getLocation().getLatitude());
+                outParams.setLocationInfo(message.getLocation().getLocationInfo());
                 outParams.setFlag(6);
             }
             else if(type == 3) {
@@ -380,6 +391,7 @@ public class ChatController {
                 outParams.setVideo(videoUrl);
                 outParams.setLongitude(message.getLocation().getLongitude());
                 outParams.setLatitude(message.getLocation().getLatitude());
+                outParams.setLocationInfo(message.getLocation().getLocationInfo());
                 outParams.setFlag(7);
             }
 
@@ -634,6 +646,7 @@ public class ChatController {
             String video = message.getVideo();
             double longitude = message.getLocation().getLongitude();
             double latitude = message.getLocation().getLatitude();
+            String locationInfo = message.getLocation().getLocationInfo();
 
             int index = 0;
             if(type == 1){
@@ -677,6 +690,7 @@ public class ChatController {
             msgItem.setVideo(video);
             msgItem.setLongitude(longitude);
             msgItem.setLatitude(latitude);
+            msgItem.setLocationInfo(locationInfo);
             msgItemList.add(msgItem);
         }
 
@@ -814,6 +828,7 @@ public class ChatController {
             String video = message.getVideo();
             double longitude = message.getLocation().getLongitude();
             double latitude = message.getLocation().getLatitude();
+            String locationInfo = message.getLocation().getLocationInfo();
 
             int index;
             if(type == 1){
@@ -857,6 +872,7 @@ public class ChatController {
             msgItem.setVideo(video);
             msgItem.setLongitude(longitude);
             msgItem.setLatitude(latitude);
+            msgItem.setLocationInfo(locationInfo);
             msgItemList.add(msgItem);
         }
 
