@@ -104,8 +104,8 @@ Request:
 
 ## 5. 查看当前所有聊天 √√
 
-Method: GET
-URL: /chat/getChattings
+Method: GET  
+URL: /chat/getChattings  
 Correct Response:
 ```coffeescript
 {
@@ -243,11 +243,28 @@ ws出参
 
 ## 12. 退出群聊 √√
 
-Method: POST
-URL: /chat/quitGroup
+Method: POST  
+URL: /chat/quitGroup  
 Request:
 ```coffeescript
 {
     "groupId": 
+}
+```
+
+## 13. 查看历史纪录 √
+
+Method: GET  
+URL: /chat/getHistory  
+Request:
+```coffeescript
+{
+    "linkId":
+}
+```
+Correct Response:
+```coffeescript
+{
+    "msgs": 群消息记录
 }
 ```
