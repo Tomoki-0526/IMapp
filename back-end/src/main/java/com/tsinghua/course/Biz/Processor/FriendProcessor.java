@@ -127,9 +127,6 @@ public class FriendProcessor {
         friendship.setRemark("");
         friendship.setStar(false);
 
-//        FriendGroup friendGroup = getGroupByUsernameAndGroupName(username, DEFAULT_GROUP);
-//        friendship.setGroupID(friendGroup.getId());
-
         Friendship.SubObj subObj = new Friendship.SubObj();
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
