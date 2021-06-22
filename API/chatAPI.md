@@ -1,6 +1,6 @@
 # 聊天功能API
 
-## 1. 获取聊天关系（私聊） √
+## 1. 获取聊天关系（私聊） √√
 
 ※ 用户进入聊天界面时调用  
 
@@ -39,7 +39,7 @@ Correct Response:
 }
 ```
 
-## 2. 退出聊天界面（私聊） √
+## 2. 退出聊天界面（私聊） √√
 
 ※ 用户退出聊天界面时调用
 
@@ -102,7 +102,7 @@ Request:
 }
 ```
 
-## 5. 查看当前所有聊天 √
+## 5. 查看当前所有聊天 √√
 
 Method: GET
 URL: /chat/getChattings
@@ -146,7 +146,7 @@ ws出参
 }
 ```
 
-## 7. 查看所有群 √
+## 7. 查看所有群 √√
 
 Method: GET  
 URL: /chat/getGroups  
@@ -165,7 +165,7 @@ Correct Response:
 }
 ```
 
-## 8. 进入群聊 √
+## 8. 进入群聊 √√
 
 Method: POST  
 URL: /chat/enterGroupChat  
@@ -184,7 +184,7 @@ Correct Response:
 }
 ```
 
-## 9. 离开群聊界面 √
+## 9. 离开群聊界面 √√
 
 Method: POST  
 URL: /chat/quitGroupChat  
