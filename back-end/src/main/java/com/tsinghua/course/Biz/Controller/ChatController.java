@@ -82,6 +82,7 @@ public class ChatController {
 
         /* 获取聊天内的所有消息 */
         List<Message> messageList = chatProcessor.getMessages(chatLink.getId());
+        MessageSortAsc(messageList);
         List<MsgItem> msgItemList = new ArrayList<>();
         for (Message message: messageList) {
             String msgId = message.getId();
@@ -612,6 +613,7 @@ public class ChatController {
         /* 获取聊天内的所有消息 */
         EnterGroupChatOutParams outParams = new EnterGroupChatOutParams();
         List<Message> messageList = chatProcessor.getMessages(groupLinkId);
+        MessageSortAsc(messageList);
         List<MsgItem> msgItemList = new ArrayList<>();
         for (Message message: messageList) {
             String msgId = message.getId();
@@ -791,6 +793,7 @@ public class ChatController {
         String linkId = inParams.getLinkId();
 
         List<Message> messageList = chatProcessor.getMessages(linkId);
+        MessageSortAsc(messageList);
         List<MsgItem> msgItemList = new ArrayList<>();
         for (Message message: messageList) {
             String msgId = message.getId();
@@ -856,6 +859,7 @@ public class ChatController {
             msgItem.setLatitude(latitude);
             msgItemList.add(msgItem);
         }
+
         MsgItem[] msgs = new MsgItem[msgItemList.size()];
         msgItemList.toArray(msgs);
 
@@ -883,12 +887,24 @@ public class ChatController {
         });
     }
 
-    /** 消息列表按发送时间排序 */
+    /** 消息列表按发送时间倒序 */
     private static void MessageSort(List<Message> list) {
         list.sort((o1, o2) -> {
             Date dt1 = o1.getSendTime();
             Date dt2 = o2.getSendTime();
             if (dt1.before(dt2))
+                return 1;
+            else
+                return -1;
+        });
+    }
+
+    /** 消息列表按发送时间顺序 */
+    private static void MessageSortAsc(List<Message> list) {
+        list.sort((o1, o2) -> {
+            Date dt1 = o1.getSendTime();
+            Date dt2 = o2.getSendTime();
+            if (dt1.after(dt2))
                 return 1;
             else
                 return -1;
