@@ -129,7 +129,10 @@ public class ChatController {
             int fromIndex = fromAvatar.indexOf(AVATAR_RELATIVE_PATH);
             String fromAvatarUrl = FILE_URL + fromAvatar.substring(fromIndex);
             msgItem.setAvatar(fromAvatarUrl);
-            msgItem.setRemark(friendship.getRemark());
+            if (fromMyself)
+                msgItem.setRemark("");
+            else
+                msgItem.setRemark(friendship.getRemark());
 
             msgItem.setFromMyself(fromMyself);
             msgItem.setType(type);
