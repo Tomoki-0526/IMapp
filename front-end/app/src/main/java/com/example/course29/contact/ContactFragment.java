@@ -20,6 +20,7 @@ import com.example.course29.contact.friend.Friend;
 import com.example.course29.contact.friend.FriendActivity;
 import com.example.course29.contact.friend.FriendAdapter;
 import com.example.course29.contact.friend.StarFriendsActivity;
+import com.example.course29.contact.group.GroupActivity;
 import com.example.course29.contact.newFriend.NewFriendActivity;
 import com.example.course29.util.HttpUtil;
 import com.example.course29.util.JsonMapUtil;
@@ -37,6 +38,7 @@ public class ContactFragment extends Fragment {
     private RecyclerView mRvContactFriendList;
     private LinearLayout mLlContactSearch;
     private LinearLayout mLlContactStarFriends;
+    private LinearLayout mLlContactGroupChats;
     private FriendAdapter adapter;
     private ArrayList<Friend> Friends = new ArrayList<>();
 
@@ -70,6 +72,7 @@ public class ContactFragment extends Fragment {
         mRvContactFriendList = view.findViewById(R.id.rv_contact_friendList);
         mLlContactSearch = view.findViewById(R.id.ll_contact_search);
         mLlContactStarFriends = view.findViewById(R.id.ll_contact_starFriends);
+        mLlContactGroupChats = view.findViewById(R.id.ll_contact_groupChats);
 
         mLlContactSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +81,13 @@ public class ContactFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        mLlContactGroupChats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), GroupActivity.class);
+                startActivity(intent);
+            }
+        });
         mLlContactNewFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

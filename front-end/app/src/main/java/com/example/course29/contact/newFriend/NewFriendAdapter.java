@@ -34,11 +34,11 @@ public class NewFriendAdapter extends BaseQuickAdapter<NewFriend, BaseViewHolder
                 break;
             case "1":
                 helper.setText(R.id.tv_itemNewFriend_status,"已通过");
-                helper.setTextColor(R.id.tv_itemNewFriend_status, mContext.getResources().getColor(R.color.green));
+                helper.setTextColor(R.id.tv_itemNewFriend_status, mContext.getResources().getColor(R.color.primary));
                 break;
             case "2":
                 helper.setText(R.id.tv_itemNewFriend_status,"已拒绝");
-                helper.setTextColor(R.id.tv_itemNewFriend_status, mContext.getResources().getColor(R.color.red));
+                helper.setTextColor(R.id.tv_itemNewFriend_status, mContext.getResources().getColor(R.color.SecondaryRed));
                 break;
             default:
                 break;

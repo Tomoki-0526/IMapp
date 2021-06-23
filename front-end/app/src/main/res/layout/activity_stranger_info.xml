@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@color/yellow"
+        android:background="@color/primary"
         >
         <ImageView
             android:id="@+id/iv_strangerInfo_return"
@@ -162,7 +162,7 @@
                 android:layout_width="150dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="50dp"
-                android:background="@color/teal_200"
+                android:background="@color/primary"
                 android:text="添加好友"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

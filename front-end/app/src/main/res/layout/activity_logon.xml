@@ -61,7 +61,7 @@
         android:layout_marginRight="50dp"
         android:textSize="12sp"
         android:text=""
-        android:textColor="@color/red"
+        android:textColor="@color/SecondaryRed"
         android:paddingLeft="10dp"
         android:textStyle="italic"
         />

@@ -6,10 +6,10 @@
         android:icon="@mipmap/icon_chat"
         android:title="@string/title_chat" />
 
-    <item
-        android:id="@+id/navigation_nearby"
-        android:icon="@mipmap/icon_nearby"
-        android:title="@string/title_nearby" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_nearby"-->
+<!--        android:icon="@mipmap/icon_nearby"-->
+<!--        android:title="@string/title_nearby" />-->
 
     <item
         android:id="@+id/navigation_contact"

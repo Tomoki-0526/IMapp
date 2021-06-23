@@ -11,11 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -23,12 +25,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.WebSocket;
 
 public class HttpUtil {
     private static String headUrl = "http://8.140.133.34:7563";
 //    private static ConcurrentHashMap<String, List<Cookie>> cookieStore = new ConcurrentHashMap<>();
     //获取OkHttpClient对象 且 cookie管理
-    private static OkHttpClient client = new OkHttpClient.Builder()
+    public static OkHttpClient client = new OkHttpClient.Builder()
             .cookieJar(new CookieJar()
             {
                 private final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
@@ -46,6 +49,7 @@ public class HttpUtil {
                     return cookies != null ? cookies : new ArrayList<Cookie>();
                 }
             })
+            .pingInterval(10, TimeUnit.SECONDS)
             .build();
     public static Map get(String url, Context context){
 
@@ -158,7 +162,6 @@ public class HttpUtil {
                 String key = entry.getKey();
                 String value = String.valueOf(entry.getValue());
                 //将请求参数逐一遍历添加到我们的请求构建类中
-                Log.e("kf",key+value);
                 multipartBodyBuilder.addFormDataPart(key, value);
             }
 //            multipartBodyBuilder.addPart(paramsBody);
@@ -216,5 +219,65 @@ public class HttpUtil {
         catch (InterruptedException e) {
         }
         return ans[0];
+    }
+
+    public static Map postArray (String url,String jsonStr, Context context) {
+
+        //创建RequestBody
+        RequestBody requestBody =  RequestBody.create(MediaType.parse("application/json;charset=utf-8")
+                , jsonStr);
+        Log.e("jsonStr",jsonStr);
+        //构建Request对象
+        Request request = new Request.Builder()
+                .url(headUrl.concat(url))
+                .post(requestBody)
+                .build();
+
+        //构建call对象
+        Call call = client.newCall(request);
+
+        //异步post请求
+        final Map[] ans = {new HashMap()};
+        final CountDownLatch latch = new CountDownLatch(1);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("postFail","failed");
+                Looper.prepare();
+                ToastUtil.showMsg(context, "Connection failed");
+                Looper.loop();
+                latch.countDown();
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final Map res = JsonMapUtil.getMap(response.body().string());
+                Log.e("res", String.valueOf(res));
+                ans[0] = res;
+                latch.countDown();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        contentTv.setText(res);
+//                    }
+//                });
+            }
+        });
+        try {
+            latch.await();
+        }
+        catch (InterruptedException e) {
+        }
+        return ans[0];
+    }
+
+    public static void wbInit() {
+
+        Request request = new Request.Builder()
+                .url("ws://8.140.133.34:7562/ws")
+                .build();
+//        WebSocket mWebSocket =
+        client.newWebSocket(request, new WsListener());
+//        return mWebSocket;
     }
 }

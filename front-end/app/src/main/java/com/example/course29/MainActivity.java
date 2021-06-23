@@ -119,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("LoginBool", true);
             // 将数据提交到sharedpreferences中
             editor.commit();
-
+//            startWebSocketService();
             ToastUtil.showMsg(MainActivity.this, getResources().getString(R.string.login_successfully));
             GlobalVariable.setGlobalUsername(strUsername);
+            GlobalVariable.setGlobalPassword(strPassword);
             intent = new Intent(MainActivity.this, MenuActivity.class);
             startActivity(intent);
             finish();
@@ -131,6 +132,11 @@ public class MainActivity extends AppCompatActivity {
             ToastUtil.showMsg(MainActivity.this,
                     res.get("msg") != null?res.get("msg").toString() : "Unknown Error");
         }
+    }
+
+    private void startWebSocketService() {
+        Intent intent = new Intent(MainActivity.this, WebSocketService.class);
+        startService(intent);
     }
 
 }

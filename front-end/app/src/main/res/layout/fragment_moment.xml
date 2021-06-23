@@ -25,7 +25,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
-            android:backgroundTint="@color/orange"
+            android:backgroundTint="@color/SecondaryYellow"
             app:borderWidth="0dp"
             android:src="@mipmap/icon_add"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,7 +35,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="90dp"
-            android:backgroundTint="@color/orange"
+            android:backgroundTint="@color/SecondaryYellow"
             app:borderWidth="0dp"
             android:src="@mipmap/icon_arrow_up"/>
     </FrameLayout>

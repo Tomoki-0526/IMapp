@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="删除好友"
-            android:textColor="@color/red"
+            android:textColor="@color/SecondaryRed"
             android:textSize="16sp"/>
     </LinearLayout>
 

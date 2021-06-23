@@ -383,9 +383,9 @@ public class UserActivity extends AppCompatActivity {
         //设置裁剪图片可操作的手势
         options.setAllowedGestures(UCropActivity.SCALE, UCropActivity.ROTATE, UCropActivity.ALL);
         //设置toolbar颜色
-        options.setToolbarColor(ActivityCompat.getColor(this, R.color.orangeRed));
+        options.setToolbarColor(ActivityCompat.getColor(this, R.color.SecondaryYellow));
         //设置状态栏颜色
-        options.setStatusBarColor(ActivityCompat.getColor(this, R.color.orangeRed));
+        options.setStatusBarColor(ActivityCompat.getColor(this, R.color.SecondaryYellow));
         //是否能调整裁剪框
         // options.setFreeStyleCropEnabled(true);
         uCrop.withOptions(options);
