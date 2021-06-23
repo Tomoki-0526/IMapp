@@ -718,7 +718,7 @@ public class ChatContentActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.chatMore_invite:
-                        intent = new Intent(ChatContentActivity.this, ChatHistoryActivity.class);
+                        intent = new Intent(ChatContentActivity.this, GroupInviteActivity.class);
                         intent.putExtra("strGroupId",mStrLinkId);
                         startActivity(intent);
                         break;
