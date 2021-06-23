@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class MsgItem {
     // 消息id
     String msgId;
-    // 发送时间
-    String sendTime;
     // 发送人
     String username;
     // 发送人昵称
@@ -19,6 +17,8 @@ public class MsgItem {
     String remark;
     // 发送人头像
     String avatar;
+    // 发送时间
+    String sendTime;
     // 是不是由自己发出的
     boolean fromMyself;
     // 消息类型
