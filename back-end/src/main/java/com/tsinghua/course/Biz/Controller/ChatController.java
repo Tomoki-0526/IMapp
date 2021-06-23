@@ -481,14 +481,11 @@ public class ChatController {
             int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
             String avatar_url = FILE_URL + avatar.substring(index);
             String name = toUser.getNickname();
-            String remark;
+            String remark = "";
             Friendship friendship = friendProcessor.getFriendshipByUsername(username, toUsername);
-            if (friendship != null) {
+            if (friendship != null && !friendship.getRemark().equals("")) {
                 name = friendship.getRemark();
                 remark = friendship.getRemark();
-            }
-            else {
-                remark = "";
             }
 
             ChatItem chatItem = new ChatItem();
