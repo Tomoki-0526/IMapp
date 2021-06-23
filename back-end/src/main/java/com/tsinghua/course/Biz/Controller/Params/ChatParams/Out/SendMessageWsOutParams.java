@@ -13,14 +13,24 @@ public class SendMessageWsOutParams extends CommonOutParams {
     String linkId;
     // 消息发送方名称
     String name;
+    // 发送方用户名
+    String username;
+    // 发送方昵称
+    String nickname;
+    // 发送方备注
+    String remark;
+    // 发送方头像
+    String avatar;
     // 是不是群聊
     boolean isMultiple;
-    // 消息类型
-    int type;
     // 消息id
     String msgId;
     // 发送时间
     String sendTime;
+    // 是不是由自己发出的
+    boolean fromMyself;
+    // 消息类型
+    int type;
     // 文本内容
     String text;
     // 图片
@@ -54,12 +64,52 @@ public class SendMessageWsOutParams extends CommonOutParams {
         this.name = name;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public boolean isMultiple() {
         return isMultiple;
     }
 
     public void setMultiple(boolean multiple) {
         isMultiple = multiple;
+    }
+
+    public boolean isFromMyself() {
+        return fromMyself;
+    }
+
+    public void setFromMyself(boolean fromMyself) {
+        this.fromMyself = fromMyself;
     }
 
     public int getType() {

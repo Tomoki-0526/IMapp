@@ -255,6 +255,19 @@ public class ChatController {
                 outParams.setType(type);
                 outParams.setMsgId(message.getId());
                 outParams.setUnread(unread);
+                outParams.setFromMyself(member.getUsername().equals(username));
+                outParams.setUsername(username);
+                User sender = userProcessor.getUserByUsername(username);
+                outParams.setNickname(sender.getNickname());
+                Friendship friendship = friendProcessor.getFriendshipByUsername(member.getUsername(), username);
+                if (friendship != null)
+                    outParams.setRemark(friendship.getRemark());
+                else
+                    outParams.setRemark("");
+                String avatar = groupLink.getAvatar();
+                int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
+                String avatarUrl = FILE_URL + avatar.substring(index);
+                outParams.setAvatar(avatarUrl);
 
                 if (type == 0 || type == 4) {
                     outParams.setText(message.getText());
@@ -271,7 +284,7 @@ public class ChatController {
                 else if(type == 1){
                     outParams.setText(message.getText());
                     String image = message.getImage();
-                    int index = image.indexOf(MESSAGE_RELATIVE_PATH);
+                    index = image.indexOf(MESSAGE_RELATIVE_PATH);
                     String imageUrl = FILE_URL + image.substring(index);
                     outParams.setImage(imageUrl);
                     outParams.setAudio(message.getAudio());
@@ -284,7 +297,7 @@ public class ChatController {
                     outParams.setText(message.getText());
                     outParams.setImage(message.getImage());
                     String audio = message.getAudio();
-                    int index = audio.indexOf(MESSAGE_RELATIVE_PATH);
+                    index = audio.indexOf(MESSAGE_RELATIVE_PATH);
                     String audioUrl = FILE_URL + audio.substring(index);
                     outParams.setAudio(audioUrl);
                     outParams.setVideo(message.getVideo());
@@ -297,7 +310,7 @@ public class ChatController {
                     outParams.setImage(message.getImage());
                     outParams.setAudio(message.getAudio());
                     String video = message.getVideo();
-                    int index = video.indexOf(MESSAGE_RELATIVE_PATH);
+                    index = video.indexOf(MESSAGE_RELATIVE_PATH);
                     String videoUrl = FILE_URL + video.substring(index);
                     outParams.setVideo(videoUrl);
                     outParams.setLongitude(message.getLocation().getLongitude());
@@ -327,8 +340,13 @@ public class ChatController {
             User user = userProcessor.getUserByUsername(username);
             outParams.setName(user.getNickname());
             Friendship friendship = friendProcessor.getFriendshipByUsername(toUsername, username);
-            if (friendship != null)
+            if (friendship != null) {
+                outParams.setRemark(friendship.getRemark());
                 outParams.setName(friendship.getRemark());
+            }
+            else {
+                outParams.setRemark("");
+            }
             outParams.setMultiple(false);
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
             dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
@@ -336,6 +354,13 @@ public class ChatController {
             outParams.setType(type);
             outParams.setMsgId(message.getId());
             outParams.setUnread(unread);
+            outParams.setFromMyself(false);
+            outParams.setUsername(username);
+            outParams.setNickname(user.getNickname());
+            String avatar = user.getAvatar();
+            int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
+            String avatarUrl = FILE_URL + avatar.substring(index);
+            outParams.setAvatar(avatarUrl);
 
             if (type == 0 || type == 4) {
                 outParams.setText(message.getText());
@@ -352,7 +377,7 @@ public class ChatController {
             else if(type == 1){
                 outParams.setText(message.getText());
                 String image = message.getImage();
-                int index = image.indexOf(MESSAGE_RELATIVE_PATH);
+                index = image.indexOf(MESSAGE_RELATIVE_PATH);
                 String imageUrl = FILE_URL + image.substring(index);
                 outParams.setImage(imageUrl);
                 outParams.setAudio(message.getAudio());
@@ -365,7 +390,7 @@ public class ChatController {
                 outParams.setText(message.getText());
                 outParams.setImage(message.getImage());
                 String audio = message.getAudio();
-                int index = audio.indexOf(MESSAGE_RELATIVE_PATH);
+                index = audio.indexOf(MESSAGE_RELATIVE_PATH);
                 String audioUrl = FILE_URL + audio.substring(index);
                 outParams.setAudio(audioUrl);
                 outParams.setVideo(message.getVideo());
@@ -378,7 +403,7 @@ public class ChatController {
                 outParams.setImage(message.getImage());
                 outParams.setAudio(message.getAudio());
                 String video = message.getVideo();
-                int index = video.indexOf(MESSAGE_RELATIVE_PATH);
+                index = video.indexOf(MESSAGE_RELATIVE_PATH);
                 String videoUrl = FILE_URL + video.substring(index);
                 outParams.setVideo(videoUrl);
                 outParams.setLongitude(message.getLocation().getLongitude());
@@ -390,6 +415,8 @@ public class ChatController {
 
             // 给自己也发一条
             outParams.setName(user.getNickname());
+            outParams.setFromMyself(true);
+            outParams.setRemark("");
             SocketUtil.sendMessageToUser(username, outParams);
         }
 
@@ -454,19 +481,29 @@ public class ChatController {
             int index = avatar.indexOf(AVATAR_RELATIVE_PATH);
             String avatar_url = FILE_URL + avatar.substring(index);
             String name = toUser.getNickname();
+            String remark;
             Friendship friendship = friendProcessor.getFriendshipByUsername(username, toUsername);
-            if (!friendship.getRemark().equals(""))
+            if (friendship != null) {
                 name = friendship.getRemark();
+                remark = friendship.getRemark();
+            }
+            else {
+                remark = "";
+            }
 
             ChatItem chatItem = new ChatItem();
             chatItem.setAvatar(avatar_url);
             chatItem.setMultiple(false);
             chatItem.setLinkId(linkId);
             chatItem.setUsername(toUsername);
+            chatItem.setNickname(toUser.getNickname());
+            chatItem.setRemark(remark);
             chatItem.setName(name);
+            chatItem.setFromMyself(message.getUsername().equals(username));
             chatItem.setType(type);
             chatItem.setLatestMsg(latestMsg);
             chatItem.setSendTime(sendTimeStr);
+            chatItem.setMsgId(message.getId());
             chatItemList.add(chatItem);
         }
         // 群聊
@@ -513,11 +550,20 @@ public class ChatController {
             String avatar_url = FILE_URL + avatar.substring(index);
             String groupName = groupLink.getGroupName();
 
+            User sender = userProcessor.getUserByUsername(message.getUsername());
+            Friendship friendship = friendProcessor.getFriendshipByUsername(username, message.getUsername());
+
             ChatItem chatItem = new ChatItem();
             chatItem.setAvatar(avatar_url);
             chatItem.setMultiple(true);
             chatItem.setLinkId(groupLinkId);
-            chatItem.setUsername("");
+            chatItem.setFromMyself(message.getUsername().equals(username));
+            chatItem.setUsername(message.getUsername());
+            chatItem.setNickname(sender.getNickname());
+            if (friendship != null)
+                chatItem.setRemark(friendship.getRemark());
+            else
+                chatItem.setRemark("");
             chatItem.setName(groupName);
             chatItem.setType(type);
             chatItem.setLatestMsg(latestMsg);
