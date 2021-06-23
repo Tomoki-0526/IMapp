@@ -31,6 +31,8 @@ public class ChatItem {
     String latestMsg;
     // 发送时间
     String sendTime;
+    // 未读数
+    int unread;
 
     public String getAvatar() {
         return avatar;
@@ -86,6 +88,14 @@ public class ChatItem {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public int getUnread() {
+        return unread;
+    }
+
+    public void setUnread(int unread) {
+        this.unread = unread;
     }
 
     public String getRemark() {

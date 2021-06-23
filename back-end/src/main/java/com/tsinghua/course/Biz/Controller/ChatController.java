@@ -485,6 +485,7 @@ public class ChatController {
                 name = friendship.getRemark();
                 remark = friendship.getRemark();
             }
+            ChatManager chatManager = chatProcessor.getChatManager(linkId, username);
 
             ChatItem chatItem = new ChatItem();
             chatItem.setAvatar(avatar_url);
@@ -499,6 +500,8 @@ public class ChatController {
             chatItem.setLatestMsg(latestMsg);
             chatItem.setSendTime(sendTimeStr);
             chatItem.setMsgId(message.getId());
+            chatItem.setUnread(chatManager.getUnread());
+
             chatItemList.add(chatItem);
         }
         // 群聊
@@ -563,6 +566,9 @@ public class ChatController {
             chatItem.setType(type);
             chatItem.setLatestMsg(latestMsg);
             chatItem.setSendTime(sendTimeStr);
+            GroupMember groupMember = chatProcessor.getGroupMemberByUsername(groupLinkId, username);
+            chatItem.setUnread(groupMember.getUnread());
+
             chatItemList.add(chatItem);
         }
 
