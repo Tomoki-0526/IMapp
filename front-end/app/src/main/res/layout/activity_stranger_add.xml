@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@color/yellow"
+        android:background="@color/primary"
         >
         <ImageView
             android:id="@+id/iv_strangerAdd_return"
@@ -163,7 +163,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="50dp"
-                android:background="@color/teal_200"
+                android:background="@color/primary"
                 android:text="同意"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -176,7 +176,7 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="50dp"
-                android:background="@color/orangeRed"
+                android:background="@color/SecondaryRed"
                 android:text="拒绝"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

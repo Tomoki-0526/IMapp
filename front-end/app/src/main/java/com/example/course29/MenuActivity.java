@@ -1,14 +1,21 @@
 package com.example.course29;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -108,9 +115,9 @@ public class MenuActivity extends AppCompatActivity {
                         case R.id.navigation_contact:
                             setCurrentFragment(contactFragment);
                             return true;
-                        case R.id.navigation_nearby:
-                            setCurrentFragment(nearbyFragment);
-                            return true;
+//                        case R.id.navigation_nearby:
+//                            setCurrentFragment(nearbyFragment);
+//                            return true;
                         case R.id.navigation_moment:
                             setCurrentFragment(momentFragment);
                             return true;
@@ -139,8 +146,7 @@ public class MenuActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(res.get("avatar").toString())
                     .into(mIvMenuProfile);
-            mTvMenuUsername.setText(res.get("nicknam" +
-                    "e").toString());
+            mTvMenuUsername.setText(res.get("nickname").toString());
             mTvMenuSignature.setText(res.get("signature").toString());
         }
         else {

@@ -37,7 +37,12 @@ public class PasswordActivity extends AppCompatActivity {
         mEtNewPassword = findViewById(R.id.et_password_newPassword);
         mEtConfirmPassword = findViewById(R.id.et_password_newPasswordConfirm);
         mBtnModifyPassword = findViewById(R.id.btn_modifyPassword);
-
+        mIvPasswordReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mBtnModifyPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

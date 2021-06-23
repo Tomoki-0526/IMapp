@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chatOne_check"
+        android:icon="@mipmap/icon_arrow_right"
+        android:title="查看好友" />
+    <item
+        android:id="@+id/chatOne_history"
+        android:icon="@mipmap/icon_arrow_right"
+        android:title="聊天记录" />
+</menu>

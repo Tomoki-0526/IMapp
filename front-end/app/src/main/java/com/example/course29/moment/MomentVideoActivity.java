@@ -98,7 +98,6 @@ public class MomentVideoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 File file = null;
-                Log.e("uri", String.valueOf(videoUri));
                 try {
 
                     File Afile = FileUriUtil.getFileByUri(videoUri,MomentVideoActivity.this);
@@ -190,7 +189,7 @@ public class MomentVideoActivity extends AppCompatActivity {
         Map map = new HashMap();
         map.put("type",3);
         files.add(file);
-        Map res = HttpUtil.postFiles("/moment/publishMoment",map, files, "avatar",MomentVideoActivity.this);
+        Map res = HttpUtil.postFiles("/moment/publishMoment",map, files, "video",MomentVideoActivity.this);
         if (res.get("success").toString() == "true") {
             ToastUtil.showMsg(MomentVideoActivity.this, "发布成功");
 //                overridePendingTransition(0,0);

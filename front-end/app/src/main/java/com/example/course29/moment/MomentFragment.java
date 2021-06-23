@@ -340,6 +340,8 @@ public class MomentFragment extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                if (getActivity() == null)
+                    return;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override public void run() {
                         // ------------- 主线程

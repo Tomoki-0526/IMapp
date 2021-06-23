@@ -4,9 +4,25 @@
     package="com.example.course29">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission
+        android:name="android.permission.CHANGE_CONFIGURATION"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -25,7 +41,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".moment.VideoActivity"></activity>
+        <service android:name=".WebSocketService"/>
+        <activity android:name=".chat.map.AmapActivity" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="c5db0a1905d0a972499bea68666e5c84" />
+
+        <activity android:name=".chat.chatContent.ChatHistoryActivity" />
+        <activity android:name=".contact.group.GroupInviteActivity" />
+        <activity android:name=".chat.chatContent.member.MemberActivity" />
+        <activity android:name=".contact.group.GroupCreateActivity" />
+        <activity android:name=".contact.group.GroupActivity" />
+        <activity android:name=".chat.ChatMoreContentActivity" />
+        <activity android:name=".chat.chatContent.ChatContentActivity" />
+        <activity android:name=".moment.VideoActivity" />
         <activity android:name=".moment.MomentVideoActivity" />
         <activity android:name=".moment.MomentPictureActivity" />
         <activity android:name=".moment.MomentTextActivity" />

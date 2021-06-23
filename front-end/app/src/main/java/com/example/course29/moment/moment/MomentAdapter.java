@@ -126,7 +126,7 @@ public class MomentAdapter extends BaseMultiItemQuickAdapter<Moment, BaseViewHol
             }
         });
         if(!isLiked.equals("")) {
-            imageViewLike.setColorFilter(Color.RED);
+            imageViewLike.setColorFilter(mContext.getResources().getColor(R.color.SecondaryRed));
         }
         else {
             imageViewLike.setColorFilter(Color.BLACK);

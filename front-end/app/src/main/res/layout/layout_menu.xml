@@ -5,12 +5,13 @@
     android:orientation="vertical"
     android:layout_width="300dp"
     android:layout_height="match_parent"
-    android:background="@color/orange">
+    android:background="@drawable/shape_border"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="95dp"
-        android:background="@color/orangeRed"
+        android:background="@color/SecondaryYellow"
         android:paddingTop="15dp"
         >
         <androidx.cardview.widget.CardView
@@ -222,7 +223,7 @@
             android:layout_width="120dp"
             android:layout_height="30dp"
             android:layout_marginBottom="30dp"
-            android:background="@color/orangeRed"
+            android:background="@color/SecondaryRed"
             android:text="退出登录"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

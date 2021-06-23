@@ -7,7 +7,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,8 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.course29.R;
-import com.example.course29.contact.newFriend.StrangerAddActivity;
-import com.example.course29.contact.newFriend.StrangerInfoActivity;
+import com.example.course29.chat.chatContent.ChatContentActivity;
 import com.example.course29.util.BitmapUtil;
 import com.example.course29.util.HttpUtil;
 import com.example.course29.util.ToastUtil;
@@ -44,6 +42,7 @@ public class FriendActivity extends AppCompatActivity {
     private TextView mTvFriendSignature;
     private TextView mTvFriendGender;
     private TextView mTvFriendRemark;
+    private Button mBtnFriendStartChat;
     private LinearLayout mLlFriendRemark;
     private ImageView mIvFriendAvatar;
     private TextView mTvDialogFriendSetStar;
@@ -73,7 +72,7 @@ public class FriendActivity extends AppCompatActivity {
         mIvFriendAvatar = findViewById(R.id.iv_friend_profile);
         mTvFriendRemark = findViewById(R.id.tv_friend_remark);
         mLlFriendRemark = findViewById(R.id.ll_friebd_remark);
-
+        mBtnFriendStartChat = findViewById(R.id.btn_friend_startChat);
 
 
         initBottomDialog();
@@ -97,6 +96,20 @@ public class FriendActivity extends AppCompatActivity {
                 }
             }
         });
+        mBtnFriendStartChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FriendActivity.this, ChatContentActivity.class);
+                intent.putExtra("strUsername",mStrUsername);
+                intent.putExtra("strName",mTvFriendRemark.getText().toString().equals("")?
+                        mTvFriendNickname.getText().toString():mTvFriendRemark.getText().toString());
+                intent.putExtra("strMultiple","false");
+                intent.putExtra("strLinkId","");
+                startActivity(intent);
+                finish();
+            }
+        });
+
         mLlDialogFriendRemark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
