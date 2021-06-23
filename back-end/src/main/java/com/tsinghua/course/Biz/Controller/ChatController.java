@@ -340,12 +340,10 @@ public class ChatController {
             User user = userProcessor.getUserByUsername(username);
             outParams.setName(user.getNickname());
             Friendship friendship = friendProcessor.getFriendshipByUsername(toUsername, username);
-            if (friendship != null) {
+            outParams.setRemark("");
+            if (friendship != null && !friendship.getRemark().equals("")) {
                 outParams.setRemark(friendship.getRemark());
                 outParams.setName(friendship.getRemark());
-            }
-            else {
-                outParams.setRemark("");
             }
             outParams.setMultiple(false);
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_PATTERN);
